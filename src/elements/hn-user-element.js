@@ -33,8 +33,11 @@ export class HnUserElement extends PolymerElement {
 
   update() {
     const state = store.getState();
-    this.setProperties({
-      user: currentUserSelector(state)
-    });
+    const user = currentUserSelector(state);
+    if (user) {
+      this.setProperties({
+        user
+      });
+    }
   }
 }

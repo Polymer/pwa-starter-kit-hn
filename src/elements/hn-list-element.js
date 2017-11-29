@@ -42,9 +42,12 @@ export class HnListElement extends PolymerElement {
 
   update() {
     const state = store.getState();
-    this.setProperties({
-      items: currentItemsSelector(state)
-    });
+    const items = currentItemsSelector(state);
+    if (items) {
+      this.setProperties({
+        items
+      });
+    }
   }
   
   _getItemHref(item) {
