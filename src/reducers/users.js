@@ -35,7 +35,7 @@ const user = (state = {}, action) => {
         ...state,
         failure: false,
         isFetching: false,
-        data: action.data
+        ...action.data
       };
     case FAIL_USER:
       return {

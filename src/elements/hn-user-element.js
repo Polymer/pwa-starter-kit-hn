@@ -11,10 +11,10 @@ export class HnUserElement extends PolymerElement {
         <td>User:</td><td>[[user.id]]</td>
       </tr>
       <tr>
-        <td>Created:</td><td>[[user.data.created]]</td>
+        <td>Created:</td><td>[[user.created]]</td>
       </tr>
       <tr>
-        <td>Karma:</td><td>[[user.data.karma]]</td>
+        <td>Karma:</td><td>[[user.karma]]</td>
       </tr>
     </table>`;
   }
