@@ -12,21 +12,18 @@ export const updateLocation = (location) => (dispatch, getState) => {
   // with the new location.path), so they cannot be combined with UPDATE_LOCATION.
   switch (pageSelector(getState())) {
     case 'list':
-      Promise.all([
-        import('../elements/hn-list-element.js'),
-        import('./lists.js'),
-        import('../reducers/lists.js')
-      ]).then(modules => {
-        dispatch(modules[1].fetchList(modules[2].currentListSelector(getState())));
+      import('../fragments/list.js').then(module => {
+        dispatch(module.fetchList(module.currentListSelector(getState())));
       });
       break;
     case 'user':
-      Promise.all([
-        import('../elements/hn-user-element.js'),
-        import('./users.js'),
-        import('../reducers/users.js')
-      ]).then(modules => {
-        dispatch(modules[1].fetchUser(modules[2].currentUserSelector(getState())));
+      import('../fragments/user.js').then(module => {
+        dispatch(module.fetchUser(module.currentUserSelector(getState())));
+      });
+      break;
+    case 'item':
+      import('../fragments/item.js').then(module => {
+        dispatch(module.fetchItem(module.currentItemSelector(getState())));
       });
       break;
   }

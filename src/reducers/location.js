@@ -38,7 +38,8 @@ export const pageSelector = createSelector(
       case 'jobs':
         return 'list';
       case 'user':
-        return 'user';
+      case 'item':
+        return splitPath[0];
       default:
         return null;
     }

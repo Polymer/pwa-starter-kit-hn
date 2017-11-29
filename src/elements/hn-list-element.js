@@ -1,17 +1,13 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
 import '../../node_modules/@polymer/polymer/lib/elements/dom-repeat.js';
-import lists, { currentListSelector } from '../reducers/lists.js';
+import { currentItemsSelector } from '../reducers/lists.js';
 import { store } from '../store.js';
-
-store.addReducers({
-  lists,
-});
 
 export class HnListElement extends PolymerElement {
   static get template() {
     return `
     <h1>List View</h1>
-    <dom-repeat items="[[_getItems(list)]]">
+    <dom-repeat items="[[items]]">
       <template>
         <div>
           <span class="index">[[index]]</span>
@@ -34,7 +30,7 @@ export class HnListElement extends PolymerElement {
   
   static get properties() {
     return {
-      list: Object
+      items: Array
     }
   }
   
@@ -46,14 +42,9 @@ export class HnListElement extends PolymerElement {
 
   update() {
     const state = store.getState();
-    const list = currentListSelector(state);
     this.setProperties({
-      list
+      items: currentItemsSelector(state)
     });
-  }
-
-  _getItems(list) {
-    return list && list.items ? Object.values(list.items) : null;
   }
   
   _getItemHref(item) {
@@ -64,5 +55,3 @@ export class HnListElement extends PolymerElement {
     return item && item.user ? `/user/${item.user}` : null;
   }
 }
-
-customElements.define('hn-list', HnListElement);

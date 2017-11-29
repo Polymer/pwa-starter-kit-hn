@@ -1,10 +1,6 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
-import users, { currentUserSelector } from '../reducers/users.js';
+import { currentUserSelector } from '../reducers/users.js';
 import { store } from '../store.js';
-
-store.addReducers({
-  users,
-});
 
 export class HnUserElement extends PolymerElement {
   static get template() {
@@ -37,11 +33,8 @@ export class HnUserElement extends PolymerElement {
 
   update() {
     const state = store.getState();
-    const user = currentUserSelector(state);
     this.setProperties({
-      user
+      user: currentUserSelector(state)
     });
   }
 }
-
-customElements.define('hn-user', HnUserElement);

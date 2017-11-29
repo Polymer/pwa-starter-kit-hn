@@ -5,6 +5,7 @@ import {
 } from '../actions/lists.js';
 import { createSelector } from '../../../node_modules/reselect/es/index.js';
 import { splitPathnameSelector } from './location.js';
+import { itemsSelector } from './items.js';
 
 const lists = (state = {}, action) => {
   switch (action.type) {
@@ -35,10 +36,7 @@ const list = (state = {}, action) => {
         ...state,
         failure: false,
         isFetching: false,
-        items: action.items.reduce((obj, item) => {
-          obj[item.id] = item;
-          return obj;
-        }, {})
+        items: action.items.map(item => item.id)
       };
     case FAIL_LIST:
       return {
@@ -74,10 +72,10 @@ export const currentListSelector = createSelector(
   }
 );
 
-export const currentItemSelector = createSelector(
+export const currentItemsSelector = createSelector(
   currentListSelector,
-  splitPathnameSelector,
-  (list, splitPath) => {
-    return list && list.items && list.items[splitPath[2]];
+  itemsSelector,
+  (list, items) => {
+    return list && list.items ? list.items.map(id => items[id]) : null;
   }
-);
+)

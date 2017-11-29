@@ -6,9 +6,13 @@ export class HnAppElement extends PolymerElement {
   static get template() {
     return `
     <style>
-      :host([page=list]) hn-user,
-      :host([page=user]) hn-list {
+      [page] > * {
         display: none;
+      }
+      [page=list] hn-list,
+      [page=item] hn-item,
+      [page=user] hn-user {
+        display: block;
       }
     </style>
     <a href="/">top</a>
@@ -16,13 +20,17 @@ export class HnAppElement extends PolymerElement {
     <a href="/ask">ask</a>
     <a href="/show">show</a>
     <a href="/jobs">jobs</a>
-    <hn-list></hn-list>
-    <hn-user></hn-user>`;
+    <div page$="[[page]]">
+      <hn-list></hn-list>
+      <hn-item></hn-item>
+      <hn-user></hn-user>
+    </div>`;
   }
   
   static get properties() {
     return {
-    }
+      page: String
+    };
   }
   
   constructor() {
@@ -33,8 +41,8 @@ export class HnAppElement extends PolymerElement {
 
   update() {
     const state = store.getState();
-    this.setAttribute('page', pageSelector(state));
+    this.setProperties({
+      page: pageSelector(state)
+    });
   }
 }
-
-customElements.define('hn-app', HnAppElement);
