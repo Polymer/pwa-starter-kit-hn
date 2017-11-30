@@ -50,10 +50,10 @@ export class HnItemElement extends PolymerElement {
   }
   
   _getItemHref(item) {
-    return item && item.id ? `/item/${item.id}` : null;
+    return item && item.id ? `/item?id=${item.id}` : null;
   }
 
   _getUserHref(item) {
-    return item && item.user ? `/user/${item.user}` : null;
+    return item && item.user ? `/user?id=${item.user}` : null;
   }
 }

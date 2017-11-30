@@ -35,11 +35,11 @@ export class HnCommentElement extends PolymerElement {
   }
 
   _getUserHref(comment) {
-    return comment ? `/user/${comment.user}` : null;
+    return comment ? `/user?id=${comment.user}` : null;
   }
 
   _getCommentHref(comment, itemId) {
-    return comment ? `/item/${itemId}#${comment.id}`: null;
+    return comment ? `/item?id=${itemId}#${comment.id}`: null;
   }
 }
 

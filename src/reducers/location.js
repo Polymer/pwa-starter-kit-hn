@@ -45,3 +45,10 @@ export const pageSelector = createSelector(
     }
   }
 );
+
+const searchSelector = state => state.location.search;
+
+export const urlSearchParamsSelector = createSelector(
+  searchSelector,
+  search => new URLSearchParams(search)
+);

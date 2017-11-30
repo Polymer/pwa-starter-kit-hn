@@ -4,7 +4,7 @@ import {
   FAIL_USER
 } from '../actions/users.js';
 import { createSelector } from '../../../node_modules/reselect/es/index.js';
-import { splitPathnameSelector } from './location.js';
+import { splitPathnameSelector, urlSearchParamsSelector } from './location.js';
 
 const users = (state = {}, action) => {
   switch (action.type) {
@@ -55,10 +55,12 @@ const usersSelector = state => state.users;
 export const currentUserSelector = createSelector(
   usersSelector,
   splitPathnameSelector,
-  (users, splitPath) => {
+  urlSearchParamsSelector,
+  (users, splitPath, params) => {
     switch (splitPath[0]) {
       case 'user':
-        return users[splitPath[1]] || { id: splitPath[1] };
+        const id = params.get('id');
+        return users[id] || { id };
       default:
         return null;
     }
