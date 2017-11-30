@@ -2,6 +2,7 @@ import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/p
 import '../../node_modules/@polymer/polymer/lib/elements/dom-repeat.js';
 import { currentItemsSelector } from '../reducers/lists.js';
 import { store } from '../store.js';
+import './hn-summary-element.js';
 
 export class HnListElement extends PolymerElement {
   static get template() {
@@ -9,20 +10,7 @@ export class HnListElement extends PolymerElement {
     <h1>List View</h1>
     <dom-repeat items="[[items]]">
       <template>
-        <div>
-          <span class="index">[[index]]</span>
-          <div class="title">
-            <a href$="[[item.url]]">[[item.title]]</a>
-            <span class="domain">([[item.domain]])</span>
-            <div class="info">
-              [[item.points]] points by
-              <a href$="[[_getItemUserHref(item)]]">[[item.user]]</a>
-              [[item.time_ago]]
-              <span class="spacer">|</span>
-              <a href="[[_getItemHref(item)]]">[[item.comments_count]] comments</a>
-            </div>
-          </div>
-        </div>
+        <hn-summary item="[[item]]"></hn-summary>
       </template>
     </dom-repeat>
     `;
@@ -48,13 +36,5 @@ export class HnListElement extends PolymerElement {
         items
       });
     }
-  }
-  
-  _getItemHref(item) {
-    return item && item.id ? `/item?id=${item.id}` : null;
-  }
-
-  _getItemUserHref(item) {
-    return item && item.user ? `/user?id=${item.user}` : null;
   }
 }
