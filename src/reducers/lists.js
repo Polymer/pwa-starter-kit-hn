@@ -4,7 +4,7 @@ import {
   FAIL_LIST
 } from '../actions/lists.js';
 import { createSelector } from '../../node_modules/reselect/src/index.js';
-import { splitPathnameSelector } from './location.js';
+import { splitPathnameSelector, pageParamSelector } from './location.js';
 import { itemsSelector } from './items.js';
 import { favoritesSelector } from './favorites.js';
 
@@ -26,9 +26,37 @@ const lists = (state = {}, action) => {
 const list = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_LIST:
+    case RECEIVE_LIST:
+    case FAIL_LIST:
       return {
         ...state,
         id: action.listId,
+        pages: pages(state.pages, action)
+      };
+    default:
+      return state;
+  }
+}
+
+const pages = (state = {}, action) => {
+  switch (action.type) {
+    case REQUEST_LIST:
+    case RECEIVE_LIST:
+    case FAIL_LIST:
+      return {
+        ...state,
+        [action.page]: page(state[action.page], action)
+      };
+    default:
+      return state;
+  }
+}
+
+const page = (state = {}, action) => {
+  switch (action.type) {
+    case REQUEST_LIST:
+      return {
+        ...state,
         failure: false,
         isFetching: true
       };
@@ -78,8 +106,13 @@ export const currentListSelector = createSelector(
 
 export const currentItemsSelector = createSelector(
   currentListSelector,
+  pageParamSelector,
   itemsSelector,
-  (list, items) => {
-    return list && list.items ? list.items.map(id => items[id] || { id }) : null;
+  (list, pageId, items) => {
+    const pages = list.pages;
+    if (!pages) return null;
+    const page = pages[pageId];
+    if (!page) return null;
+    return page.items ? page.items.map(id => items[id] || { id }) : null;
   }
 )
