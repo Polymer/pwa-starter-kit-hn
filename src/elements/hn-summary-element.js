@@ -42,11 +42,11 @@ export class HnSummaryElement extends PolymerElement {
   }
 
   _markItem() {
-    store.dispatch(addFavorite(this.item.id));
+    store.dispatch(addFavorite(this.item));
   }
 
   _unmarkItem() {
-    store.dispatch(removeFavorite(this.item.id));
+    store.dispatch(removeFavorite(this.item));
   }
 }
 

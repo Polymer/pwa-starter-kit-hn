@@ -36,6 +36,7 @@ export const pageSelector = createSelector(
       case 'ask':
       case 'show':
       case 'jobs':
+      case 'favorites':
         return 'list';
       case 'user':
       case 'item':

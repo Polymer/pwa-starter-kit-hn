@@ -15,7 +15,7 @@ openRequest.onsuccess = (event) => {
   objectStore.openCursor().onsuccess = function(event) {
     const cursor = event.target.result;
     if (cursor) {
-      store.dispatch(addFavorite(cursor.value.id));
+      store.dispatch(addFavorite(cursor.value));
       cursor.continue();
     }
   }

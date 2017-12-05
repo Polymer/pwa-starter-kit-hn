@@ -20,6 +20,7 @@ export class HnAppElement extends PolymerElement {
     <a href="/ask">ask</a>
     <a href="/show">show</a>
     <a href="/jobs">jobs</a>
+    <a href="/favorites">favorites</a>
     <div page$="[[page]]">
       <hn-list></hn-list>
       <hn-item></hn-item>

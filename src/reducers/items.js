@@ -3,6 +3,7 @@ import {
   RECEIVE_ITEM,
   FAIL_ITEM
 } from '../actions/items.js';
+import { ADD_FAVORITE } from '../actions/favorites.js';
 // HACK: Don't need to import list actions just for this.
 // import { RECEIVE_LIST } from '../actions/lists.js';
 import { createSelector } from '../../../node_modules/reselect/es/index.js';
@@ -23,6 +24,11 @@ const items = (state = {}, action) => {
         obj[item.id] = item;
         return obj;
       }, {...state});
+    case ADD_FAVORITE:
+      return {
+        ...state,
+        [action.item.id]: action.item
+      };
     default:
       return state;
   }

@@ -8,11 +8,11 @@ const favorites = (state = {}, action) => {
     case ADD_FAVORITE:
       return {
         ...state,
-        [action.itemId]: true
+        [action.item.id]: true
       };
     case REMOVE_FAVORITE:
       const result = { ...state };
-      delete result[action.itemId];
+      delete result[action.item.id];
       return result;
     default:
       return state;
@@ -20,3 +20,5 @@ const favorites = (state = {}, action) => {
 }
 
 export default favorites;
+
+export const favoritesSelector = state => state.favorites;

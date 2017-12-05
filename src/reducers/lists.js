@@ -6,6 +6,7 @@ import {
 import { createSelector } from '../../../node_modules/reselect/es/index.js';
 import { splitPathnameSelector } from './location.js';
 import { itemsSelector } from './items.js';
+import { favoritesSelector } from './favorites.js';
 
 const lists = (state = {}, action) => {
   switch (action.type) {
@@ -55,8 +56,9 @@ const listsSelector = state => state.lists;
 
 export const currentListSelector = createSelector(
   listsSelector,
+  favoritesSelector,
   splitPathnameSelector,
-  (lists, splitPath) => {
+  (lists, favorites, splitPath) => {
     switch (splitPath[0]) {
       case '':
         return lists['news'] || { id: 'news' };
@@ -66,6 +68,8 @@ export const currentListSelector = createSelector(
       case 'show':
       case 'jobs':
         return lists[splitPath[0]] || { id: splitPath[0] };
+      case 'favorites':
+        return { id: 'favorites', items: Object.keys(favorites).map(id => parseInt(id, 10)) };
       default:
         return null;
     }
@@ -76,6 +80,6 @@ export const currentItemsSelector = createSelector(
   currentListSelector,
   itemsSelector,
   (list, items) => {
-    return list && list.items ? list.items.map(id => items[id]) : null;
+    return list && list.items ? list.items.map(id => items[id] || { id }) : null;
   }
 )
