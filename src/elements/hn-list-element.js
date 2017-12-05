@@ -10,7 +10,7 @@ export class HnListElement extends PolymerElement {
     <h1>List View</h1>
     <dom-repeat items="[[items]]">
       <template>
-        <hn-summary item="[[item]]"></hn-summary>
+        <hn-summary item="[[item]]" is-favorite="[[_isFavorite(favorites, item)]]"></hn-summary>
       </template>
     </dom-repeat>
     `;
@@ -33,8 +33,13 @@ export class HnListElement extends PolymerElement {
     const items = currentItemsSelector(state);
     if (items) {
       this.setProperties({
+        favorites: state.favorites,
         items
       });
     }
+  }
+
+  _isFavorite(favorites, item) {
+    return Boolean(favorites && item && favorites[item.id]);
   }
 }

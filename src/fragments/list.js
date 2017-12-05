@@ -1,11 +1,10 @@
+import '../js/items.js';
 import lists from '../reducers/lists.js';
-import items from '../reducers/items.js';
 import { store } from '../store.js';
 import { HnListElement } from '../elements/hn-list-element.js';
 
 store.addReducers({
-  lists,
-  items
+  lists
 });
 
 // Define element only after adding the reducers it needs

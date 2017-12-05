@@ -1,4 +1,6 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
+import { store } from '../store.js';
+import { addFavorite, removeFavorite } from '../actions/favorites.js';
 
 export class HnSummaryElement extends PolymerElement {
   static get template() {
@@ -17,13 +19,17 @@ export class HnSummaryElement extends PolymerElement {
       [[item.time_ago]]
       <span class="spacer">|</span>
       <a href$="[[_getItemHref(item)]]">[[item.comments_count]] comments</a>
+      <button hidden$="[[isFavorite]]" on-click="_markItem">Mark</button>
+      <button hidden$="[[!isFavorite]]" on-click="_unmarkItem">Unmark</button>
     </div>
     `;
   }
   
   static get properties() {
     return {
-      item: Object
+      item: Object,
+
+      isFavorite: Boolean
     }
   }
   
@@ -33,6 +39,14 @@ export class HnSummaryElement extends PolymerElement {
 
   _getUserHref(item) {
     return item && item.user ? `/user?id=${item.user}` : null;
+  }
+
+  _markItem() {
+    store.dispatch(addFavorite(this.item.id));
+  }
+
+  _unmarkItem() {
+    store.dispatch(removeFavorite(this.item.id));
   }
 }
 

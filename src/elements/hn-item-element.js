@@ -9,7 +9,8 @@ export class HnItemElement extends PolymerElement {
   static get template() {
     return `
     <h1>Item View</h1>
-    <hn-summary item="[[item]]"></hn-summary>
+    <hn-summary item="[[item]]" is-favorite="[[_isFavorite(favorites, item)]]"></hn-summary>
+    <div hidden$="[[!item.content]]" inner-h-t-m-l="[[item.content]]"></div>
     <dom-repeat items="[[item.comments]]" as="comment">
       <template>
         <hn-comment id$="[[comment.id]]" comment="[[comment]]" item-id="[[item.id]]"></hn-comment>
@@ -35,8 +36,13 @@ export class HnItemElement extends PolymerElement {
     const item = currentItemSelector(state);
     if (item) {
       this.setProperties({
+        favorites: state.favorites,
         item
       });
     }
+  }
+
+  _isFavorite(favorites, item) {
+    return Boolean(favorites && item && favorites[item.id]);
   }
 }
