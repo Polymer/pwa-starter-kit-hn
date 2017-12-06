@@ -1,5 +1,6 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
-import { store } from '../store.js';
+import { store } from '../modules/store.js';
+import '../modules/router.js';
 import { pageSelector } from '../reducers/location.js';
 
 export class HnAppElement extends PolymerElement {
@@ -47,3 +48,5 @@ export class HnAppElement extends PolymerElement {
     });
   }
 }
+
+customElements.define('hn-app', HnAppElement);

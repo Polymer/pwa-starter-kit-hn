@@ -1,7 +1,8 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
 import '../../node_modules/@polymer/polymer/lib/elements/dom-repeat.js';
 import { currentItemSelector } from '../reducers/items.js';
-import { store } from '../store.js';
+import { store } from '../modules/store.js';
+import '../modules/items.js';
 import './hn-summary-element.js';
 import './hn-comment-element.js';
 import { fetchItem } from '../actions/items.js';
@@ -52,3 +53,5 @@ export class HnItemElement extends PolymerElement {
     store.dispatch(fetchItem(this.item));
   }
 }
+
+customElements.define('hn-item', HnItemElement);

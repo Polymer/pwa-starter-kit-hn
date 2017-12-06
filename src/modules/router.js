@@ -1,6 +1,6 @@
 import { updateLocation, pushState } from '../actions/location.js';
 import location from '../reducers/location.js';
-import { store } from '../store.js';
+import { store } from './store.js';
 
 store.addReducers({
   location,

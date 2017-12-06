@@ -1,7 +1,9 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
 import '../../node_modules/@polymer/polymer/lib/elements/dom-repeat.js';
 import { currentItemsSelector, currentListSelector } from '../reducers/lists.js';
-import { store } from '../store.js';
+import { store } from '../modules/store.js';
+import '../modules/lists.js';
+import '../modules/items.js';
 import './hn-summary-element.js';
 import { fetchList } from '../actions/lists.js';
 
@@ -55,3 +57,5 @@ export class HnListElement extends PolymerElement {
     store.dispatch(fetchList(this.list));
   }
 }
+
+customElements.define('hn-list', HnListElement);

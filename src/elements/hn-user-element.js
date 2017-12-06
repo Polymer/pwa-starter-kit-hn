@@ -1,6 +1,7 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
 import { currentUserSelector } from '../reducers/users.js';
-import { store } from '../store.js';
+import { store } from '../modules/store.js';
+import '../modules/users.js';
 import { fetchUser } from '../actions/users.js';
 
 export class HnUserElement extends PolymerElement {
@@ -47,3 +48,5 @@ export class HnUserElement extends PolymerElement {
     store.dispatch(fetchUser(this.user));
   }
 }
+
+customElements.define('hn-user', HnUserElement);
