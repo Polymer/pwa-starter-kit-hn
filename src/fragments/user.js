@@ -10,4 +10,4 @@ store.addReducers({
 customElements.define('hn-user', HnUserElement);
 
 export { currentUserSelector } from '../reducers/users.js';
-export { fetchUser } from '../actions/users.js';
+export { fetchUserIfNeeded } from '../actions/users.js';

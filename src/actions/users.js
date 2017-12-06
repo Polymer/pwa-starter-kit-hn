@@ -3,12 +3,16 @@ export const RECEIVE_USER = 'RECEIVE_USER';
 export const FAIL_USER = 'FAIL_USER';
 
 export const fetchUser = (user) => (dispatch) => {
+  dispatch(requestUser(user.id));
+  fetch(`https://node-hnapi.herokuapp.com/user/${user.id}`)
+    .then(res => res.json())
+    .then(data => dispatch(receiveUser(user.id, data)))
+    .catch(() => dispatch(failUser(user.id)));
+};
+
+export const fetchUserIfNeeded = (user) => (dispatch) => {
   if (user && !user.created_time && !user.isFetching) {
-    dispatch(requestUser(user.id));
-    return fetch(`https://node-hnapi.herokuapp.com/user/${user.id}`)
-      .then(res => res.json())
-      .then(data => dispatch(receiveUser(user.id, data)))
-      .catch(() => dispatch(failUser(user.id)));
+    dispatch(fetchUser(user));
   }
 };
 

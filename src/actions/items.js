@@ -3,12 +3,16 @@ export const RECEIVE_ITEM = 'RECEIVE_ITEM';
 export const FAIL_ITEM = 'FAIL_ITEM';
 
 export const fetchItem = (item) => (dispatch) => {
+  dispatch(requestItem(item.id));
+  fetch(`https://node-hnapi.herokuapp.com/item/${item.id}`)
+    .then(res => res.json())
+    .then(data => dispatch(receiveItem(item.id, data)))
+    .catch(() => dispatch(failItem(item.id)));
+};
+
+export const fetchItemIfNeeded = (item) => (dispatch) => {
   if (item && !item.comments && !item.isFetching) {
-    dispatch(requestItem(item.id));
-    return fetch(`https://node-hnapi.herokuapp.com/item/${item.id}`)
-      .then(res => res.json())
-      .then(data => dispatch(receiveItem(item.id, data)))
-      .catch(() => dispatch(failItem(item.id)));
+    dispatch(fetchItem(item));
   }
 };
 

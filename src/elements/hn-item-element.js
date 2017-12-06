@@ -4,11 +4,13 @@ import { currentItemSelector } from '../reducers/items.js';
 import { store } from '../store.js';
 import './hn-summary-element.js';
 import './hn-comment-element.js';
+import { fetchItem } from '../actions/items.js';
 
 export class HnItemElement extends PolymerElement {
   static get template() {
     return `
     <h1>Item View</h1>
+    <button on-click="_reload">Reload</button>
     <hn-summary item="[[item]]" is-favorite="[[_isFavorite(favorites, item)]]"></hn-summary>
     <div hidden$="[[!item.content]]" inner-h-t-m-l="[[item.content]]"></div>
     <dom-repeat items="[[item.comments]]" as="comment">
@@ -44,5 +46,9 @@ export class HnItemElement extends PolymerElement {
 
   _isFavorite(favorites, item) {
     return Boolean(favorites && item && favorites[item.id]);
+  }
+  
+  _reload() {
+    store.dispatch(fetchItem(this.item));
   }
 }

@@ -13,17 +13,17 @@ export const updateLocation = (location) => (dispatch, getState) => {
   switch (pageSelector(getState())) {
     case 'list':
       import('../fragments/list.js').then(module => {
-        dispatch(module.fetchList(module.currentListSelector(getState())));
+        dispatch(module.fetchListIfNeeded(module.currentListSelector(getState())));
       });
       break;
     case 'user':
       import('../fragments/user.js').then(module => {
-        dispatch(module.fetchUser(module.currentUserSelector(getState())));
+        dispatch(module.fetchUserIfNeeded(module.currentUserSelector(getState())));
       });
       break;
     case 'item':
       import('../fragments/item.js').then(module => {
-        dispatch(module.fetchItem(module.currentItemSelector(getState())));
+        dispatch(module.fetchItemIfNeeded(module.currentItemSelector(getState())));
       });
       break;
   }

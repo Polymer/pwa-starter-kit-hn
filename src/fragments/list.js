@@ -11,4 +11,4 @@ store.addReducers({
 customElements.define('hn-list', HnListElement);
 
 export { currentListSelector } from '../reducers/lists.js';
-export { fetchList } from '../actions/lists.js';
+export { fetchListIfNeeded } from '../actions/lists.js';

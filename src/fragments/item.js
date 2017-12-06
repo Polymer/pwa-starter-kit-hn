@@ -5,4 +5,4 @@ import { HnItemElement } from '../elements/hn-item-element.js';
 customElements.define('hn-item', HnItemElement);
 
 export { currentItemSelector } from '../reducers/items.js';
-export { fetchItem } from '../actions/items.js';
+export { fetchItemIfNeeded } from '../actions/items.js';

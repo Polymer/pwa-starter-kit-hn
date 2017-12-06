@@ -1,11 +1,13 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
 import { currentUserSelector } from '../reducers/users.js';
 import { store } from '../store.js';
+import { fetchUser } from '../actions/users.js';
 
 export class HnUserElement extends PolymerElement {
   static get template() {
     return `
     <h1>User View</h1>
+    <button on-click="_reload">Reload</button>
     <table>
       <tr>
         <td>User:</td><td>[[user.id]]</td>
@@ -39,5 +41,9 @@ export class HnUserElement extends PolymerElement {
         user
       });
     }
+  }
+  
+  _reload() {
+    store.dispatch(fetchUser(this.user));
   }
 }
