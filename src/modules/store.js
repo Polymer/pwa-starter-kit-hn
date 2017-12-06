@@ -1,8 +1,8 @@
-import createStore from '../../node_modules/@0xcda7a/redux-es6/es/createStore.js';
-import applyMiddleware from '../../node_modules/@0xcda7a/redux-es6/es/applyMiddleware.js';
-import origCompose from '../../node_modules/@0xcda7a/redux-es6/es/compose.js';
-import combineReducers from '../../node_modules/@0xcda7a/redux-es6/es/combineReducers.js';
-import thunk from '../../node_modules/redux-thunk/es/index.js';
+import createStore from '../../node_modules/@0xcda7a/redux-es6/src/createStore.js';
+import applyMiddleware from '../../node_modules/@0xcda7a/redux-es6/src/applyMiddleware.js';
+import origCompose from '../../node_modules/@0xcda7a/redux-es6/src/compose.js';
+import combineReducers from '../../node_modules/@0xcda7a/redux-es6/src/combineReducers.js';
+import thunk from '../../node_modules/redux-thunk/src/index.js';
 
 const compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || origCompose;
 
