@@ -13,7 +13,7 @@ Client side routing is done by the src/modules/router.js module, which intercept
 
 ## Lazy-loading
 
-Dynamically-loaded elements, actions, and selectors files are grouped by fragments. The app.js fragment is loaded by index.html while other fragments are loaded as a side-effect by the `updateLocation` action in src/actions/location.js.
+Dynamically-loaded elements are loaded as a side-effect by the `updateLocation` action in src/actions/location.js. These elements may export actions and selectors that are asynchronously used by the `updateLocation` action for a particular page.
 
 ## File structure
 
@@ -22,7 +22,5 @@ Dynamically-loaded elements, actions, and selectors files are grouped by fragmen
   * Like [one of the Redux examples](https://github.com/reactjs/redux/tree/master/examples/real-world/src), actions and reducers are in their own directories
 * elements/
   * Custom element definitions
-* fragments/
-  * Lazy-loaded fragments - see "Lazy-loading" above
 * modules/
   * Code depended on by elements but not necessarily related to that element definition. A module may be depended on by multiple elements.

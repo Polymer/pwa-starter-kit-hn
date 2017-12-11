@@ -5,7 +5,7 @@ import { store } from '../modules/store.js';
 import '../modules/lists.js';
 import '../modules/items.js';
 import './hn-summary-element.js';
-import { fetchList } from '../actions/lists.js';
+import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 
 export class HnListElement extends PolymerElement {
   static get template() {
@@ -59,3 +59,5 @@ export class HnListElement extends PolymerElement {
 }
 
 customElements.define('hn-list', HnListElement);
+
+export { currentListSelector, fetchListIfNeeded };

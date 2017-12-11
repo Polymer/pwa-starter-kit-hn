@@ -2,7 +2,7 @@ import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/p
 import { currentUserSelector } from '../reducers/users.js';
 import { store } from '../modules/store.js';
 import '../modules/users.js';
-import { fetchUser } from '../actions/users.js';
+import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
 
 export class HnUserElement extends PolymerElement {
   static get template() {
@@ -50,3 +50,5 @@ export class HnUserElement extends PolymerElement {
 }
 
 customElements.define('hn-user', HnUserElement);
+
+export { currentUserSelector, fetchUserIfNeeded };

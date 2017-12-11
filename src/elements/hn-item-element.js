@@ -5,7 +5,7 @@ import { store } from '../modules/store.js';
 import '../modules/items.js';
 import './hn-summary-element.js';
 import './hn-comment-element.js';
-import { fetchItem } from '../actions/items.js';
+import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
 
 export class HnItemElement extends PolymerElement {
   static get template() {
@@ -55,3 +55,5 @@ export class HnItemElement extends PolymerElement {
 }
 
 customElements.define('hn-item', HnItemElement);
+
+export { currentItemSelector, fetchItemIfNeeded };
