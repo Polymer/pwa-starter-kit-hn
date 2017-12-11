@@ -1,4 +1,5 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
+import '../../node_modules/@polymer/polymer/lib/elements/dom-if.js';
 import { currentUserSelector } from '../reducers/users.js';
 import { store } from '../modules/store.js';
 import '../modules/users.js';
@@ -9,7 +10,7 @@ export class HnUserElement extends PolymerElement {
     return `
     <h1>User View</h1>
     <button on-click="_reload">Reload</button>
-    <table>
+    <table hidden$="[[user.failure]]">
       <tr>
         <td>User:</td><td>[[user.id]]</td>
       </tr>
@@ -19,7 +20,12 @@ export class HnUserElement extends PolymerElement {
       <tr>
         <td>Karma:</td><td>[[user.karma]]</td>
       </tr>
-    </table>`;
+    </table>
+    <dom-if if="[[user.failure]]">
+      <template>
+        <p>User not found</p>
+      </template>
+    </dom-if>`;
   }
   
   static get properties() {

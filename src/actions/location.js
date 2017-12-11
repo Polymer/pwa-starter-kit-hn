@@ -26,6 +26,9 @@ export const updateLocation = (location) => (dispatch, getState) => {
         dispatch(module.fetchItemIfNeeded(module.currentItemSelector(getState())));
       });
       break;
+    case 'invalid-page':
+      import('../elements/hn-invalid-page-element.js');
+      break;
   }
 };
 

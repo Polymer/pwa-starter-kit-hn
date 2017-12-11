@@ -12,7 +12,8 @@ export class HnAppElement extends PolymerElement {
       }
       [page=list] hn-list,
       [page=item] hn-item,
-      [page=user] hn-user {
+      [page=user] hn-user,
+      [page=invalid-page] hn-invalid-page {
         display: block;
       }
     </style>
@@ -26,6 +27,7 @@ export class HnAppElement extends PolymerElement {
       <hn-list></hn-list>
       <hn-item></hn-item>
       <hn-user></hn-user>
+      <hn-invalid-page></hn-invalid-page>
     </div>`;
   }
   

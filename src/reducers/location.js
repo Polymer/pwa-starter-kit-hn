@@ -42,7 +42,7 @@ export const pageSelector = createSelector(
       case 'item':
         return splitPath[0];
       default:
-        return null;
+        return 'invalid-page';
     }
   }
 );

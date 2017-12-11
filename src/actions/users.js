@@ -6,7 +6,12 @@ export const fetchUser = (user) => (dispatch) => {
   dispatch(requestUser(user.id));
   fetch(`https://node-hnapi.herokuapp.com/user/${user.id}`)
     .then(res => res.json())
-    .then(data => dispatch(receiveUser(user.id, data)))
+    .then(data => {
+      if (data.error) {
+        throw data.error;
+      }
+      dispatch(receiveUser(user.id, data))
+    })
     .catch(() => dispatch(failUser(user.id)));
 };
 
@@ -31,7 +36,7 @@ const receiveUser = (userId, data) => {
   };
 };
 
-const failuser = (userId) => {
+const failUser = (userId) => {
   return {
     type: FAIL_USER,
     userId
