@@ -6,7 +6,7 @@ import {
 import { ADD_FAVORITE } from '../actions/favorites.js';
 // HACK: Don't need to import list actions just for this.
 // import { RECEIVE_LIST } from '../actions/lists.js';
-import { createSelector } from '../../../node_modules/reselect/src/index.js';
+import { createSelector } from '../../node_modules/reselect/src/index.js';
 import { splitPathnameSelector, urlSearchParamsSelector } from './location.js';
 
 const items = (state = {}, action) => {

@@ -3,7 +3,7 @@ import {
   RECEIVE_USER,
   FAIL_USER
 } from '../actions/users.js';
-import { createSelector } from '../../../node_modules/reselect/src/index.js';
+import { createSelector } from '../../node_modules/reselect/src/index.js';
 import { splitPathnameSelector, urlSearchParamsSelector } from './location.js';
 
 const users = (state = {}, action) => {

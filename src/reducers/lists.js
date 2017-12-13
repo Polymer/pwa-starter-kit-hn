@@ -3,7 +3,7 @@ import {
   RECEIVE_LIST,
   FAIL_LIST
 } from '../actions/lists.js';
-import { createSelector } from '../../../node_modules/reselect/src/index.js';
+import { createSelector } from '../../node_modules/reselect/src/index.js';
 import { splitPathnameSelector } from './location.js';
 import { itemsSelector } from './items.js';
 import { favoritesSelector } from './favorites.js';
