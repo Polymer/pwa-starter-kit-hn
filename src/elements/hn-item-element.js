@@ -1,12 +1,20 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
 import '../../node_modules/@polymer/polymer/lib/elements/dom-if.js';
 import '../../node_modules/@polymer/polymer/lib/elements/dom-repeat.js';
-import { currentItemSelector } from '../reducers/items.js';
-import { store } from '../modules/store.js';
-import '../modules/items.js';
+import items, { currentItemSelector } from '../reducers/items.js';
+import favorites from '../reducers/favorites.js';
+import { store } from '../store.js';
 import './hn-summary-element.js';
 import './hn-comment-element.js';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
+import { loadFavorites } from '../actions/favorites.js';
+
+store.addReducers({
+  favorites,
+  items
+});
+
+store.dispatch(loadFavorites());
 
 export class HnItemElement extends PolymerElement {
   static get template() {
@@ -37,14 +45,14 @@ export class HnItemElement extends PolymerElement {
   
   constructor() {
     super();
-    store.subscribe(() => this.update());
-    this.update();
+    store.subscribe(() => this.update(store.getState()));
+    this.update(store.getState());
   }
 
-  update() {
-    const state = store.getState();
+  update(state) {
     const item = currentItemSelector(state);
     if (item) {
+      document.title = item.title;
       this.setProperties({
         favorites: state.favorites,
         item

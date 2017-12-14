@@ -1,7 +1,34 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
-import { store } from '../modules/store.js';
-import '../modules/router.js';
-import { pageSelector } from '../reducers/location.js';
+import location, { pageSelector } from '../reducers/location.js';
+import { store } from '../store.js';
+import { updateLocation, pushState } from '../actions/location.js';
+
+store.addReducers({
+  location,
+});
+
+document.body.addEventListener('click', e => {
+  if ((e.button !== 0) || (e.metaKey || e.ctrlKey)) {
+    return;
+  }
+  let origin;
+  if (window.location.origin) {
+    origin = window.location.origin;
+  } else {
+    origin = window.location.protocol + '//' + window.location.host;
+  }
+  let anchor = e.composedPath().filter(n=>n.localName=='a')[0];
+  if (anchor && anchor.href.indexOf(origin) === 0) {
+    e.preventDefault();
+    store.dispatch(pushState(anchor.href));
+  }
+});
+
+function handleUrlChange() {
+  store.dispatch(updateLocation(window.location));
+}
+window.addEventListener('popstate', handleUrlChange);
+handleUrlChange();
 
 export class HnAppElement extends PolymerElement {
   static get template() {

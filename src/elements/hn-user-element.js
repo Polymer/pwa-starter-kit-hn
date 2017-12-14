@@ -1,9 +1,12 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
 import '../../node_modules/@polymer/polymer/lib/elements/dom-if.js';
-import { currentUserSelector } from '../reducers/users.js';
-import { store } from '../modules/store.js';
-import '../modules/users.js';
+import users, { currentUserSelector } from '../reducers/users.js';
+import { store } from '../store.js';
 import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
+
+store.addReducers({
+  users,
+});
 
 export class HnUserElement extends PolymerElement {
   static get template() {
@@ -44,6 +47,7 @@ export class HnUserElement extends PolymerElement {
     const state = store.getState();
     const user = currentUserSelector(state);
     if (user) {
+      document.title = user.id;
       this.setProperties({
         user
       });

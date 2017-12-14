@@ -57,7 +57,11 @@ export const deleteFavorite = (item) => (dispatch) => {
   });
 };
 
+let loaded = false;
+
 export const loadFavorites = () => (dispatch) => {
+  if (loaded) return;
+  loaded = true;
   dbPromise.then((db) => {
     const objectStore = db.transaction('favorites').objectStore('favorites');
     objectStore.openCursor().onsuccess = function(event) {

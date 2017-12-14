@@ -1,11 +1,20 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
 import '../../node_modules/@polymer/polymer/lib/elements/dom-repeat.js';
-import { currentItemsSelector, currentListSelector } from '../reducers/lists.js';
-import { store } from '../modules/store.js';
-import '../modules/lists.js';
-import '../modules/items.js';
+import lists, { currentItemsSelector, currentListSelector } from '../reducers/lists.js';
+import items from '../reducers/items.js';
+import favorites from '../reducers/favorites.js';
+import { store } from '../store.js';
 import './hn-summary-element.js';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
+import { loadFavorites } from '../actions/favorites.js';
+
+store.addReducers({
+  lists,
+  favorites,
+  items
+});
+
+store.dispatch(loadFavorites());
 
 export class HnListElement extends PolymerElement {
   static get template() {
@@ -39,13 +48,17 @@ export class HnListElement extends PolymerElement {
   update() {
     const state = store.getState();
     const list = currentListSelector(state);
-    const items = currentItemsSelector(state);
-    if (items) {
-      this.setProperties({
+    if (list) {
+      document.title = list.id;
+      const props = {
         favorites: state.favorites,
-        list,
-        items
-      });
+        list
+      };
+      const items = currentItemsSelector(state);
+      if (items) {
+        props.items = items;
+      }
+      this.setProperties(props);
     }
   }
 

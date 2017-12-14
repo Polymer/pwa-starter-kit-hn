@@ -1,5 +1,5 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
-import { store } from '../modules/store.js';
+import { store } from '../store.js';
 import { saveFavorite, deleteFavorite } from '../actions/favorites.js';
 
 export class HnSummaryElement extends PolymerElement {
