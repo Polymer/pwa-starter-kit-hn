@@ -3,12 +3,13 @@ import '../../node_modules/@polymer/polymer/lib/elements/dom-if.js';
 import users, { currentUserSelector } from '../reducers/users.js';
 import { store } from '../store.js';
 import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
+import { connect } from '../../lib/connect-mixin.js';
 
 store.addReducers({
   users,
 });
 
-export class HnUserElement extends PolymerElement {
+export class HnUserElement extends connect(store)(PolymerElement) {
   static get template() {
     return `
     <h1>User View</h1>
@@ -36,15 +37,8 @@ export class HnUserElement extends PolymerElement {
       user: Object
     }
   }
-  
-  constructor() {
-    super();
-    store.subscribe(() => this.update());
-    this.update();
-  }
 
-  update() {
-    const state = store.getState();
+  update(state) {
     const user = currentUserSelector(state);
     if (user) {
       document.title = user.id;

@@ -7,6 +7,7 @@ import { store } from '../store.js';
 import './hn-summary.js';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
+import { connect } from '../../lib/connect-mixin.js';
 
 store.addReducers({
   lists,
@@ -16,7 +17,7 @@ store.addReducers({
 
 store.dispatch(loadFavorites());
 
-export class HnListElement extends PolymerElement {
+export class HnListElement extends connect(store)(PolymerElement) {
   static get template() {
     return `
     <h1>List View</h1>
@@ -38,15 +39,8 @@ export class HnListElement extends PolymerElement {
       items: Array
     }
   }
-  
-  constructor() {
-    super();
-    store.subscribe(() => this.update());
-    this.update();
-  }
 
-  update() {
-    const state = store.getState();
+  update(state) {
     const list = currentListSelector(state);
     if (list) {
       document.title = list.id;

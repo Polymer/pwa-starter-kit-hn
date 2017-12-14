@@ -8,6 +8,7 @@ import './hn-summary.js';
 import './hn-comment.js';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
 import { loadFavorites } from '../actions/favorites.js';
+import { connect } from '../../lib/connect-mixin.js';
 
 store.addReducers({
   favorites,
@@ -16,7 +17,7 @@ store.addReducers({
 
 store.dispatch(loadFavorites());
 
-export class HnItemElement extends PolymerElement {
+export class HnItemElement extends connect(store)(PolymerElement) {
   static get template() {
     return `
     <h1>Item View</h1>
@@ -41,12 +42,6 @@ export class HnItemElement extends PolymerElement {
     return {
       item: Object
     }
-  }
-  
-  constructor() {
-    super();
-    store.subscribe(() => this.update(store.getState()));
-    this.update(store.getState());
   }
 
   update(state) {

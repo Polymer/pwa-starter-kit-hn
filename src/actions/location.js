@@ -31,13 +31,3 @@ export const updateLocation = (location) => (dispatch, getState) => {
       break;
   }
 };
-
-export const pushState = (href) => (dispatch) => {
-  window.history.pushState({}, '', href);
-  dispatch(updateLocation(window.location));
-};
-
-export const replaceState = (href) => (dispatch) => {
-  window.history.replaceState({}, '', href);
-  dispatch(updateLocation(window.location));
-};
