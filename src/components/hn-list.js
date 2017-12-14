@@ -4,7 +4,7 @@ import lists, { currentItemsSelector, currentListSelector } from '../reducers/li
 import items from '../reducers/items.js';
 import favorites from '../reducers/favorites.js';
 import { store } from '../store.js';
-import './hn-summary-element.js';
+import './hn-summary.js';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
 
