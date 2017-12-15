@@ -4,6 +4,7 @@ import users, { currentUserSelector } from '../reducers/users.js';
 import { store } from '../store.js';
 import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
 import { connect } from '../../lib/connect-mixin.js';
+import { sharedStyles } from './shared-styles.js';
 
 store.addReducers({
   users,
@@ -12,7 +13,12 @@ store.addReducers({
 export class HnUserElement extends connect(store)(PolymerElement) {
   static get template() {
     return `
-    <h1>User View</h1>
+    ${sharedStyles}
+    <style>
+      table {
+        margin: 1em 0;
+      }
+    </style>
     <button on-click="_reload">Reload</button>
     <table hidden$="[[user.failure]]">
       <tr>

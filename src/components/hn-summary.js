@@ -1,10 +1,12 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
 import { store } from '../store.js';
 import { saveFavorite, deleteFavorite } from '../actions/favorites.js';
+import { sharedStyles } from './shared-styles.js';
 
 export class HnSummaryElement extends PolymerElement {
   static get template() {
     return `
+    ${sharedStyles}
     <style>
       :host {
         display: block;

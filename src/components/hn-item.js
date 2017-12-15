@@ -9,6 +9,7 @@ import './hn-comment.js';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
 import { loadFavorites } from '../actions/favorites.js';
 import { connect } from '../../lib/connect-mixin.js';
+import { sharedStyles } from './shared-styles.js';
 
 store.addReducers({
   favorites,
@@ -20,7 +21,7 @@ store.dispatch(loadFavorites());
 export class HnItemElement extends connect(store)(PolymerElement) {
   static get template() {
     return `
-    <h1>Item View</h1>
+    ${sharedStyles}
     <button on-click="_reload">Reload</button>
     <div hidden$="[[item.failure]]">
       <hn-summary item="[[item]]" is-favorite="[[_isFavorite(favorites, item)]]"></hn-summary>

@@ -4,6 +4,7 @@ import { store } from '../store.js';
 import { updateLocation } from '../actions/location.js';
 import { connect } from '../../lib/connect-mixin.js';
 import { installRouter } from '../../lib/router.js';
+import { sharedStyles } from './shared-styles.js';
 
 store.addReducers({
   location,
@@ -14,7 +15,16 @@ installRouter(() => store.dispatch(updateLocation(window.location)));
 export class HnAppElement extends connect(store)(PolymerElement) {
   static get template() {
     return `
+    ${sharedStyles}
     <style>
+      header {
+        margin: 1em 0;
+      }
+      header a {
+        padding: 4px;
+        border: 2px solid;
+        border-bottom: none;
+      }
       [page] > * {
         display: none;
       }
@@ -25,12 +35,14 @@ export class HnAppElement extends connect(store)(PolymerElement) {
         display: block;
       }
     </style>
-    <a href="/">top</a>
-    <a href="/new">new</a>
-    <a href="/ask">ask</a>
-    <a href="/show">show</a>
-    <a href="/jobs">jobs</a>
-    <a href="/favorites">favorites</a>
+    <header>
+      <a href="/">top</a>
+      <a href="/new">new</a>
+      <a href="/ask">ask</a>
+      <a href="/show">show</a>
+      <a href="/jobs">jobs</a>
+      <a href="/favorites">favorites</a>
+    </header>
     <div page$="[[page]]">
       <hn-list></hn-list>
       <hn-item></hn-item>
