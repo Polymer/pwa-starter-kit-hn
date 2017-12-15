@@ -1,202 +1,6 @@
-webpackJsonp([2],{
+webpackJsonp([0],{
 
-/***/ 29:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_polymer_polymer_polymer_element_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_polymer_polymer_lib_elements_dom_if_js__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reducers_users_js__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_store_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_users_js__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_users_js__ = __webpack_require__(47);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "currentUserSelector", function() { return __WEBPACK_IMPORTED_MODULE_2__reducers_users_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserIfNeeded", function() { return __WEBPACK_IMPORTED_MODULE_5__actions_users_js__["e"]; });
-
-
-
-
-
-
-
-class HnUserElement extends __WEBPACK_IMPORTED_MODULE_0__node_modules_polymer_polymer_polymer_element_js__["a" /* Element */] {
-  static get template() {
-    return `
-    <h1>User View</h1>
-    <button on-click="_reload">Reload</button>
-    <table hidden$="[[user.failure]]">
-      <tr>
-        <td>User:</td><td>[[user.id]]</td>
-      </tr>
-      <tr>
-        <td>Created:</td><td>[[user.created]]</td>
-      </tr>
-      <tr>
-        <td>Karma:</td><td>[[user.karma]]</td>
-      </tr>
-    </table>
-    <dom-if if="[[user.failure]]">
-      <template>
-        <p>User not found</p>
-      </template>
-    </dom-if>`;
-  }
-
-  static get properties() {
-    return {
-      user: Object
-    };
-  }
-
-  constructor() {
-    super();
-    __WEBPACK_IMPORTED_MODULE_3__modules_store_js__["a" /* store */].subscribe(() => this.update());
-    this.update();
-  }
-
-  update() {
-    const state = __WEBPACK_IMPORTED_MODULE_3__modules_store_js__["a" /* store */].getState();
-    const user = Object(__WEBPACK_IMPORTED_MODULE_2__reducers_users_js__["a" /* currentUserSelector */])(state);
-    if (user) {
-      this.setProperties({
-        user
-      });
-    }
-  }
-
-  _reload() {
-    __WEBPACK_IMPORTED_MODULE_3__modules_store_js__["a" /* store */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_users_js__["d" /* fetchUser */])(this.user));
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["HnUserElement"] = HnUserElement;
-
-
-customElements.define('hn-user', HnUserElement);
-
-
-
-/***/ }),
-
-/***/ 33:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_mixin_js__ = __webpack_require__(2);
-
-
-// Common implementation for mixin & behavior
-function mutablePropertyChange(inst, property, value, old, mutableData) {
-  let isObject;
-  if (mutableData) {
-    isObject = typeof value === 'object' && value !== null;
-    // Pull `old` for Objects from temp cache, but treat `null` as a primitive
-    if (isObject) {
-      old = inst.__dataTemp[property];
-    }
-  }
-  // Strict equality check, but return false for NaN===NaN
-  let shouldChange = old !== value && (old === old || value === value);
-  // Objects are stored in temporary cache (cleared at end of
-  // turn), which is used for dirty-checking
-  if (isObject && shouldChange) {
-    inst.__dataTemp[property] = value;
-  }
-  return shouldChange;
-}
-
-const MutableData = Object(__WEBPACK_IMPORTED_MODULE_0__utils_mixin_js__["a" /* dedupingMixin */])(superClass => {
-
-  /**
-   * @polymer
-   * @mixinClass
-   * @implements {Polymer_MutableData}
-   */
-  class MutableData extends superClass {
-    /**
-     * Overrides `Polymer.PropertyEffects` to provide option for skipping
-     * strict equality checking for Objects and Arrays.
-     *
-     * This method pulls the value to dirty check against from the `__dataTemp`
-     * cache (rather than the normal `__data` cache) for Objects.  Since the temp
-     * cache is cleared at the end of a turn, this implementation allows
-     * side-effects of deep object changes to be processed by re-setting the
-     * same object (using the temp cache as an in-turn backstop to prevent
-     * cycles due to 2-way notification).
-     *
-     * @param {string} property Property name
-     * @param {*} value New property value
-     * @param {*} old Previous property value
-     * @return {boolean} Whether the property should be considered a change
-     * @protected
-     */
-    _shouldPropertyChange(property, value, old) {
-      return mutablePropertyChange(this, property, value, old, true);
-    }
-
-  }
-  /** @type {boolean} */
-  MutableData.prototype.mutableData = false;
-
-  return MutableData;
-});
-/* harmony export (immutable) */ __webpack_exports__["a"] = MutableData;
-
-
-const OptionalMutableData = Object(__WEBPACK_IMPORTED_MODULE_0__utils_mixin_js__["a" /* dedupingMixin */])(superClass => {
-
-  /**
-   * @mixinClass
-   * @polymer
-   * @implements {Polymer_OptionalMutableData}
-   */
-  class OptionalMutableData extends superClass {
-
-    static get properties() {
-      return {
-        /**
-         * Instance-level flag for configuring the dirty-checking strategy
-         * for this element.  When true, Objects and Arrays will skip dirty
-         * checking, otherwise strict equality checking will be used.
-         */
-        mutableData: Boolean
-      };
-    }
-
-    /**
-     * Overrides `Polymer.PropertyEffects` to provide option for skipping
-     * strict equality checking for Objects and Arrays.
-     *
-     * When `this.mutableData` is true on this instance, this method
-     * pulls the value to dirty check against from the `__dataTemp` cache
-     * (rather than the normal `__data` cache) for Objects.  Since the temp
-     * cache is cleared at the end of a turn, this implementation allows
-     * side-effects of deep object changes to be processed by re-setting the
-     * same object (using the temp cache as an in-turn backstop to prevent
-     * cycles due to 2-way notification).
-     *
-     * @param {string} property Property name
-     * @param {*} value New property value
-     * @param {*} old Previous property value
-     * @return {boolean} Whether the property should be considered a change
-     * @protected
-     */
-    _shouldPropertyChange(property, value, old) {
-      return mutablePropertyChange(this, property, value, old, this.mutableData);
-    }
-  }
-
-  return OptionalMutableData;
-});
-/* harmony export (immutable) */ __webpack_exports__["b"] = OptionalMutableData;
-
-
-// Export for use by legacy behavior
-MutableData._mutablePropertyChange = mutablePropertyChange;
-
-/***/ }),
-
-/***/ 34:
+/***/ 38:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -204,8 +8,8 @@ MutableData._mutablePropertyChange = mutablePropertyChange;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TemplateInstanceBase; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_property_effects_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_mutable_data_js__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_property_effects_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_mutable_data_js__ = __webpack_require__(39);
 
 
 
@@ -705,7 +509,125 @@ const Templatize = {
 
 /***/ }),
 
-/***/ 35:
+/***/ 39:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_mixin_js__ = __webpack_require__(2);
+
+
+// Common implementation for mixin & behavior
+function mutablePropertyChange(inst, property, value, old, mutableData) {
+  let isObject;
+  if (mutableData) {
+    isObject = typeof value === 'object' && value !== null;
+    // Pull `old` for Objects from temp cache, but treat `null` as a primitive
+    if (isObject) {
+      old = inst.__dataTemp[property];
+    }
+  }
+  // Strict equality check, but return false for NaN===NaN
+  let shouldChange = old !== value && (old === old || value === value);
+  // Objects are stored in temporary cache (cleared at end of
+  // turn), which is used for dirty-checking
+  if (isObject && shouldChange) {
+    inst.__dataTemp[property] = value;
+  }
+  return shouldChange;
+}
+
+const MutableData = Object(__WEBPACK_IMPORTED_MODULE_0__utils_mixin_js__["a" /* dedupingMixin */])(superClass => {
+
+  /**
+   * @polymer
+   * @mixinClass
+   * @implements {Polymer_MutableData}
+   */
+  class MutableData extends superClass {
+    /**
+     * Overrides `Polymer.PropertyEffects` to provide option for skipping
+     * strict equality checking for Objects and Arrays.
+     *
+     * This method pulls the value to dirty check against from the `__dataTemp`
+     * cache (rather than the normal `__data` cache) for Objects.  Since the temp
+     * cache is cleared at the end of a turn, this implementation allows
+     * side-effects of deep object changes to be processed by re-setting the
+     * same object (using the temp cache as an in-turn backstop to prevent
+     * cycles due to 2-way notification).
+     *
+     * @param {string} property Property name
+     * @param {*} value New property value
+     * @param {*} old Previous property value
+     * @return {boolean} Whether the property should be considered a change
+     * @protected
+     */
+    _shouldPropertyChange(property, value, old) {
+      return mutablePropertyChange(this, property, value, old, true);
+    }
+
+  }
+  /** @type {boolean} */
+  MutableData.prototype.mutableData = false;
+
+  return MutableData;
+});
+/* harmony export (immutable) */ __webpack_exports__["a"] = MutableData;
+
+
+const OptionalMutableData = Object(__WEBPACK_IMPORTED_MODULE_0__utils_mixin_js__["a" /* dedupingMixin */])(superClass => {
+
+  /**
+   * @mixinClass
+   * @polymer
+   * @implements {Polymer_OptionalMutableData}
+   */
+  class OptionalMutableData extends superClass {
+
+    static get properties() {
+      return {
+        /**
+         * Instance-level flag for configuring the dirty-checking strategy
+         * for this element.  When true, Objects and Arrays will skip dirty
+         * checking, otherwise strict equality checking will be used.
+         */
+        mutableData: Boolean
+      };
+    }
+
+    /**
+     * Overrides `Polymer.PropertyEffects` to provide option for skipping
+     * strict equality checking for Objects and Arrays.
+     *
+     * When `this.mutableData` is true on this instance, this method
+     * pulls the value to dirty check against from the `__dataTemp` cache
+     * (rather than the normal `__data` cache) for Objects.  Since the temp
+     * cache is cleared at the end of a turn, this implementation allows
+     * side-effects of deep object changes to be processed by re-setting the
+     * same object (using the temp cache as an in-turn backstop to prevent
+     * cycles due to 2-way notification).
+     *
+     * @param {string} property Property name
+     * @param {*} value New property value
+     * @param {*} old Previous property value
+     * @return {boolean} Whether the property should be considered a change
+     * @protected
+     */
+    _shouldPropertyChange(property, value, old) {
+      return mutablePropertyChange(this, property, value, old, this.mutableData);
+    }
+  }
+
+  return OptionalMutableData;
+});
+/* harmony export (immutable) */ __webpack_exports__["b"] = OptionalMutableData;
+
+
+// Export for use by legacy behavior
+MutableData._mutablePropertyChange = mutablePropertyChange;
+
+/***/ }),
+
+/***/ 40:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -713,7 +635,7 @@ const Templatize = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixin_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__async_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__async_js__ = __webpack_require__(13);
 
 
 
@@ -818,7 +740,7 @@ class Debouncer {
 
 /***/ }),
 
-/***/ 36:
+/***/ 41:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -860,425 +782,6 @@ const flush = function () {
 };
 /* harmony export (immutable) */ __webpack_exports__["b"] = flush;
 
-
-/***/ }),
-
-/***/ 43:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export DomIf */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_element_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_templatize_js__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_debounce_js__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_flush_js__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_async_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_path_js__ = __webpack_require__(13);
-
-
-
-
-
-
-
-/**
- * The `<dom-if>` element will stamp a light-dom `<template>` child when
- * the `if` property becomes truthy, and the template can use Polymer
- * data-binding and declarative event features when used in the context of
- * a Polymer element's template.
- *
- * When `if` becomes falsey, the stamped content is hidden but not
- * removed from dom. When `if` subsequently becomes truthy again, the content
- * is simply re-shown. This approach is used due to its favorable performance
- * characteristics: the expense of creating template content is paid only
- * once and lazily.
- *
- * Set the `restamp` property to true to force the stamped content to be
- * created / destroyed when the `if` condition changes.
- *
- * @customElement
- * @polymer
- * @extends Polymer.Element
- * @memberof Polymer
- * @summary Custom element that conditionally stamps and hides or removes
- *   template content based on a boolean flag.
- */
-class DomIf extends __WEBPACK_IMPORTED_MODULE_0__polymer_element_js__["a" /* Element */] {
-
-  // Not needed to find template; can be removed once the analyzer
-  // can find the tag name from customElements.define call
-  static get is() {
-    return 'dom-if';
-  }
-
-  static get template() {
-    return null;
-  }
-
-  static get properties() {
-
-    return {
-
-      /**
-       * Fired whenever DOM is added or removed/hidden by this template (by
-       * default, rendering occurs lazily).  To force immediate rendering, call
-       * `render`.
-       *
-       * @event dom-change
-       */
-
-      /**
-       * A boolean indicating whether this template should stamp.
-       */
-      if: {
-        type: Boolean,
-        observer: '__debounceRender'
-      },
-
-      /**
-       * When true, elements will be removed from DOM and discarded when `if`
-       * becomes false and re-created and added back to the DOM when `if`
-       * becomes true.  By default, stamped elements will be hidden but left
-       * in the DOM when `if` becomes false, which is generally results
-       * in better performance.
-       */
-      restamp: {
-        type: Boolean,
-        observer: '__debounceRender'
-      }
-
-    };
-  }
-
-  constructor() {
-    super();
-    this.__renderDebouncer = null;
-    this.__invalidProps = null;
-    this.__instance = null;
-    this._lastIf = false;
-    this.__ctor = null;
-  }
-
-  __debounceRender() {
-    // Render is async for 2 reasons:
-    // 1. To eliminate dom creation trashing if user code thrashes `if` in the
-    //    same turn. This was more common in 1.x where a compound computed
-    //    property could result in the result changing multiple times, but is
-    //    mitigated to a large extent by batched property processing in 2.x.
-    // 2. To avoid double object propagation when a bag including values bound
-    //    to the `if` property as well as one or more hostProps could enqueue
-    //    the <dom-if> to flush before the <template>'s host property
-    //    forwarding. In that scenario creating an instance would result in
-    //    the host props being set once, and then the enqueued changes on the
-    //    template would set properties a second time, potentially causing an
-    //    object to be set to an instance more than once.  Creating the
-    //    instance async from flushing data ensures this doesn't happen. If
-    //    we wanted a sync option in the future, simply having <dom-if> flush
-    //    (or clear) its template's pending host properties before creating
-    //    the instance would also avoid the problem.
-    this.__renderDebouncer = __WEBPACK_IMPORTED_MODULE_2__utils_debounce_js__["a" /* Debouncer */].debounce(this.__renderDebouncer, __WEBPACK_IMPORTED_MODULE_4__utils_async_js__["a" /* microTask */], () => this.__render());
-    Object(__WEBPACK_IMPORTED_MODULE_3__utils_flush_js__["a" /* enqueueDebouncer */])(this.__renderDebouncer);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    if (!this.parentNode || this.parentNode.nodeType == Node.DOCUMENT_FRAGMENT_NODE && !this.parentNode.host) {
-      this.__teardownInstance();
-    }
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    if (this.if) {
-      this.__debounceRender();
-    }
-  }
-
-  /**
-   * Forces the element to render its content. Normally rendering is
-   * asynchronous to a provoking change. This is done for efficiency so
-   * that multiple changes trigger only a single render. The render method
-   * should be called if, for example, template rendering is required to
-   * validate application state.
-   */
-  render() {
-    Object(__WEBPACK_IMPORTED_MODULE_3__utils_flush_js__["b" /* flush */])();
-  }
-
-  __render() {
-    if (this.if) {
-      if (!this.__ensureInstance()) {
-        // No template found yet
-        return;
-      }
-      this._showHideChildren();
-    } else if (this.restamp) {
-      this.__teardownInstance();
-    }
-    if (!this.restamp && this.__instance) {
-      this._showHideChildren();
-    }
-    if (this.if != this._lastIf) {
-      this.dispatchEvent(new CustomEvent('dom-change', {
-        bubbles: true,
-        composed: true
-      }));
-      this._lastIf = this.if;
-    }
-  }
-
-  __ensureInstance() {
-    let parentNode = this.parentNode;
-    // Guard against element being detached while render was queued
-    if (parentNode) {
-      if (!this.__ctor) {
-        let template = this.querySelector('template');
-        if (!template) {
-          // Wait until childList changes and template should be there by then
-          let observer = new MutationObserver(() => {
-            if (this.querySelector('template')) {
-              observer.disconnect();
-              this.__render();
-            } else {
-              throw new Error('dom-if requires a <template> child');
-            }
-          });
-          observer.observe(this, { childList: true });
-          return false;
-        }
-        this.__ctor = __WEBPACK_IMPORTED_MODULE_1__utils_templatize_js__["b" /* Templatize */].templatize(template, this, {
-          // dom-if templatizer instances require `mutable: true`, as
-          // `__syncHostProperties` relies on that behavior to sync objects
-          mutableData: true,
-          /**
-           * @param {string} prop Property to forward
-           * @param {*} value Value of property
-           * @this {this}
-           */
-          forwardHostProp: function (prop, value) {
-            if (this.__instance) {
-              if (this.if) {
-                this.__instance.forwardHostProp(prop, value);
-              } else {
-                // If we have an instance but are squelching host property
-                // forwarding due to if being false, note the invalidated
-                // properties so `__syncHostProperties` can sync them the next
-                // time `if` becomes true
-                this.__invalidProps = this.__invalidProps || Object.create(null);
-                this.__invalidProps[Object(__WEBPACK_IMPORTED_MODULE_5__utils_path_js__["g" /* root */])(prop)] = true;
-              }
-            }
-          }
-        });
-      }
-      if (!this.__instance) {
-        this.__instance = new this.__ctor();
-        parentNode.insertBefore(this.__instance.root, this);
-      } else {
-        this.__syncHostProperties();
-        let c$ = this.__instance.children;
-        if (c$ && c$.length) {
-          // Detect case where dom-if was re-attached in new position
-          let lastChild = this.previousSibling;
-          if (lastChild !== c$[c$.length - 1]) {
-            for (let i = 0, n; i < c$.length && (n = c$[i]); i++) {
-              parentNode.insertBefore(n, this);
-            }
-          }
-        }
-      }
-    }
-    return true;
-  }
-
-  __syncHostProperties() {
-    let props = this.__invalidProps;
-    if (props) {
-      for (let prop in props) {
-        this.__instance._setPendingProperty(prop, this.__dataHost[prop]);
-      }
-      this.__invalidProps = null;
-      this.__instance._flushProperties();
-    }
-  }
-
-  __teardownInstance() {
-    if (this.__instance) {
-      let c$ = this.__instance.children;
-      if (c$ && c$.length) {
-        // use first child parent, for case when dom-if may have been detached
-        let parent = c$[0].parentNode;
-        for (let i = 0, n; i < c$.length && (n = c$[i]); i++) {
-          parent.removeChild(n);
-        }
-      }
-      this.__instance = null;
-      this.__invalidProps = null;
-    }
-  }
-
-  _showHideChildren() {
-    let hidden = this.__hideTemplateChildren__ || !this.if;
-    if (this.__instance) {
-      this.__instance._showHideChildren(hidden);
-    }
-  }
-
-}
-
-customElements.define(DomIf.is, DomIf);
-
-
-
-/***/ }),
-
-/***/ 46:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_users_js__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_reselect_src_index_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__location_js__ = __webpack_require__(4);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-
-
-
-
-const users = (state = {}, action) => {
-  switch (action.type) {
-    case __WEBPACK_IMPORTED_MODULE_0__actions_users_js__["c" /* REQUEST_USER */]:
-    case __WEBPACK_IMPORTED_MODULE_0__actions_users_js__["b" /* RECEIVE_USER */]:
-    case __WEBPACK_IMPORTED_MODULE_0__actions_users_js__["a" /* FAIL_USER */]:
-      const userId = action.userId;
-      return _extends({}, state, {
-        [userId]: user(state[userId], action)
-      });
-    default:
-      return state;
-  }
-};
-
-const user = (state = {}, action) => {
-  switch (action.type) {
-    case __WEBPACK_IMPORTED_MODULE_0__actions_users_js__["c" /* REQUEST_USER */]:
-      return _extends({}, state, {
-        id: action.userId,
-        failure: false,
-        isFetching: true
-      });
-    case __WEBPACK_IMPORTED_MODULE_0__actions_users_js__["b" /* RECEIVE_USER */]:
-      return _extends({}, state, {
-        failure: false,
-        isFetching: false
-      }, action.data);
-    case __WEBPACK_IMPORTED_MODULE_0__actions_users_js__["a" /* FAIL_USER */]:
-      return _extends({}, state, {
-        failure: true,
-        isFetching: false
-      });
-    default:
-      return state;
-  }
-};
-
-/* harmony default export */ __webpack_exports__["b"] = (users);
-
-const usersSelector = state => state.users;
-
-const currentUserSelector = Object(__WEBPACK_IMPORTED_MODULE_1__node_modules_reselect_src_index_js__["a" /* createSelector */])(usersSelector, __WEBPACK_IMPORTED_MODULE_2__location_js__["c" /* splitPathnameSelector */], __WEBPACK_IMPORTED_MODULE_2__location_js__["d" /* urlSearchParamsSelector */], (users, splitPath, params) => {
-  switch (splitPath[0]) {
-    case 'user':
-      const id = params.get('id');
-      return users[id] || { id };
-    default:
-      return null;
-  }
-});
-/* harmony export (immutable) */ __webpack_exports__["a"] = currentUserSelector;
-
-
-/***/ }),
-
-/***/ 47:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-const REQUEST_USER = 'REQUEST_USER';
-/* harmony export (immutable) */ __webpack_exports__["c"] = REQUEST_USER;
-
-const RECEIVE_USER = 'RECEIVE_USER';
-/* harmony export (immutable) */ __webpack_exports__["b"] = RECEIVE_USER;
-
-const FAIL_USER = 'FAIL_USER';
-/* harmony export (immutable) */ __webpack_exports__["a"] = FAIL_USER;
-
-
-const fetchUser = user => dispatch => {
-  dispatch(requestUser(user.id));
-  fetch(`https://node-hnapi.herokuapp.com/user/${user.id}`).then(res => res.json()).then(data => {
-    if (data.error) {
-      throw data.error;
-    }
-    dispatch(receiveUser(user.id, data));
-  }).catch(() => dispatch(failUser(user.id)));
-};
-/* harmony export (immutable) */ __webpack_exports__["d"] = fetchUser;
-
-
-const fetchUserIfNeeded = user => dispatch => {
-  if (user && !user.created_time && !user.isFetching) {
-    dispatch(fetchUser(user));
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["e"] = fetchUserIfNeeded;
-
-
-const requestUser = userId => {
-  return {
-    type: REQUEST_USER,
-    userId
-  };
-};
-
-const receiveUser = (userId, data) => {
-  return {
-    type: RECEIVE_USER,
-    userId,
-    data
-  };
-};
-
-const failUser = userId => {
-  return {
-    type: FAIL_USER,
-    userId
-  };
-};
-
-/***/ }),
-
-/***/ 49:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__reducers_users_js__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reducers_location_js__ = __webpack_require__(4);
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_1__store_js__["a" /* store */].addReducers({
-  users: __WEBPACK_IMPORTED_MODULE_0__reducers_users_js__["b" /* default */]
-});
-
-__WEBPACK_IMPORTED_MODULE_1__store_js__["a" /* store */].subscribe(() => {
-  const state = __WEBPACK_IMPORTED_MODULE_1__store_js__["a" /* store */].getState();
-  if (Object(__WEBPACK_IMPORTED_MODULE_2__reducers_location_js__["b" /* pageSelector */])(state) === 'user') {
-    document.title = Object(__WEBPACK_IMPORTED_MODULE_0__reducers_users_js__["a" /* currentUserSelector */])(state).id;
-  }
-});
 
 /***/ })
 

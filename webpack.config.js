@@ -1,9 +1,25 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/elements/hn-app-element.js',
+  entry: './src/components/hn-app.js',
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'list-item',
+      chunks: ['list', 'item']
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'item-user',
+      chunks: ['item', 'user']
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'commons',
+      minChunks: 2
+    }),
+  ],
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
+    chunkFilename: '[name].js',
     path: path.resolve(__dirname, 'dist')
   },
   module: {
