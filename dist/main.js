@@ -381,7 +381,13 @@ const pageSelector = Object(__WEBPACK_IMPORTED_MODULE_1__node_modules_reselect_s
 
 const searchSelector = state => state.location.search;
 
-const urlSearchParamsSelector = Object(__WEBPACK_IMPORTED_MODULE_1__node_modules_reselect_src_index_js__["a" /* createSelector */])(searchSelector, search => new URLSearchParams(search));
+const urlSearchParamsSelector = Object(__WEBPACK_IMPORTED_MODULE_1__node_modules_reselect_src_index_js__["a" /* createSelector */])(searchSelector, search => {
+  if ('URLSearchParams' in window) {
+    return new URLSearchParams(search);
+  } else {
+    return new Map(search.slice(1).split('&').map(s => s.split('=')));
+  }
+});
 /* harmony export (immutable) */ __webpack_exports__["d"] = urlSearchParamsSelector;
 
 

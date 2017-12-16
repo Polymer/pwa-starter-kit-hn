@@ -51,5 +51,11 @@ const searchSelector = state => state.location.search;
 
 export const urlSearchParamsSelector = createSelector(
   searchSelector,
-  search => new URLSearchParams(search)
+  search => {
+    if ('URLSearchParams' in window) {
+      return new URLSearchParams(search);
+    } else {
+      return new Map(search.slice(1).split('&').map(s => s.split('=')));
+    }
+  }
 );

@@ -18,6 +18,8 @@
 
   <body>
     <hn-app></hn-app>
+    <!-- Can't use wc-loader as-is - CE/SD polyfill needs to run before the bundle. -->
+    <script defer src="/webcomponentsjs/webcomponents-sd-ce.js"></script>
     <script defer src="/main.js"></script>
   </body>
 </html>
