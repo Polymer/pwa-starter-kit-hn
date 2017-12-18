@@ -1,125 +1,143 @@
 webpackJsonp([1],{
 
 /***/ 34:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-const ADD_FAVORITE = 'ADD_FAVORITE';
-/* harmony export (immutable) */ __webpack_exports__["a"] = ADD_FAVORITE;
-
-const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
-/* harmony export (immutable) */ __webpack_exports__["b"] = REMOVE_FAVORITE;
 
 
-const dbPromise = window.dbPromise = new Promise((resolve, reject) => {
-  const openRequest = window.indexedDB.open('favorites', 5);
-  openRequest.onsuccess = event => {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var ADD_FAVORITE = exports.ADD_FAVORITE = 'ADD_FAVORITE';
+var REMOVE_FAVORITE = exports.REMOVE_FAVORITE = 'REMOVE_FAVORITE';
+
+var dbPromise = window.dbPromise = new Promise(function (resolve, reject) {
+  var openRequest = window.indexedDB.open('favorites', 5);
+  openRequest.onsuccess = function (event) {
     resolve(event.target.result);
   };
-  openRequest.onupgradeneeded = event => {
+  openRequest.onupgradeneeded = function (event) {
     event.target.result.createObjectStore('favorites', { keyPath: 'id' });
   };
-  openRequest.onerror = error => {
+  openRequest.onerror = function (error) {
     reject(error);
   };
 });
 
-const saveFavorite = item => dispatch => {
-  dbPromise.then(db => {
-    const transaction = db.transaction(['favorites'], 'readwrite');
-    const objectStore = transaction.objectStore('favorites');
-    const objectStoreRequest = objectStore.add({
-      comments_count: item.comments_count,
-      domain: item.domain,
-      id: item.id,
-      points: item.points,
-      time: item.time,
-      time_ago: item.time_ago,
-      title: item.title,
-      type: item.type,
-      url: item.url,
-      user: item.user
-    });
-    objectStoreRequest.onsuccess = () => {
-      dispatch(addFavorite(item));
-    };
-  });
-};
-/* harmony export (immutable) */ __webpack_exports__["e"] = saveFavorite;
-
-
-const addFavorite = item => dispatch => {
-  dispatch({
-    type: ADD_FAVORITE,
-    item
-  });
-};
-
-const deleteFavorite = item => dispatch => {
-  dbPromise.then(db => {
-    const transaction = db.transaction(['favorites'], 'readwrite');
-    const objectStore = transaction.objectStore('favorites');
-    const objectStoreRequest = objectStore.delete(item.id);
-    objectStoreRequest.onsuccess = () => {
-      dispatch({
-        type: REMOVE_FAVORITE,
-        item
+var saveFavorite = exports.saveFavorite = function saveFavorite(item) {
+  return function (dispatch) {
+    dbPromise.then(function (db) {
+      var transaction = db.transaction(['favorites'], 'readwrite');
+      var objectStore = transaction.objectStore('favorites');
+      var objectStoreRequest = objectStore.add({
+        comments_count: item.comments_count,
+        domain: item.domain,
+        id: item.id,
+        points: item.points,
+        time: item.time,
+        time_ago: item.time_ago,
+        title: item.title,
+        type: item.type,
+        url: item.url,
+        user: item.user
       });
-    };
-  });
+      objectStoreRequest.onsuccess = function () {
+        dispatch(addFavorite(item));
+      };
+    });
+  };
 };
-/* harmony export (immutable) */ __webpack_exports__["c"] = deleteFavorite;
 
-
-let loaded = false;
-
-const loadFavorites = () => dispatch => {
-  if (loaded) return;
-  loaded = true;
-  dbPromise.then(db => {
-    const objectStore = db.transaction('favorites').objectStore('favorites');
-    objectStore.openCursor().onsuccess = function (event) {
-      const cursor = event.target.result;
-      if (cursor) {
-        dispatch(addFavorite(cursor.value));
-        cursor.continue();
-      }
-    };
-  });
+var addFavorite = function addFavorite(item) {
+  return function (dispatch) {
+    dispatch({
+      type: ADD_FAVORITE,
+      item: item
+    });
+  };
 };
-/* harmony export (immutable) */ __webpack_exports__["d"] = loadFavorites;
 
+var deleteFavorite = exports.deleteFavorite = function deleteFavorite(item) {
+  return function (dispatch) {
+    dbPromise.then(function (db) {
+      var transaction = db.transaction(['favorites'], 'readwrite');
+      var objectStore = transaction.objectStore('favorites');
+      var objectStoreRequest = objectStore.delete(item.id);
+      objectStoreRequest.onsuccess = function () {
+        dispatch({
+          type: REMOVE_FAVORITE,
+          item: item
+        });
+      };
+    });
+  };
+};
+
+var loaded = false;
+
+var loadFavorites = exports.loadFavorites = function loadFavorites() {
+  return function (dispatch) {
+    if (loaded) return;
+    loaded = true;
+    dbPromise.then(function (db) {
+      var objectStore = db.transaction('favorites').objectStore('favorites');
+      objectStore.openCursor().onsuccess = function (event) {
+        var cursor = event.target.result;
+        if (cursor) {
+          dispatch(addFavorite(cursor.value));
+          cursor.continue();
+        }
+      };
+    });
+  };
+};
 
 /***/ }),
 
 /***/ 35:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* unused harmony export DomRepeat */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_element_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_templatize_js__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_debounce_js__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_flush_js__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_mutable_data_js__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_path_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_async_js__ = __webpack_require__(13);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DomRepeat = undefined;
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _polymerElement = __webpack_require__(10);
 
+var _templatize = __webpack_require__(38);
 
+var _debounce = __webpack_require__(40);
 
-let TemplateInstanceBase = __WEBPACK_IMPORTED_MODULE_1__utils_templatize_js__["a" /* TemplateInstanceBase */]; // eslint-disable-line
+var _flush = __webpack_require__(41);
+
+var _mutableData = __webpack_require__(39);
+
+var _path = __webpack_require__(16);
+
+var _async = __webpack_require__(13);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TemplateInstanceBase = _templatize.TemplateInstanceBase; // eslint-disable-line
 
 /**
  * @constructor
  * @implements {Polymer_OptionalMutableData}
  * @extends {Polymer.Element}
  */
-const domRepeatBase = Object(__WEBPACK_IMPORTED_MODULE_4__mixins_mutable_data_js__["b" /* OptionalMutableData */])(__WEBPACK_IMPORTED_MODULE_0__polymer_element_js__["a" /* Element */]);
+var domRepeatBase = (0, _mutableData.OptionalMutableData)(_polymerElement.Element);
 
 /**
  * The `<dom-repeat>` element will automatically stamp and binds one instance
@@ -216,636 +234,720 @@ const domRepeatBase = Object(__WEBPACK_IMPORTED_MODULE_4__mixins_mutable_data_js
  * @summary Custom element for stamping instance of a template bound to
  *   items in an array.
  */
-class DomRepeat extends domRepeatBase {
 
-  // Not needed to find template; can be removed once the analyzer
-  // can find the tag name from customElements.define call
-  static get is() {
-    return 'dom-repeat';
-  }
+var DomRepeat = function (_domRepeatBase) {
+  _inherits(DomRepeat, _domRepeatBase);
 
-  static get template() {
-    return null;
-  }
+  _createClass(DomRepeat, null, [{
+    key: 'is',
 
-  static get properties() {
 
-    /**
-     * Fired whenever DOM is added or removed by this template (by
-     * default, rendering occurs lazily).  To force immediate rendering, call
-     * `render`.
-     *
-     * @event dom-change
-     */
-    return {
-
-      /**
-       * An array containing items determining how many instances of the template
-       * to stamp and that that each template instance should bind to.
-       */
-      items: {
-        type: Array
-      },
+    // Not needed to find template; can be removed once the analyzer
+    // can find the tag name from customElements.define call
+    get: function get() {
+      return 'dom-repeat';
+    }
+  }, {
+    key: 'template',
+    get: function get() {
+      return null;
+    }
+  }, {
+    key: 'properties',
+    get: function get() {
 
       /**
-       * The name of the variable to add to the binding scope for the array
-       * element associated with a given template instance.
-       */
-      as: {
-        type: String,
-        value: 'item'
-      },
-
-      /**
-       * The name of the variable to add to the binding scope with the index
-       * of the instance in the sorted and filtered list of rendered items.
-       * Note, for the index in the `this.items` array, use the value of the
-       * `itemsIndexAs` property.
-       */
-      indexAs: {
-        type: String,
-        value: 'index'
-      },
-
-      /**
-       * The name of the variable to add to the binding scope with the index
-       * of the instance in the `this.items` array. Note, for the index of
-       * this instance in the sorted and filtered list of rendered items,
-       * use the value of the `indexAs` property.
-       */
-      itemsIndexAs: {
-        type: String,
-        value: 'itemsIndex'
-      },
-
-      /**
-       * A function that should determine the sort order of the items.  This
-       * property should either be provided as a string, indicating a method
-       * name on the element's host, or else be an actual function.  The
-       * function should match the sort function passed to `Array.sort`.
-       * Using a sort function has no effect on the underlying `items` array.
-       */
-      sort: {
-        type: Function,
-        observer: '__sortChanged'
-      },
-
-      /**
-       * A function that can be used to filter items out of the view.  This
-       * property should either be provided as a string, indicating a method
-       * name on the element's host, or else be an actual function.  The
-       * function should match the sort function passed to `Array.filter`.
-       * Using a filter function has no effect on the underlying `items` array.
-       */
-      filter: {
-        type: Function,
-        observer: '__filterChanged'
-      },
-
-      /**
-       * When using a `filter` or `sort` function, the `observe` property
-       * should be set to a space-separated list of the names of item
-       * sub-fields that should trigger a re-sort or re-filter when changed.
-       * These should generally be fields of `item` that the sort or filter
-       * function depends on.
-       */
-      observe: {
-        type: String,
-        observer: '__observeChanged'
-      },
-
-      /**
-       * When using a `filter` or `sort` function, the `delay` property
-       * determines a debounce time after a change to observed item
-       * properties that must pass before the filter or sort is re-run.
-       * This is useful in rate-limiting shuffing of the view when
-       * item changes may be frequent.
-       */
-      delay: Number,
-
-      /**
-       * Count of currently rendered items after `filter` (if any) has been applied.
-       * If "chunking mode" is enabled, `renderedItemCount` is updated each time a
-       * set of template instances is rendered.
+       * Fired whenever DOM is added or removed by this template (by
+       * default, rendering occurs lazily).  To force immediate rendering, call
+       * `render`.
        *
+       * @event dom-change
        */
-      renderedItemCount: {
-        type: Number,
-        notify: true,
-        readOnly: true
-      },
+      return {
 
-      /**
-       * Defines an initial count of template instances to render after setting
-       * the `items` array, before the next paint, and puts the `dom-repeat`
-       * into "chunking mode".  The remaining items will be created and rendered
-       * incrementally at each animation frame therof until all instances have
-       * been rendered.
-       */
-      initialCount: {
-        type: Number,
-        observer: '__initializeChunking'
-      },
+        /**
+         * An array containing items determining how many instances of the template
+         * to stamp and that that each template instance should bind to.
+         */
+        items: {
+          type: Array
+        },
 
-      /**
-       * When `initialCount` is used, this property defines a frame rate to
-       * target by throttling the number of instances rendered each frame to
-       * not exceed the budget for the target frame rate.  Setting this to a
-       * higher number will allow lower latency and higher throughput for
-       * things like event handlers, but will result in a longer time for the
-       * remaining items to complete rendering.
-       */
-      targetFramerate: {
-        type: Number,
-        value: 20
-      },
+        /**
+         * The name of the variable to add to the binding scope for the array
+         * element associated with a given template instance.
+         */
+        as: {
+          type: String,
+          value: 'item'
+        },
 
-      _targetFrameTime: {
-        type: Number,
-        computed: '__computeFrameTime(targetFramerate)'
-      }
+        /**
+         * The name of the variable to add to the binding scope with the index
+         * of the instance in the sorted and filtered list of rendered items.
+         * Note, for the index in the `this.items` array, use the value of the
+         * `itemsIndexAs` property.
+         */
+        indexAs: {
+          type: String,
+          value: 'index'
+        },
 
-    };
-  }
+        /**
+         * The name of the variable to add to the binding scope with the index
+         * of the instance in the `this.items` array. Note, for the index of
+         * this instance in the sorted and filtered list of rendered items,
+         * use the value of the `indexAs` property.
+         */
+        itemsIndexAs: {
+          type: String,
+          value: 'itemsIndex'
+        },
 
-  static get observers() {
-    return ['__itemsChanged(items.*)'];
-  }
+        /**
+         * A function that should determine the sort order of the items.  This
+         * property should either be provided as a string, indicating a method
+         * name on the element's host, or else be an actual function.  The
+         * function should match the sort function passed to `Array.sort`.
+         * Using a sort function has no effect on the underlying `items` array.
+         */
+        sort: {
+          type: Function,
+          observer: '__sortChanged'
+        },
 
-  constructor() {
-    super();
-    this.__instances = [];
-    this.__limit = Infinity;
-    this.__pool = [];
-    this.__renderDebouncer = null;
-    this.__itemsIdxToInstIdx = {};
-    this.__chunkCount = null;
-    this.__lastChunkTime = null;
-    this.__sortFn = null;
-    this.__filterFn = null;
-    this.__observePaths = null;
-    this.__ctor = null;
-    this.__isDetached = true;
-    this.template = null;
-  }
+        /**
+         * A function that can be used to filter items out of the view.  This
+         * property should either be provided as a string, indicating a method
+         * name on the element's host, or else be an actual function.  The
+         * function should match the sort function passed to `Array.filter`.
+         * Using a filter function has no effect on the underlying `items` array.
+         */
+        filter: {
+          type: Function,
+          observer: '__filterChanged'
+        },
 
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.__isDetached = true;
-    for (let i = 0; i < this.__instances.length; i++) {
-      this.__detachInstance(i);
+        /**
+         * When using a `filter` or `sort` function, the `observe` property
+         * should be set to a space-separated list of the names of item
+         * sub-fields that should trigger a re-sort or re-filter when changed.
+         * These should generally be fields of `item` that the sort or filter
+         * function depends on.
+         */
+        observe: {
+          type: String,
+          observer: '__observeChanged'
+        },
+
+        /**
+         * When using a `filter` or `sort` function, the `delay` property
+         * determines a debounce time after a change to observed item
+         * properties that must pass before the filter or sort is re-run.
+         * This is useful in rate-limiting shuffing of the view when
+         * item changes may be frequent.
+         */
+        delay: Number,
+
+        /**
+         * Count of currently rendered items after `filter` (if any) has been applied.
+         * If "chunking mode" is enabled, `renderedItemCount` is updated each time a
+         * set of template instances is rendered.
+         *
+         */
+        renderedItemCount: {
+          type: Number,
+          notify: true,
+          readOnly: true
+        },
+
+        /**
+         * Defines an initial count of template instances to render after setting
+         * the `items` array, before the next paint, and puts the `dom-repeat`
+         * into "chunking mode".  The remaining items will be created and rendered
+         * incrementally at each animation frame therof until all instances have
+         * been rendered.
+         */
+        initialCount: {
+          type: Number,
+          observer: '__initializeChunking'
+        },
+
+        /**
+         * When `initialCount` is used, this property defines a frame rate to
+         * target by throttling the number of instances rendered each frame to
+         * not exceed the budget for the target frame rate.  Setting this to a
+         * higher number will allow lower latency and higher throughput for
+         * things like event handlers, but will result in a longer time for the
+         * remaining items to complete rendering.
+         */
+        targetFramerate: {
+          type: Number,
+          value: 20
+        },
+
+        _targetFrameTime: {
+          type: Number,
+          computed: '__computeFrameTime(targetFramerate)'
+        }
+
+      };
     }
+  }, {
+    key: 'observers',
+    get: function get() {
+      return ['__itemsChanged(items.*)'];
+    }
+  }]);
+
+  function DomRepeat() {
+    _classCallCheck(this, DomRepeat);
+
+    var _this = _possibleConstructorReturn(this, (DomRepeat.__proto__ || Object.getPrototypeOf(DomRepeat)).call(this));
+
+    _this.__instances = [];
+    _this.__limit = Infinity;
+    _this.__pool = [];
+    _this.__renderDebouncer = null;
+    _this.__itemsIdxToInstIdx = {};
+    _this.__chunkCount = null;
+    _this.__lastChunkTime = null;
+    _this.__sortFn = null;
+    _this.__filterFn = null;
+    _this.__observePaths = null;
+    _this.__ctor = null;
+    _this.__isDetached = true;
+    _this.template = null;
+    return _this;
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    // only perform attachment if the element was previously detached.
-    if (this.__isDetached) {
-      this.__isDetached = false;
-      let parent = this.parentNode;
-      for (let i = 0; i < this.__instances.length; i++) {
-        this.__attachInstance(i, parent);
+  _createClass(DomRepeat, [{
+    key: 'disconnectedCallback',
+    value: function disconnectedCallback() {
+      _get(DomRepeat.prototype.__proto__ || Object.getPrototypeOf(DomRepeat.prototype), 'disconnectedCallback', this).call(this);
+      this.__isDetached = true;
+      for (var i = 0; i < this.__instances.length; i++) {
+        this.__detachInstance(i);
       }
     }
-  }
+  }, {
+    key: 'connectedCallback',
+    value: function connectedCallback() {
+      _get(DomRepeat.prototype.__proto__ || Object.getPrototypeOf(DomRepeat.prototype), 'connectedCallback', this).call(this);
+      // only perform attachment if the element was previously detached.
+      if (this.__isDetached) {
+        this.__isDetached = false;
+        var parent = this.parentNode;
+        for (var i = 0; i < this.__instances.length; i++) {
+          this.__attachInstance(i, parent);
+        }
+      }
+    }
+  }, {
+    key: '__ensureTemplatized',
+    value: function __ensureTemplatized() {
+      var _this2 = this;
 
-  __ensureTemplatized() {
-    // Templatizing (generating the instance constructor) needs to wait
-    // until ready, since won't have its template content handed back to
-    // it until then
-    if (!this.__ctor) {
-      let template = this.template = this.querySelector('template');
-      if (!template) {
-        // // Wait until childList changes and template should be there by then
-        let observer = new MutationObserver(() => {
-          if (this.querySelector('template')) {
-            observer.disconnect();
-            this.__render();
-          } else {
-            throw new Error('dom-repeat requires a <template> child');
+      // Templatizing (generating the instance constructor) needs to wait
+      // until ready, since won't have its template content handed back to
+      // it until then
+      if (!this.__ctor) {
+        var template = this.template = this.querySelector('template');
+        if (!template) {
+          // // Wait until childList changes and template should be there by then
+          var observer = new MutationObserver(function () {
+            if (_this2.querySelector('template')) {
+              observer.disconnect();
+              _this2.__render();
+            } else {
+              throw new Error('dom-repeat requires a <template> child');
+            }
+          });
+          observer.observe(this, { childList: true });
+          return false;
+        }
+        // Template instance props that should be excluded from forwarding
+        var instanceProps = {};
+        instanceProps[this.as] = true;
+        instanceProps[this.indexAs] = true;
+        instanceProps[this.itemsIndexAs] = true;
+        this.__ctor = _templatize.Templatize.templatize(template, this, {
+          mutableData: this.mutableData,
+          parentModel: true,
+          instanceProps: instanceProps,
+          /**
+           * @this {this}
+           * @param {string} prop Property to set
+           * @param {*} value Value to set property to
+           */
+          forwardHostProp: function forwardHostProp(prop, value) {
+            var i$ = this.__instances;
+            for (var i = 0, inst; i < i$.length && (inst = i$[i]); i++) {
+              inst.forwardHostProp(prop, value);
+            }
+          },
+          /**
+           * @this {this}
+           * @param {Object} inst Instance to notify
+           * @param {string} prop Property to notify
+           * @param {*} value Value to notify
+           */
+          notifyInstanceProp: function notifyInstanceProp(inst, prop, value) {
+            if ((0, _path.matches)(this.as, prop)) {
+              var idx = inst[this.itemsIndexAs];
+              if (prop == this.as) {
+                this.items[idx] = value;
+              }
+              var path = (0, _path.translate)(this.as, 'items.' + idx, prop);
+              this.notifyPath(path, value);
+            }
           }
         });
-        observer.observe(this, { childList: true });
-        return false;
       }
-      // Template instance props that should be excluded from forwarding
-      let instanceProps = {};
-      instanceProps[this.as] = true;
-      instanceProps[this.indexAs] = true;
-      instanceProps[this.itemsIndexAs] = true;
-      this.__ctor = __WEBPACK_IMPORTED_MODULE_1__utils_templatize_js__["b" /* Templatize */].templatize(template, this, {
-        mutableData: this.mutableData,
-        parentModel: true,
-        instanceProps: instanceProps,
-        /**
-         * @this {this}
-         * @param {string} prop Property to set
-         * @param {*} value Value to set property to
-         */
-        forwardHostProp: function (prop, value) {
-          let i$ = this.__instances;
-          for (let i = 0, inst; i < i$.length && (inst = i$[i]); i++) {
-            inst.forwardHostProp(prop, value);
-          }
-        },
-        /**
-         * @this {this}
-         * @param {Object} inst Instance to notify
-         * @param {string} prop Property to notify
-         * @param {*} value Value to notify
-         */
-        notifyInstanceProp: function (inst, prop, value) {
-          if (Object(__WEBPACK_IMPORTED_MODULE_5__utils_path_js__["e" /* matches */])(this.as, prop)) {
-            let idx = inst[this.itemsIndexAs];
-            if (prop == this.as) {
-              this.items[idx] = value;
-            }
-            let path = Object(__WEBPACK_IMPORTED_MODULE_5__utils_path_js__["i" /* translate */])(this.as, 'items.' + idx, prop);
-            this.notifyPath(path, value);
-          }
-        }
+      return true;
+    }
+  }, {
+    key: '__getMethodHost',
+    value: function __getMethodHost() {
+      // Technically this should be the owner of the outermost template.
+      // In shadow dom, this is always getRootNode().host, but we can
+      // approximate this via cooperation with our dataHost always setting
+      // `_methodHost` as long as there were bindings (or id's) on this
+      // instance causing it to get a dataHost.
+      return this.__dataHost._methodHost || this.__dataHost;
+    }
+  }, {
+    key: '__sortChanged',
+    value: function __sortChanged(sort) {
+      var methodHost = this.__getMethodHost();
+      this.__sortFn = sort && (typeof sort == 'function' ? sort : function () {
+        return methodHost[sort].apply(methodHost, arguments);
+      });
+      if (this.items) {
+        this.__debounceRender(this.__render);
+      }
+    }
+  }, {
+    key: '__filterChanged',
+    value: function __filterChanged(filter) {
+      var methodHost = this.__getMethodHost();
+      this.__filterFn = filter && (typeof filter == 'function' ? filter : function () {
+        return methodHost[filter].apply(methodHost, arguments);
+      });
+      if (this.items) {
+        this.__debounceRender(this.__render);
+      }
+    }
+  }, {
+    key: '__computeFrameTime',
+    value: function __computeFrameTime(rate) {
+      return Math.ceil(1000 / rate);
+    }
+  }, {
+    key: '__initializeChunking',
+    value: function __initializeChunking() {
+      if (this.initialCount) {
+        this.__limit = this.initialCount;
+        this.__chunkCount = this.initialCount;
+        this.__lastChunkTime = performance.now();
+      }
+    }
+  }, {
+    key: '__tryRenderChunk',
+    value: function __tryRenderChunk() {
+      // Debounced so that multiple calls through `_render` between animation
+      // frames only queue one new rAF (e.g. array mutation & chunked render)
+      if (this.items && this.__limit < this.items.length) {
+        this.__debounceRender(this.__requestRenderChunk);
+      }
+    }
+  }, {
+    key: '__requestRenderChunk',
+    value: function __requestRenderChunk() {
+      var _this3 = this;
+
+      requestAnimationFrame(function () {
+        return _this3.__renderChunk();
       });
     }
-    return true;
-  }
-
-  __getMethodHost() {
-    // Technically this should be the owner of the outermost template.
-    // In shadow dom, this is always getRootNode().host, but we can
-    // approximate this via cooperation with our dataHost always setting
-    // `_methodHost` as long as there were bindings (or id's) on this
-    // instance causing it to get a dataHost.
-    return this.__dataHost._methodHost || this.__dataHost;
-  }
-
-  __sortChanged(sort) {
-    let methodHost = this.__getMethodHost();
-    this.__sortFn = sort && (typeof sort == 'function' ? sort : function () {
-      return methodHost[sort].apply(methodHost, arguments);
-    });
-    if (this.items) {
+  }, {
+    key: '__renderChunk',
+    value: function __renderChunk() {
+      // Simple auto chunkSize throttling algorithm based on feedback loop:
+      // measure actual time between frames and scale chunk count by ratio
+      // of target/actual frame time
+      var currChunkTime = performance.now();
+      var ratio = this._targetFrameTime / (currChunkTime - this.__lastChunkTime);
+      this.__chunkCount = Math.round(this.__chunkCount * ratio) || 1;
+      this.__limit += this.__chunkCount;
+      this.__lastChunkTime = currChunkTime;
       this.__debounceRender(this.__render);
     }
-  }
-
-  __filterChanged(filter) {
-    let methodHost = this.__getMethodHost();
-    this.__filterFn = filter && (typeof filter == 'function' ? filter : function () {
-      return methodHost[filter].apply(methodHost, arguments);
-    });
-    if (this.items) {
-      this.__debounceRender(this.__render);
+  }, {
+    key: '__observeChanged',
+    value: function __observeChanged() {
+      this.__observePaths = this.observe && this.observe.replace('.*', '.').split(' ');
     }
-  }
-
-  __computeFrameTime(rate) {
-    return Math.ceil(1000 / rate);
-  }
-
-  __initializeChunking() {
-    if (this.initialCount) {
-      this.__limit = this.initialCount;
-      this.__chunkCount = this.initialCount;
-      this.__lastChunkTime = performance.now();
+  }, {
+    key: '__itemsChanged',
+    value: function __itemsChanged(change) {
+      if (this.items && !Array.isArray(this.items)) {
+        console.warn('dom-repeat expected array for `items`, found', this.items);
+      }
+      // If path was to an item (e.g. 'items.3' or 'items.3.foo'), forward the
+      // path to that instance synchronously (retuns false for non-item paths)
+      if (!this.__handleItemPath(change.path, change.value)) {
+        // Otherwise, the array was reset ('items') or spliced ('items.splices'),
+        // so queue a full refresh
+        this.__initializeChunking();
+        this.__debounceRender(this.__render);
+      }
     }
-  }
-
-  __tryRenderChunk() {
-    // Debounced so that multiple calls through `_render` between animation
-    // frames only queue one new rAF (e.g. array mutation & chunked render)
-    if (this.items && this.__limit < this.items.length) {
-      this.__debounceRender(this.__requestRenderChunk);
-    }
-  }
-
-  __requestRenderChunk() {
-    requestAnimationFrame(() => this.__renderChunk());
-  }
-
-  __renderChunk() {
-    // Simple auto chunkSize throttling algorithm based on feedback loop:
-    // measure actual time between frames and scale chunk count by ratio
-    // of target/actual frame time
-    let currChunkTime = performance.now();
-    let ratio = this._targetFrameTime / (currChunkTime - this.__lastChunkTime);
-    this.__chunkCount = Math.round(this.__chunkCount * ratio) || 1;
-    this.__limit += this.__chunkCount;
-    this.__lastChunkTime = currChunkTime;
-    this.__debounceRender(this.__render);
-  }
-
-  __observeChanged() {
-    this.__observePaths = this.observe && this.observe.replace('.*', '.').split(' ');
-  }
-
-  __itemsChanged(change) {
-    if (this.items && !Array.isArray(this.items)) {
-      console.warn('dom-repeat expected array for `items`, found', this.items);
-    }
-    // If path was to an item (e.g. 'items.3' or 'items.3.foo'), forward the
-    // path to that instance synchronously (retuns false for non-item paths)
-    if (!this.__handleItemPath(change.path, change.value)) {
-      // Otherwise, the array was reset ('items') or spliced ('items.splices'),
-      // so queue a full refresh
-      this.__initializeChunking();
-      this.__debounceRender(this.__render);
-    }
-  }
-
-  __handleObservedPaths(path) {
-    if (this.__observePaths) {
-      path = path.substring(path.indexOf('.') + 1);
-      let paths = this.__observePaths;
-      for (let i = 0; i < paths.length; i++) {
-        if (path.indexOf(paths[i]) === 0) {
-          this.__debounceRender(this.__render, this.delay);
-          return true;
+  }, {
+    key: '__handleObservedPaths',
+    value: function __handleObservedPaths(path) {
+      if (this.__observePaths) {
+        path = path.substring(path.indexOf('.') + 1);
+        var paths = this.__observePaths;
+        for (var i = 0; i < paths.length; i++) {
+          if (path.indexOf(paths[i]) === 0) {
+            this.__debounceRender(this.__render, this.delay);
+            return true;
+          }
         }
       }
     }
-  }
 
-  /**
-   * @param {function(this:DomRepeat)} fn Function to debounce.
-   * @param {number=} delay Delay in ms to debounce by.
-   */
-  __debounceRender(fn, delay = 0) {
-    this.__renderDebouncer = __WEBPACK_IMPORTED_MODULE_2__utils_debounce_js__["a" /* Debouncer */].debounce(this.__renderDebouncer, delay > 0 ? __WEBPACK_IMPORTED_MODULE_6__utils_async_js__["b" /* timeOut */].after(delay) : __WEBPACK_IMPORTED_MODULE_6__utils_async_js__["a" /* microTask */], fn.bind(this));
-    Object(__WEBPACK_IMPORTED_MODULE_3__utils_flush_js__["a" /* enqueueDebouncer */])(this.__renderDebouncer);
-  }
+    /**
+     * @param {function(this:DomRepeat)} fn Function to debounce.
+     * @param {number=} delay Delay in ms to debounce by.
+     */
 
-  /**
-   * Forces the element to render its content. Normally rendering is
-   * asynchronous to a provoking change. This is done for efficiency so
-   * that multiple changes trigger only a single render. The render method
-   * should be called if, for example, template rendering is required to
-   * validate application state.
-   */
-  render() {
-    // Queue this repeater, then flush all in order
-    this.__debounceRender(this.__render);
-    Object(__WEBPACK_IMPORTED_MODULE_3__utils_flush_js__["b" /* flush */])();
-  }
+  }, {
+    key: '__debounceRender',
+    value: function __debounceRender(fn) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
-  __render() {
-    if (!this.__ensureTemplatized()) {
-      // No template found yet
-      return;
+      this.__renderDebouncer = _debounce.Debouncer.debounce(this.__renderDebouncer, delay > 0 ? _async.timeOut.after(delay) : _async.microTask, fn.bind(this));
+      (0, _flush.enqueueDebouncer)(this.__renderDebouncer);
     }
-    this.__applyFullRefresh();
-    // Reset the pool
-    // TODO(kschaaf): Reuse pool across turns and nested templates
-    // Now that objects/arrays are re-evaluated when set, we can safely
-    // reuse pooled instances across turns, however we still need to decide
-    // semantics regarding how long to hold, how many to hold, etc.
-    this.__pool.length = 0;
-    // Set rendered item count
-    this._setRenderedItemCount(this.__instances.length);
-    // Notify users
-    this.dispatchEvent(new CustomEvent('dom-change', {
-      bubbles: true,
-      composed: true
-    }));
-    // Check to see if we need to render more items
-    this.__tryRenderChunk();
-  }
 
-  __applyFullRefresh() {
-    let items = this.items || [];
-    let isntIdxToItemsIdx = new Array(items.length);
-    for (let i = 0; i < items.length; i++) {
-      isntIdxToItemsIdx[i] = i;
+    /**
+     * Forces the element to render its content. Normally rendering is
+     * asynchronous to a provoking change. This is done for efficiency so
+     * that multiple changes trigger only a single render. The render method
+     * should be called if, for example, template rendering is required to
+     * validate application state.
+     */
+
+  }, {
+    key: 'render',
+    value: function render() {
+      // Queue this repeater, then flush all in order
+      this.__debounceRender(this.__render);
+      (0, _flush.flush)();
     }
-    // Apply user filter
-    if (this.__filterFn) {
-      isntIdxToItemsIdx = isntIdxToItemsIdx.filter((i, idx, array) => this.__filterFn(items[i], idx, array));
+  }, {
+    key: '__render',
+    value: function __render() {
+      if (!this.__ensureTemplatized()) {
+        // No template found yet
+        return;
+      }
+      this.__applyFullRefresh();
+      // Reset the pool
+      // TODO(kschaaf): Reuse pool across turns and nested templates
+      // Now that objects/arrays are re-evaluated when set, we can safely
+      // reuse pooled instances across turns, however we still need to decide
+      // semantics regarding how long to hold, how many to hold, etc.
+      this.__pool.length = 0;
+      // Set rendered item count
+      this._setRenderedItemCount(this.__instances.length);
+      // Notify users
+      this.dispatchEvent(new CustomEvent('dom-change', {
+        bubbles: true,
+        composed: true
+      }));
+      // Check to see if we need to render more items
+      this.__tryRenderChunk();
     }
-    // Apply user sort
-    if (this.__sortFn) {
-      isntIdxToItemsIdx.sort((a, b) => this.__sortFn(items[a], items[b]));
+  }, {
+    key: '__applyFullRefresh',
+    value: function __applyFullRefresh() {
+      var _this4 = this;
+
+      var items = this.items || [];
+      var isntIdxToItemsIdx = new Array(items.length);
+      for (var i = 0; i < items.length; i++) {
+        isntIdxToItemsIdx[i] = i;
+      }
+      // Apply user filter
+      if (this.__filterFn) {
+        isntIdxToItemsIdx = isntIdxToItemsIdx.filter(function (i, idx, array) {
+          return _this4.__filterFn(items[i], idx, array);
+        });
+      }
+      // Apply user sort
+      if (this.__sortFn) {
+        isntIdxToItemsIdx.sort(function (a, b) {
+          return _this4.__sortFn(items[a], items[b]);
+        });
+      }
+      // items->inst map kept for item path forwarding
+      var itemsIdxToInstIdx = this.__itemsIdxToInstIdx = {};
+      var instIdx = 0;
+      // Generate instances and assign items
+      var limit = Math.min(isntIdxToItemsIdx.length, this.__limit);
+      for (; instIdx < limit; instIdx++) {
+        var inst = this.__instances[instIdx];
+        var itemIdx = isntIdxToItemsIdx[instIdx];
+        var item = items[itemIdx];
+        itemsIdxToInstIdx[itemIdx] = instIdx;
+        if (inst && instIdx < this.__limit) {
+          inst._setPendingProperty(this.as, item);
+          inst._setPendingProperty(this.indexAs, instIdx);
+          inst._setPendingProperty(this.itemsIndexAs, itemIdx);
+          inst._flushProperties();
+        } else {
+          this.__insertInstance(item, instIdx, itemIdx);
+        }
+      }
+      // Remove any extra instances from previous state
+      for (var _i = this.__instances.length - 1; _i >= instIdx; _i--) {
+        this.__detachAndRemoveInstance(_i);
+      }
     }
-    // items->inst map kept for item path forwarding
-    const itemsIdxToInstIdx = this.__itemsIdxToInstIdx = {};
-    let instIdx = 0;
-    // Generate instances and assign items
-    const limit = Math.min(isntIdxToItemsIdx.length, this.__limit);
-    for (; instIdx < limit; instIdx++) {
-      let inst = this.__instances[instIdx];
-      let itemIdx = isntIdxToItemsIdx[instIdx];
-      let item = items[itemIdx];
-      itemsIdxToInstIdx[itemIdx] = instIdx;
-      if (inst && instIdx < this.__limit) {
+  }, {
+    key: '__detachInstance',
+    value: function __detachInstance(idx) {
+      var inst = this.__instances[idx];
+      for (var i = 0; i < inst.children.length; i++) {
+        var el = inst.children[i];
+        inst.root.appendChild(el);
+      }
+      return inst;
+    }
+  }, {
+    key: '__attachInstance',
+    value: function __attachInstance(idx, parent) {
+      var inst = this.__instances[idx];
+      parent.insertBefore(inst.root, this);
+    }
+  }, {
+    key: '__detachAndRemoveInstance',
+    value: function __detachAndRemoveInstance(idx) {
+      var inst = this.__detachInstance(idx);
+      if (inst) {
+        this.__pool.push(inst);
+      }
+      this.__instances.splice(idx, 1);
+    }
+  }, {
+    key: '__stampInstance',
+    value: function __stampInstance(item, instIdx, itemIdx) {
+      var model = {};
+      model[this.as] = item;
+      model[this.indexAs] = instIdx;
+      model[this.itemsIndexAs] = itemIdx;
+      return new this.__ctor(model);
+    }
+  }, {
+    key: '__insertInstance',
+    value: function __insertInstance(item, instIdx, itemIdx) {
+      var inst = this.__pool.pop();
+      if (inst) {
+        // TODO(kschaaf): If the pool is shared across turns, hostProps
+        // need to be re-set to reused instances in addition to item
         inst._setPendingProperty(this.as, item);
         inst._setPendingProperty(this.indexAs, instIdx);
         inst._setPendingProperty(this.itemsIndexAs, itemIdx);
         inst._flushProperties();
       } else {
-        this.__insertInstance(item, instIdx, itemIdx);
+        inst = this.__stampInstance(item, instIdx, itemIdx);
+      }
+      var beforeRow = this.__instances[instIdx + 1];
+      var beforeNode = beforeRow ? beforeRow.children[0] : this;
+      this.parentNode.insertBefore(inst.root, beforeNode);
+      this.__instances[instIdx] = inst;
+      return inst;
+    }
+
+    // Implements extension point from Templatize mixin
+
+  }, {
+    key: '_showHideChildren',
+    value: function _showHideChildren(hidden) {
+      for (var i = 0; i < this.__instances.length; i++) {
+        this.__instances[i]._showHideChildren(hidden);
       }
     }
-    // Remove any extra instances from previous state
-    for (let i = this.__instances.length - 1; i >= instIdx; i--) {
-      this.__detachAndRemoveInstance(i);
-    }
-  }
 
-  __detachInstance(idx) {
-    let inst = this.__instances[idx];
-    for (let i = 0; i < inst.children.length; i++) {
-      let el = inst.children[i];
-      inst.root.appendChild(el);
-    }
-    return inst;
-  }
+    // Called as a side effect of a host items.<key>.<path> path change,
+    // responsible for notifying item.<path> changes to inst for key
 
-  __attachInstance(idx, parent) {
-    let inst = this.__instances[idx];
-    parent.insertBefore(inst.root, this);
-  }
-
-  __detachAndRemoveInstance(idx) {
-    let inst = this.__detachInstance(idx);
-    if (inst) {
-      this.__pool.push(inst);
-    }
-    this.__instances.splice(idx, 1);
-  }
-
-  __stampInstance(item, instIdx, itemIdx) {
-    let model = {};
-    model[this.as] = item;
-    model[this.indexAs] = instIdx;
-    model[this.itemsIndexAs] = itemIdx;
-    return new this.__ctor(model);
-  }
-
-  __insertInstance(item, instIdx, itemIdx) {
-    let inst = this.__pool.pop();
-    if (inst) {
-      // TODO(kschaaf): If the pool is shared across turns, hostProps
-      // need to be re-set to reused instances in addition to item
-      inst._setPendingProperty(this.as, item);
-      inst._setPendingProperty(this.indexAs, instIdx);
-      inst._setPendingProperty(this.itemsIndexAs, itemIdx);
-      inst._flushProperties();
-    } else {
-      inst = this.__stampInstance(item, instIdx, itemIdx);
-    }
-    let beforeRow = this.__instances[instIdx + 1];
-    let beforeNode = beforeRow ? beforeRow.children[0] : this;
-    this.parentNode.insertBefore(inst.root, beforeNode);
-    this.__instances[instIdx] = inst;
-    return inst;
-  }
-
-  // Implements extension point from Templatize mixin
-  _showHideChildren(hidden) {
-    for (let i = 0; i < this.__instances.length; i++) {
-      this.__instances[i]._showHideChildren(hidden);
-    }
-  }
-
-  // Called as a side effect of a host items.<key>.<path> path change,
-  // responsible for notifying item.<path> changes to inst for key
-  __handleItemPath(path, value) {
-    let itemsPath = path.slice(6); // 'items.'.length == 6
-    let dot = itemsPath.indexOf('.');
-    let itemsIdx = dot < 0 ? itemsPath : itemsPath.substring(0, dot);
-    // If path was index into array...
-    if (itemsIdx == parseInt(itemsIdx, 10)) {
-      let itemSubPath = dot < 0 ? '' : itemsPath.substring(dot + 1);
-      // If the path is observed, it will trigger a full refresh
-      this.__handleObservedPaths(itemSubPath);
-      // Note, even if a rull refresh is triggered, always do the path
-      // notification because unless mutableData is used for dom-repeat
-      // and all elements in the instance subtree, a full refresh may
-      // not trigger the proper update.
-      let instIdx = this.__itemsIdxToInstIdx[itemsIdx];
-      let inst = this.__instances[instIdx];
-      if (inst) {
-        let itemPath = this.as + (itemSubPath ? '.' + itemSubPath : '');
-        // This is effectively `notifyPath`, but avoids some of the overhead
-        // of the public API
-        inst._setPendingPropertyOrPath(itemPath, value, false, true);
-        inst._flushProperties();
+  }, {
+    key: '__handleItemPath',
+    value: function __handleItemPath(path, value) {
+      var itemsPath = path.slice(6); // 'items.'.length == 6
+      var dot = itemsPath.indexOf('.');
+      var itemsIdx = dot < 0 ? itemsPath : itemsPath.substring(0, dot);
+      // If path was index into array...
+      if (itemsIdx == parseInt(itemsIdx, 10)) {
+        var itemSubPath = dot < 0 ? '' : itemsPath.substring(dot + 1);
+        // If the path is observed, it will trigger a full refresh
+        this.__handleObservedPaths(itemSubPath);
+        // Note, even if a rull refresh is triggered, always do the path
+        // notification because unless mutableData is used for dom-repeat
+        // and all elements in the instance subtree, a full refresh may
+        // not trigger the proper update.
+        var instIdx = this.__itemsIdxToInstIdx[itemsIdx];
+        var inst = this.__instances[instIdx];
+        if (inst) {
+          var itemPath = this.as + (itemSubPath ? '.' + itemSubPath : '');
+          // This is effectively `notifyPath`, but avoids some of the overhead
+          // of the public API
+          inst._setPendingPropertyOrPath(itemPath, value, false, true);
+          inst._flushProperties();
+        }
+        return true;
       }
-      return true;
     }
-  }
 
-  /**
-   * Returns the item associated with a given element stamped by
-   * this `dom-repeat`.
-   *
-   * Note, to modify sub-properties of the item,
-   * `modelForElement(el).set('item.<sub-prop>', value)`
-   * should be used.
-   *
-   * @param {HTMLElement} el Element for which to return the item.
-   * @return {*} Item associated with the element.
-   */
-  itemForElement(el) {
-    let instance = this.modelForElement(el);
-    return instance && instance[this.as];
-  }
+    /**
+     * Returns the item associated with a given element stamped by
+     * this `dom-repeat`.
+     *
+     * Note, to modify sub-properties of the item,
+     * `modelForElement(el).set('item.<sub-prop>', value)`
+     * should be used.
+     *
+     * @param {HTMLElement} el Element for which to return the item.
+     * @return {*} Item associated with the element.
+     */
 
-  /**
-   * Returns the inst index for a given element stamped by this `dom-repeat`.
-   * If `sort` is provided, the index will reflect the sorted order (rather
-   * than the original array order).
-   *
-   * @param {HTMLElement} el Element for which to return the index.
-   * @return {*} Row index associated with the element (note this may
-   *   not correspond to the array index if a user `sort` is applied).
-   */
-  indexForElement(el) {
-    let instance = this.modelForElement(el);
-    return instance && instance[this.indexAs];
-  }
+  }, {
+    key: 'itemForElement',
+    value: function itemForElement(el) {
+      var instance = this.modelForElement(el);
+      return instance && instance[this.as];
+    }
 
-  /**
-   * Returns the template "model" associated with a given element, which
-   * serves as the binding scope for the template instance the element is
-   * contained in. A template model is an instance of `Polymer.Base`, and
-   * should be used to manipulate data associated with this template instance.
-   *
-   * Example:
-   *
-   *   let model = modelForElement(el);
-   *   if (model.index < 10) {
-   *     model.set('item.checked', true);
-   *   }
-   *
-   * @param {HTMLElement} el Element for which to return a template model.
-   * @return {TemplateInstanceBase} Model representing the binding scope for
-   *   the element.
-   */
-  modelForElement(el) {
-    return __WEBPACK_IMPORTED_MODULE_1__utils_templatize_js__["b" /* Templatize */].modelForElement(this.template, el);
-  }
+    /**
+     * Returns the inst index for a given element stamped by this `dom-repeat`.
+     * If `sort` is provided, the index will reflect the sorted order (rather
+     * than the original array order).
+     *
+     * @param {HTMLElement} el Element for which to return the index.
+     * @return {*} Row index associated with the element (note this may
+     *   not correspond to the array index if a user `sort` is applied).
+     */
 
-}
+  }, {
+    key: 'indexForElement',
+    value: function indexForElement(el) {
+      var instance = this.modelForElement(el);
+      return instance && instance[this.indexAs];
+    }
+
+    /**
+     * Returns the template "model" associated with a given element, which
+     * serves as the binding scope for the template instance the element is
+     * contained in. A template model is an instance of `Polymer.Base`, and
+     * should be used to manipulate data associated with this template instance.
+     *
+     * Example:
+     *
+     *   let model = modelForElement(el);
+     *   if (model.index < 10) {
+     *     model.set('item.checked', true);
+     *   }
+     *
+     * @param {HTMLElement} el Element for which to return a template model.
+     * @return {TemplateInstanceBase} Model representing the binding scope for
+     *   the element.
+     */
+
+  }, {
+    key: 'modelForElement',
+    value: function modelForElement(el) {
+      return _templatize.Templatize.modelForElement(this.template, el);
+    }
+  }]);
+
+  return DomRepeat;
+}(domRepeatBase);
 
 customElements.define(DomRepeat.is, DomRepeat);
 
-
+exports.DomRepeat = DomRepeat;
 
 /***/ }),
 
 /***/ 36:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_items_js__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_favorites_js__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_reselect_src_index_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__location_js__ = __webpack_require__(4);
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.currentItemSelector = exports.itemsSelector = undefined;
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-
-
 // HACK: Don't need to import list actions just for this.
 // import { RECEIVE_LIST } from '../actions/lists.js';
 
 
+var _items = __webpack_require__(43);
 
-const items = (state = {}, action) => {
+var _favorites = __webpack_require__(34);
+
+var _index = __webpack_require__(14);
+
+var _location = __webpack_require__(4);
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var items = function items() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
   switch (action.type) {
-    case __WEBPACK_IMPORTED_MODULE_0__actions_items_js__["c" /* REQUEST_ITEM */]:
-    case __WEBPACK_IMPORTED_MODULE_0__actions_items_js__["b" /* RECEIVE_ITEM */]:
-    case __WEBPACK_IMPORTED_MODULE_0__actions_items_js__["a" /* FAIL_ITEM */]:
-      const itemId = action.itemId;
-      return _extends({}, state, {
-        [itemId]: item(state[itemId], action)
-      });
+    case _items.REQUEST_ITEM:
+    case _items.RECEIVE_ITEM:
+    case _items.FAIL_ITEM:
+      var itemId = action.itemId;
+      return _extends({}, state, _defineProperty({}, itemId, item(state[itemId], action)));
     case 'RECEIVE_LIST':
-      return action.items.reduce((obj, item) => {
+      return action.items.reduce(function (obj, item) {
         obj[item.id] = item;
         return obj;
       }, _extends({}, state));
-    case __WEBPACK_IMPORTED_MODULE_1__actions_favorites_js__["a" /* ADD_FAVORITE */]:
-      return _extends({}, state, {
-        [action.item.id]: action.item
-      });
+    case _favorites.ADD_FAVORITE:
+      return _extends({}, state, _defineProperty({}, action.item.id, action.item));
     default:
       return state;
   }
 };
 
-const item = (state = {}, action) => {
+var item = function item() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
   switch (action.type) {
-    case __WEBPACK_IMPORTED_MODULE_0__actions_items_js__["c" /* REQUEST_ITEM */]:
+    case _items.REQUEST_ITEM:
       return _extends({}, state, {
         id: action.itemId,
         failure: false,
         isFetching: true
       });
-    case __WEBPACK_IMPORTED_MODULE_0__actions_items_js__["b" /* RECEIVE_ITEM */]:
+    case _items.RECEIVE_ITEM:
       return _extends({}, state, {
         failure: false,
         isFetching: false
       }, action.data);
-    case __WEBPACK_IMPORTED_MODULE_0__actions_items_js__["a" /* FAIL_ITEM */]:
+    case _items.FAIL_ITEM:
       return _extends({}, state, {
         failure: true,
         isFetching: false
@@ -855,43 +957,49 @@ const item = (state = {}, action) => {
   }
 };
 
-/* harmony default export */ __webpack_exports__["b"] = (items);
+exports.default = items;
+var itemsSelector = exports.itemsSelector = function itemsSelector(state) {
+  return state.items;
+};
 
-const itemsSelector = state => state.items;
-/* harmony export (immutable) */ __webpack_exports__["c"] = itemsSelector;
-
-
-const currentItemSelector = Object(__WEBPACK_IMPORTED_MODULE_2__node_modules_reselect_src_index_js__["a" /* createSelector */])(itemsSelector, __WEBPACK_IMPORTED_MODULE_3__location_js__["c" /* splitPathnameSelector */], __WEBPACK_IMPORTED_MODULE_3__location_js__["d" /* urlSearchParamsSelector */], (items, splitPath, params) => {
+var currentItemSelector = exports.currentItemSelector = (0, _index.createSelector)(itemsSelector, _location.splitPathnameSelector, _location.urlSearchParamsSelector, function (items, splitPath, params) {
   switch (splitPath[0]) {
     case 'item':
-      const id = params.get('id');
-      return items[id] || { id };
+      var id = params.get('id');
+      return items[id] || { id: id };
     default:
       return null;
   }
 });
-/* harmony export (immutable) */ __webpack_exports__["a"] = currentItemSelector;
-
 
 /***/ }),
 
 /***/ 37:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_favorites_js__ = __webpack_require__(34);
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.favoritesSelector = undefined;
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _favorites = __webpack_require__(34);
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-const favorites = (state = {}, action) => {
+var favorites = function favorites() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
   switch (action.type) {
-    case __WEBPACK_IMPORTED_MODULE_0__actions_favorites_js__["a" /* ADD_FAVORITE */]:
-      return _extends({}, state, {
-        [action.item.id]: true
-      });
-    case __WEBPACK_IMPORTED_MODULE_0__actions_favorites_js__["b" /* REMOVE_FAVORITE */]:
-      const result = _extends({}, state);
+    case _favorites.ADD_FAVORITE:
+      return _extends({}, state, _defineProperty({}, action.item.id, true));
+    case _favorites.REMOVE_FAVORITE:
+      var result = _extends({}, state);
       delete result[action.item.id];
       return result;
     default:
@@ -899,130 +1007,145 @@ const favorites = (state = {}, action) => {
   }
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (favorites);
-
-const favoritesSelector = state => state.favorites;
-/* harmony export (immutable) */ __webpack_exports__["b"] = favoritesSelector;
-
+exports.default = favorites;
+var favoritesSelector = exports.favoritesSelector = function favoritesSelector(state) {
+  return state.favorites;
+};
 
 /***/ }),
 
 /***/ 43:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-const REQUEST_ITEM = 'REQUEST_ITEM';
-/* harmony export (immutable) */ __webpack_exports__["c"] = REQUEST_ITEM;
-
-const RECEIVE_ITEM = 'RECEIVE_ITEM';
-/* harmony export (immutable) */ __webpack_exports__["b"] = RECEIVE_ITEM;
-
-const FAIL_ITEM = 'FAIL_ITEM';
-/* harmony export (immutable) */ __webpack_exports__["a"] = FAIL_ITEM;
 
 
-const fetchItem = item => dispatch => {
-  dispatch(requestItem(item.id));
-  fetch(`https://node-hnapi.herokuapp.com/item/${item.id}`).then(res => res.json()).then(data => dispatch(receiveItem(item.id, data))).catch(() => dispatch(failItem(item.id)));
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var REQUEST_ITEM = exports.REQUEST_ITEM = 'REQUEST_ITEM';
+var RECEIVE_ITEM = exports.RECEIVE_ITEM = 'RECEIVE_ITEM';
+var FAIL_ITEM = exports.FAIL_ITEM = 'FAIL_ITEM';
+
+var fetchItem = exports.fetchItem = function fetchItem(item) {
+  return function (dispatch) {
+    dispatch(requestItem(item.id));
+    fetch('https://node-hnapi.herokuapp.com/item/' + item.id).then(function (res) {
+      return res.json();
+    }).then(function (data) {
+      return dispatch(receiveItem(item.id, data));
+    }).catch(function () {
+      return dispatch(failItem(item.id));
+    });
+  };
 };
-/* harmony export (immutable) */ __webpack_exports__["d"] = fetchItem;
 
-
-const fetchItemIfNeeded = item => dispatch => {
-  if (item && !item.comments && !item.isFetching) {
-    dispatch(fetchItem(item));
-  }
+var fetchItemIfNeeded = exports.fetchItemIfNeeded = function fetchItemIfNeeded(item) {
+  return function (dispatch) {
+    if (item && !item.comments && !item.isFetching) {
+      dispatch(fetchItem(item));
+    }
+  };
 };
-/* harmony export (immutable) */ __webpack_exports__["e"] = fetchItemIfNeeded;
 
-
-const requestItem = itemId => {
+var requestItem = function requestItem(itemId) {
   return {
     type: REQUEST_ITEM,
-    itemId
+    itemId: itemId
   };
 };
 
-const receiveItem = (itemId, data) => {
+var receiveItem = function receiveItem(itemId, data) {
   return {
     type: RECEIVE_ITEM,
-    itemId,
-    data
+    itemId: itemId,
+    data: data
   };
 };
 
-const failItem = itemId => {
+var failItem = function failItem(itemId) {
   return {
     type: FAIL_ITEM,
-    itemId
+    itemId: itemId
   };
 };
 
 /***/ }),
 
 /***/ 44:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_polymer_polymer_polymer_element_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_favorites_js__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_styles_js__ = __webpack_require__(11);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.HnSummaryElement = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _polymerElement = __webpack_require__(10);
 
-class HnSummaryElement extends __WEBPACK_IMPORTED_MODULE_0__node_modules_polymer_polymer_polymer_element_js__["a" /* Element */] {
-  static get template() {
-    return `
-    ${__WEBPACK_IMPORTED_MODULE_3__shared_styles_js__["a" /* sharedStyles */]}
-    <style>
-      :host {
-        display: block;
-        margin: 1em 0;
-      }
-    </style>
-    <a href$="[[item.url]]">[[item.title]]</a>
-    <span class="domain">([[item.domain]])</span>
-    <div class="info">
-      [[item.points]] points by
-      <a href$="[[_getUserHref(item)]]">[[item.user]]</a>
-      [[item.time_ago]]
-      <span class="spacer">|</span>
-      <a href$="[[_getItemHref(item)]]">[[item.comments_count]] comments</a>
-      <button hidden$="[[isFavorite]]" on-click="_markItem">Mark</button>
-      <button hidden$="[[!isFavorite]]" on-click="_unmarkItem">Unmark</button>
-    </div>
-    `;
+var _store = __webpack_require__(12);
+
+var _favorites = __webpack_require__(34);
+
+var _sharedStyles = __webpack_require__(11);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HnSummaryElement = exports.HnSummaryElement = function (_PolymerElement) {
+  _inherits(HnSummaryElement, _PolymerElement);
+
+  function HnSummaryElement() {
+    _classCallCheck(this, HnSummaryElement);
+
+    return _possibleConstructorReturn(this, (HnSummaryElement.__proto__ || Object.getPrototypeOf(HnSummaryElement)).apply(this, arguments));
   }
 
-  static get properties() {
-    return {
-      item: Object,
+  _createClass(HnSummaryElement, [{
+    key: '_getItemHref',
+    value: function _getItemHref(item) {
+      return item && item.id ? '/item?id=' + item.id : null;
+    }
+  }, {
+    key: '_getUserHref',
+    value: function _getUserHref(item) {
+      return item && item.user ? '/user?id=' + item.user : null;
+    }
+  }, {
+    key: '_markItem',
+    value: function _markItem() {
+      _store.store.dispatch((0, _favorites.saveFavorite)(this.item));
+    }
+  }, {
+    key: '_unmarkItem',
+    value: function _unmarkItem() {
+      _store.store.dispatch((0, _favorites.deleteFavorite)(this.item));
+    }
+  }], [{
+    key: 'template',
+    get: function get() {
+      return '\n    ' + _sharedStyles.sharedStyles + '\n    <style>\n      :host {\n        display: block;\n        margin: 1em 0;\n      }\n    </style>\n    <a href$="[[item.url]]">[[item.title]]</a>\n    <span class="domain">([[item.domain]])</span>\n    <div class="info">\n      [[item.points]] points by\n      <a href$="[[_getUserHref(item)]]">[[item.user]]</a>\n      [[item.time_ago]]\n      <span class="spacer">|</span>\n      <a href$="[[_getItemHref(item)]]">[[item.comments_count]] comments</a>\n      <button hidden$="[[isFavorite]]" on-click="_markItem">Mark</button>\n      <button hidden$="[[!isFavorite]]" on-click="_unmarkItem">Unmark</button>\n    </div>\n    ';
+    }
+  }, {
+    key: 'properties',
+    get: function get() {
+      return {
+        item: Object,
 
-      isFavorite: Boolean
-    };
-  }
+        isFavorite: Boolean
+      };
+    }
+  }]);
 
-  _getItemHref(item) {
-    return item && item.id ? `/item?id=${item.id}` : null;
-  }
-
-  _getUserHref(item) {
-    return item && item.user ? `/user?id=${item.user}` : null;
-  }
-
-  _markItem() {
-    __WEBPACK_IMPORTED_MODULE_1__store_js__["a" /* store */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_favorites_js__["e" /* saveFavorite */])(this.item));
-  }
-
-  _unmarkItem() {
-    __WEBPACK_IMPORTED_MODULE_1__store_js__["a" /* store */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_favorites_js__["c" /* deleteFavorite */])(this.item));
-  }
-}
-/* unused harmony export HnSummaryElement */
-
+  return HnSummaryElement;
+}(_polymerElement.Element);
 
 customElements.define('hn-summary', HnSummaryElement);
 

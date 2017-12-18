@@ -55,7 +55,10 @@ export const urlSearchParamsSelector = createSelector(
     if ('URLSearchParams' in window) {
       return new URLSearchParams(search);
     } else {
-      return new Map(search.slice(1).split('&').map(s => s.split('=')));
+      return search.slice(1).split('&').reduce((map, s) => {
+        map.set(...s.split('=').map(window.decodeURIComponent));
+        return map;
+      }, new Map());
     }
   }
 );

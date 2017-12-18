@@ -1,22 +1,37 @@
 webpackJsonp([2],{
 
 /***/ 45:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* unused harmony export DomIf */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_element_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_templatize_js__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_debounce_js__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_flush_js__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_async_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_path_js__ = __webpack_require__(16);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DomIf = undefined;
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _polymerElement = __webpack_require__(10);
 
+var _templatize = __webpack_require__(38);
+
+var _debounce = __webpack_require__(40);
+
+var _flush = __webpack_require__(41);
+
+var _async = __webpack_require__(13);
+
+var _path = __webpack_require__(16);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
  * The `<dom-if>` element will stamp a light-dom `<template>` child when
@@ -40,232 +55,264 @@ webpackJsonp([2],{
  * @summary Custom element that conditionally stamps and hides or removes
  *   template content based on a boolean flag.
  */
-class DomIf extends __WEBPACK_IMPORTED_MODULE_0__polymer_element_js__["a" /* Element */] {
+var DomIf = function (_Element) {
+  _inherits(DomIf, _Element);
 
-  // Not needed to find template; can be removed once the analyzer
-  // can find the tag name from customElements.define call
-  static get is() {
-    return 'dom-if';
+  _createClass(DomIf, null, [{
+    key: 'is',
+
+
+    // Not needed to find template; can be removed once the analyzer
+    // can find the tag name from customElements.define call
+    get: function get() {
+      return 'dom-if';
+    }
+  }, {
+    key: 'template',
+    get: function get() {
+      return null;
+    }
+  }, {
+    key: 'properties',
+    get: function get() {
+
+      return {
+
+        /**
+         * Fired whenever DOM is added or removed/hidden by this template (by
+         * default, rendering occurs lazily).  To force immediate rendering, call
+         * `render`.
+         *
+         * @event dom-change
+         */
+
+        /**
+         * A boolean indicating whether this template should stamp.
+         */
+        if: {
+          type: Boolean,
+          observer: '__debounceRender'
+        },
+
+        /**
+         * When true, elements will be removed from DOM and discarded when `if`
+         * becomes false and re-created and added back to the DOM when `if`
+         * becomes true.  By default, stamped elements will be hidden but left
+         * in the DOM when `if` becomes false, which is generally results
+         * in better performance.
+         */
+        restamp: {
+          type: Boolean,
+          observer: '__debounceRender'
+        }
+
+      };
+    }
+  }]);
+
+  function DomIf() {
+    _classCallCheck(this, DomIf);
+
+    var _this = _possibleConstructorReturn(this, (DomIf.__proto__ || Object.getPrototypeOf(DomIf)).call(this));
+
+    _this.__renderDebouncer = null;
+    _this.__invalidProps = null;
+    _this.__instance = null;
+    _this._lastIf = false;
+    _this.__ctor = null;
+    return _this;
   }
 
-  static get template() {
-    return null;
-  }
+  _createClass(DomIf, [{
+    key: '__debounceRender',
+    value: function __debounceRender() {
+      var _this2 = this;
 
-  static get properties() {
-
-    return {
-
-      /**
-       * Fired whenever DOM is added or removed/hidden by this template (by
-       * default, rendering occurs lazily).  To force immediate rendering, call
-       * `render`.
-       *
-       * @event dom-change
-       */
-
-      /**
-       * A boolean indicating whether this template should stamp.
-       */
-      if: {
-        type: Boolean,
-        observer: '__debounceRender'
-      },
-
-      /**
-       * When true, elements will be removed from DOM and discarded when `if`
-       * becomes false and re-created and added back to the DOM when `if`
-       * becomes true.  By default, stamped elements will be hidden but left
-       * in the DOM when `if` becomes false, which is generally results
-       * in better performance.
-       */
-      restamp: {
-        type: Boolean,
-        observer: '__debounceRender'
+      // Render is async for 2 reasons:
+      // 1. To eliminate dom creation trashing if user code thrashes `if` in the
+      //    same turn. This was more common in 1.x where a compound computed
+      //    property could result in the result changing multiple times, but is
+      //    mitigated to a large extent by batched property processing in 2.x.
+      // 2. To avoid double object propagation when a bag including values bound
+      //    to the `if` property as well as one or more hostProps could enqueue
+      //    the <dom-if> to flush before the <template>'s host property
+      //    forwarding. In that scenario creating an instance would result in
+      //    the host props being set once, and then the enqueued changes on the
+      //    template would set properties a second time, potentially causing an
+      //    object to be set to an instance more than once.  Creating the
+      //    instance async from flushing data ensures this doesn't happen. If
+      //    we wanted a sync option in the future, simply having <dom-if> flush
+      //    (or clear) its template's pending host properties before creating
+      //    the instance would also avoid the problem.
+      this.__renderDebouncer = _debounce.Debouncer.debounce(this.__renderDebouncer, _async.microTask, function () {
+        return _this2.__render();
+      });
+      (0, _flush.enqueueDebouncer)(this.__renderDebouncer);
+    }
+  }, {
+    key: 'disconnectedCallback',
+    value: function disconnectedCallback() {
+      _get(DomIf.prototype.__proto__ || Object.getPrototypeOf(DomIf.prototype), 'disconnectedCallback', this).call(this);
+      if (!this.parentNode || this.parentNode.nodeType == Node.DOCUMENT_FRAGMENT_NODE && !this.parentNode.host) {
+        this.__teardownInstance();
       }
-
-    };
-  }
-
-  constructor() {
-    super();
-    this.__renderDebouncer = null;
-    this.__invalidProps = null;
-    this.__instance = null;
-    this._lastIf = false;
-    this.__ctor = null;
-  }
-
-  __debounceRender() {
-    // Render is async for 2 reasons:
-    // 1. To eliminate dom creation trashing if user code thrashes `if` in the
-    //    same turn. This was more common in 1.x where a compound computed
-    //    property could result in the result changing multiple times, but is
-    //    mitigated to a large extent by batched property processing in 2.x.
-    // 2. To avoid double object propagation when a bag including values bound
-    //    to the `if` property as well as one or more hostProps could enqueue
-    //    the <dom-if> to flush before the <template>'s host property
-    //    forwarding. In that scenario creating an instance would result in
-    //    the host props being set once, and then the enqueued changes on the
-    //    template would set properties a second time, potentially causing an
-    //    object to be set to an instance more than once.  Creating the
-    //    instance async from flushing data ensures this doesn't happen. If
-    //    we wanted a sync option in the future, simply having <dom-if> flush
-    //    (or clear) its template's pending host properties before creating
-    //    the instance would also avoid the problem.
-    this.__renderDebouncer = __WEBPACK_IMPORTED_MODULE_2__utils_debounce_js__["a" /* Debouncer */].debounce(this.__renderDebouncer, __WEBPACK_IMPORTED_MODULE_4__utils_async_js__["a" /* microTask */], () => this.__render());
-    Object(__WEBPACK_IMPORTED_MODULE_3__utils_flush_js__["a" /* enqueueDebouncer */])(this.__renderDebouncer);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    if (!this.parentNode || this.parentNode.nodeType == Node.DOCUMENT_FRAGMENT_NODE && !this.parentNode.host) {
-      this.__teardownInstance();
     }
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    if (this.if) {
-      this.__debounceRender();
-    }
-  }
-
-  /**
-   * Forces the element to render its content. Normally rendering is
-   * asynchronous to a provoking change. This is done for efficiency so
-   * that multiple changes trigger only a single render. The render method
-   * should be called if, for example, template rendering is required to
-   * validate application state.
-   */
-  render() {
-    Object(__WEBPACK_IMPORTED_MODULE_3__utils_flush_js__["b" /* flush */])();
-  }
-
-  __render() {
-    if (this.if) {
-      if (!this.__ensureInstance()) {
-        // No template found yet
-        return;
+  }, {
+    key: 'connectedCallback',
+    value: function connectedCallback() {
+      _get(DomIf.prototype.__proto__ || Object.getPrototypeOf(DomIf.prototype), 'connectedCallback', this).call(this);
+      if (this.if) {
+        this.__debounceRender();
       }
-      this._showHideChildren();
-    } else if (this.restamp) {
-      this.__teardownInstance();
     }
-    if (!this.restamp && this.__instance) {
-      this._showHideChildren();
-    }
-    if (this.if != this._lastIf) {
-      this.dispatchEvent(new CustomEvent('dom-change', {
-        bubbles: true,
-        composed: true
-      }));
-      this._lastIf = this.if;
-    }
-  }
 
-  __ensureInstance() {
-    let parentNode = this.parentNode;
-    // Guard against element being detached while render was queued
-    if (parentNode) {
-      if (!this.__ctor) {
-        let template = this.querySelector('template');
-        if (!template) {
-          // Wait until childList changes and template should be there by then
-          let observer = new MutationObserver(() => {
-            if (this.querySelector('template')) {
-              observer.disconnect();
-              this.__render();
-            } else {
-              throw new Error('dom-if requires a <template> child');
+    /**
+     * Forces the element to render its content. Normally rendering is
+     * asynchronous to a provoking change. This is done for efficiency so
+     * that multiple changes trigger only a single render. The render method
+     * should be called if, for example, template rendering is required to
+     * validate application state.
+     */
+
+  }, {
+    key: 'render',
+    value: function render() {
+      (0, _flush.flush)();
+    }
+  }, {
+    key: '__render',
+    value: function __render() {
+      if (this.if) {
+        if (!this.__ensureInstance()) {
+          // No template found yet
+          return;
+        }
+        this._showHideChildren();
+      } else if (this.restamp) {
+        this.__teardownInstance();
+      }
+      if (!this.restamp && this.__instance) {
+        this._showHideChildren();
+      }
+      if (this.if != this._lastIf) {
+        this.dispatchEvent(new CustomEvent('dom-change', {
+          bubbles: true,
+          composed: true
+        }));
+        this._lastIf = this.if;
+      }
+    }
+  }, {
+    key: '__ensureInstance',
+    value: function __ensureInstance() {
+      var _this3 = this;
+
+      var parentNode = this.parentNode;
+      // Guard against element being detached while render was queued
+      if (parentNode) {
+        if (!this.__ctor) {
+          var template = this.querySelector('template');
+          if (!template) {
+            // Wait until childList changes and template should be there by then
+            var observer = new MutationObserver(function () {
+              if (_this3.querySelector('template')) {
+                observer.disconnect();
+                _this3.__render();
+              } else {
+                throw new Error('dom-if requires a <template> child');
+              }
+            });
+            observer.observe(this, { childList: true });
+            return false;
+          }
+          this.__ctor = _templatize.Templatize.templatize(template, this, {
+            // dom-if templatizer instances require `mutable: true`, as
+            // `__syncHostProperties` relies on that behavior to sync objects
+            mutableData: true,
+            /**
+             * @param {string} prop Property to forward
+             * @param {*} value Value of property
+             * @this {this}
+             */
+            forwardHostProp: function forwardHostProp(prop, value) {
+              if (this.__instance) {
+                if (this.if) {
+                  this.__instance.forwardHostProp(prop, value);
+                } else {
+                  // If we have an instance but are squelching host property
+                  // forwarding due to if being false, note the invalidated
+                  // properties so `__syncHostProperties` can sync them the next
+                  // time `if` becomes true
+                  this.__invalidProps = this.__invalidProps || Object.create(null);
+                  this.__invalidProps[(0, _path.root)(prop)] = true;
+                }
+              }
             }
           });
-          observer.observe(this, { childList: true });
-          return false;
         }
-        this.__ctor = __WEBPACK_IMPORTED_MODULE_1__utils_templatize_js__["b" /* Templatize */].templatize(template, this, {
-          // dom-if templatizer instances require `mutable: true`, as
-          // `__syncHostProperties` relies on that behavior to sync objects
-          mutableData: true,
-          /**
-           * @param {string} prop Property to forward
-           * @param {*} value Value of property
-           * @this {this}
-           */
-          forwardHostProp: function (prop, value) {
-            if (this.__instance) {
-              if (this.if) {
-                this.__instance.forwardHostProp(prop, value);
-              } else {
-                // If we have an instance but are squelching host property
-                // forwarding due to if being false, note the invalidated
-                // properties so `__syncHostProperties` can sync them the next
-                // time `if` becomes true
-                this.__invalidProps = this.__invalidProps || Object.create(null);
-                this.__invalidProps[Object(__WEBPACK_IMPORTED_MODULE_5__utils_path_js__["g" /* root */])(prop)] = true;
+        if (!this.__instance) {
+          this.__instance = new this.__ctor();
+          parentNode.insertBefore(this.__instance.root, this);
+        } else {
+          this.__syncHostProperties();
+          var c$ = this.__instance.children;
+          if (c$ && c$.length) {
+            // Detect case where dom-if was re-attached in new position
+            var lastChild = this.previousSibling;
+            if (lastChild !== c$[c$.length - 1]) {
+              for (var i = 0, n; i < c$.length && (n = c$[i]); i++) {
+                parentNode.insertBefore(n, this);
               }
             }
           }
-        });
+        }
       }
-      if (!this.__instance) {
-        this.__instance = new this.__ctor();
-        parentNode.insertBefore(this.__instance.root, this);
-      } else {
-        this.__syncHostProperties();
-        let c$ = this.__instance.children;
+      return true;
+    }
+  }, {
+    key: '__syncHostProperties',
+    value: function __syncHostProperties() {
+      var props = this.__invalidProps;
+      if (props) {
+        for (var prop in props) {
+          this.__instance._setPendingProperty(prop, this.__dataHost[prop]);
+        }
+        this.__invalidProps = null;
+        this.__instance._flushProperties();
+      }
+    }
+  }, {
+    key: '__teardownInstance',
+    value: function __teardownInstance() {
+      if (this.__instance) {
+        var c$ = this.__instance.children;
         if (c$ && c$.length) {
-          // Detect case where dom-if was re-attached in new position
-          let lastChild = this.previousSibling;
-          if (lastChild !== c$[c$.length - 1]) {
-            for (let i = 0, n; i < c$.length && (n = c$[i]); i++) {
-              parentNode.insertBefore(n, this);
-            }
+          // use first child parent, for case when dom-if may have been detached
+          var parent = c$[0].parentNode;
+          for (var i = 0, n; i < c$.length && (n = c$[i]); i++) {
+            parent.removeChild(n);
           }
         }
+        this.__instance = null;
+        this.__invalidProps = null;
       }
     }
-    return true;
-  }
-
-  __syncHostProperties() {
-    let props = this.__invalidProps;
-    if (props) {
-      for (let prop in props) {
-        this.__instance._setPendingProperty(prop, this.__dataHost[prop]);
+  }, {
+    key: '_showHideChildren',
+    value: function _showHideChildren() {
+      var hidden = this.__hideTemplateChildren__ || !this.if;
+      if (this.__instance) {
+        this.__instance._showHideChildren(hidden);
       }
-      this.__invalidProps = null;
-      this.__instance._flushProperties();
     }
-  }
+  }]);
 
-  __teardownInstance() {
-    if (this.__instance) {
-      let c$ = this.__instance.children;
-      if (c$ && c$.length) {
-        // use first child parent, for case when dom-if may have been detached
-        let parent = c$[0].parentNode;
-        for (let i = 0, n; i < c$.length && (n = c$[i]); i++) {
-          parent.removeChild(n);
-        }
-      }
-      this.__instance = null;
-      this.__invalidProps = null;
-    }
-  }
-
-  _showHideChildren() {
-    let hidden = this.__hideTemplateChildren__ || !this.if;
-    if (this.__instance) {
-      this.__instance._showHideChildren(hidden);
-    }
-  }
-
-}
+  return DomIf;
+}(_polymerElement.Element);
 
 customElements.define(DomIf.is, DomIf);
 
-
+exports.DomIf = DomIf;
 
 /***/ })
 

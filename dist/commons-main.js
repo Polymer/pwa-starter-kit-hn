@@ -1,24 +1,37 @@
 webpackJsonp([0],{
 
 /***/ 38:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Templatize; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TemplateInstanceBase; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_property_effects_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_mutable_data_js__ = __webpack_require__(39);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.TemplateInstanceBase = exports.Templatize = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+__webpack_require__(0);
+
+var _propertyEffects = __webpack_require__(17);
+
+var _mutableData = __webpack_require__(39);
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // Base class for HTMLTemplateElement extension that has property effects
 // machinery for propagating host properties to children. This is an ES5
 // class only because Babel (incorrectly) requires super() in the class
 // constructor even though no `this` is used and it returns an instance.
-let newInstance = null;
+var newInstance = null;
 /**
  * @constructor
  * @extends {HTMLTemplateElement}
@@ -37,13 +50,13 @@ HTMLTemplateElementExtension.prototype = Object.create(HTMLTemplateElement.proto
  * @implements {Polymer_PropertyEffects}
  * @extends {HTMLTemplateElementExtension}
  */
-const DataTemplate = Object(__WEBPACK_IMPORTED_MODULE_1__mixins_property_effects_js__["a" /* PropertyEffects */])(HTMLTemplateElementExtension);
+var DataTemplate = (0, _propertyEffects.PropertyEffects)(HTMLTemplateElementExtension);
 /**
  * @constructor
  * @implements {Polymer_MutableData}
  * @extends {DataTemplate}
  */
-const MutableDataTemplate = Object(__WEBPACK_IMPORTED_MODULE_2__mixins_mutable_data_js__["a" /* MutableData */])(DataTemplate);
+var MutableDataTemplate = (0, _mutableData.MutableData)(DataTemplate);
 
 // Applies a DataTemplate subclass to a <template> instance
 function upgradeTemplate(template, constructor) {
@@ -58,7 +71,13 @@ function upgradeTemplate(template, constructor) {
  * @constructor
  * @implements {Polymer_PropertyEffects}
  */
-const base = Object(__WEBPACK_IMPORTED_MODULE_1__mixins_property_effects_js__["a" /* PropertyEffects */])(class {});
+var base = (0, _propertyEffects.PropertyEffects)(function () {
+  function _class() {
+    _classCallCheck(this, _class);
+  }
+
+  return _class;
+}());
 
 /**
  * @polymer
@@ -66,26 +85,33 @@ const base = Object(__WEBPACK_IMPORTED_MODULE_1__mixins_property_effects_js__["a
  * @appliesMixin Polymer.PropertyEffects
  * @unrestricted
  */
-class TemplateInstanceBase extends base {
-  constructor(props) {
-    super();
-    this._configureProperties(props);
-    this.root = this._stampTemplate(this.__dataHost);
+
+var TemplateInstanceBase = function (_base) {
+  _inherits(TemplateInstanceBase, _base);
+
+  function TemplateInstanceBase(props) {
+    _classCallCheck(this, TemplateInstanceBase);
+
+    var _this = _possibleConstructorReturn(this, (TemplateInstanceBase.__proto__ || Object.getPrototypeOf(TemplateInstanceBase)).call(this));
+
+    _this._configureProperties(props);
+    _this.root = _this._stampTemplate(_this.__dataHost);
     // Save list of stamped children
-    let children = this.children = [];
-    for (let n = this.root.firstChild; n; n = n.nextSibling) {
+    var children = _this.children = [];
+    for (var n = _this.root.firstChild; n; n = n.nextSibling) {
       children.push(n);
-      n.__templatizeInstance = this;
+      n.__templatizeInstance = _this;
     }
-    if (this.__templatizeOwner.__hideTemplateChildren__) {
-      this._showHideChildren(true);
+    if (_this.__templatizeOwner.__hideTemplateChildren__) {
+      _this._showHideChildren(true);
     }
     // Flush props only when props are passed if instance props exist
     // or when there isn't instance props.
-    let options = this.__templatizeOptions;
+    var options = _this.__templatizeOptions;
     if (props && options.instanceProps || !options.instanceProps) {
-      this._enableProperties();
+      _this._enableProperties();
     }
+    return _this;
   }
   /**
    * Configure the given `props` by calling `_setPendingProperty`. Also
@@ -93,128 +119,154 @@ class TemplateInstanceBase extends base {
    * @private
    * @param {Object} props Object of property name-value pairs to set.
    */
-  _configureProperties(props) {
-    let options = this.__templatizeOptions;
-    if (props) {
-      for (let iprop in options.instanceProps) {
-        if (iprop in props) {
-          this._setPendingProperty(iprop, props[iprop]);
-        }
-      }
-    }
-    for (let hprop in this.__hostProps) {
-      this._setPendingProperty(hprop, this.__dataHost['_host_' + hprop]);
-    }
-  }
-  /**
-   * Forwards a host property to this instance.  This method should be
-   * called on instances from the `options.forwardHostProp` callback
-   * to propagate changes of host properties to each instance.
-   *
-   * Note this method enqueues the change, which are flushed as a batch.
-   *
-   * @param {string} prop Property or path name
-   * @param {*} value Value of the property to forward
-   */
-  forwardHostProp(prop, value) {
-    if (this._setPendingPropertyOrPath(prop, value, false, true)) {
-      this.__dataHost._enqueueClient(this);
-    }
-  }
-  /**
-   * @override
-   */
-  _addEventListenerToNode(node, eventName, handler) {
-    if (this._methodHost && this.__templatizeOptions.parentModel) {
-      // If this instance should be considered a parent model, decorate
-      // events this template instance as `model`
-      this._methodHost._addEventListenerToNode(node, eventName, e => {
-        e.model = this;
-        handler(e);
-      });
-    } else {
-      // Otherwise delegate to the template's host (which could be)
-      // another template instance
-      let templateHost = this.__dataHost.__dataHost;
-      if (templateHost) {
-        templateHost._addEventListenerToNode(node, eventName, handler);
-      }
-    }
-  }
-  /**
-   * Shows or hides the template instance top level child elements. For
-   * text nodes, `textContent` is removed while "hidden" and replaced when
-   * "shown."
-   * @param {boolean} hide Set to true to hide the children;
-   * set to false to show them.
-   * @protected
-   */
-  _showHideChildren(hide) {
-    let c = this.children;
-    for (let i = 0; i < c.length; i++) {
-      let n = c[i];
-      // Ignore non-changes
-      if (Boolean(hide) != Boolean(n.__hideTemplateChildren__)) {
-        if (n.nodeType === Node.TEXT_NODE) {
-          if (hide) {
-            n.__polymerTextContent__ = n.textContent;
-            n.textContent = '';
-          } else {
-            n.textContent = n.__polymerTextContent__;
-          }
-        } else if (n.style) {
-          if (hide) {
-            n.__polymerDisplay__ = n.style.display;
-            n.style.display = 'none';
-          } else {
-            n.style.display = n.__polymerDisplay__;
+
+
+  _createClass(TemplateInstanceBase, [{
+    key: '_configureProperties',
+    value: function _configureProperties(props) {
+      var options = this.__templatizeOptions;
+      if (props) {
+        for (var iprop in options.instanceProps) {
+          if (iprop in props) {
+            this._setPendingProperty(iprop, props[iprop]);
           }
         }
       }
-      n.__hideTemplateChildren__ = hide;
-      if (n._showHideChildren) {
-        n._showHideChildren(hide);
+      for (var hprop in this.__hostProps) {
+        this._setPendingProperty(hprop, this.__dataHost['_host_' + hprop]);
       }
     }
-  }
-  /**
-   * Overrides default property-effects implementation to intercept
-   * textContent bindings while children are "hidden" and cache in
-   * private storage for later retrieval.
-   *
-   * @override
-   */
-  _setUnmanagedPropertyToNode(node, prop, value) {
-    if (node.__hideTemplateChildren__ && node.nodeType == Node.TEXT_NODE && prop == 'textContent') {
-      node.__polymerTextContent__ = value;
-    } else {
-      super._setUnmanagedPropertyToNode(node, prop, value);
+    /**
+     * Forwards a host property to this instance.  This method should be
+     * called on instances from the `options.forwardHostProp` callback
+     * to propagate changes of host properties to each instance.
+     *
+     * Note this method enqueues the change, which are flushed as a batch.
+     *
+     * @param {string} prop Property or path name
+     * @param {*} value Value of the property to forward
+     */
+
+  }, {
+    key: 'forwardHostProp',
+    value: function forwardHostProp(prop, value) {
+      if (this._setPendingPropertyOrPath(prop, value, false, true)) {
+        this.__dataHost._enqueueClient(this);
+      }
     }
-  }
-  /**
-   * Find the parent model of this template instance.  The parent model
-   * is either another templatize instance that had option `parentModel: true`,
-   * or else the host element.
-   *
-   * @return {Polymer_PropertyEffects} The parent model of this instance
-   */
-  get parentModel() {
-    let model = this.__parentModel;
-    if (!model) {
-      let options;
-      model = this;
-      do {
-        // A template instance's `__dataHost` is a <template>
-        // `model.__dataHost.__dataHost` is the template's host
-        model = model.__dataHost.__dataHost;
-      } while ((options = model.__templatizeOptions) && !options.parentModel);
-      this.__parentModel = model;
+    /**
+     * @override
+     */
+
+  }, {
+    key: '_addEventListenerToNode',
+    value: function _addEventListenerToNode(node, eventName, handler) {
+      var _this2 = this;
+
+      if (this._methodHost && this.__templatizeOptions.parentModel) {
+        // If this instance should be considered a parent model, decorate
+        // events this template instance as `model`
+        this._methodHost._addEventListenerToNode(node, eventName, function (e) {
+          e.model = _this2;
+          handler(e);
+        });
+      } else {
+        // Otherwise delegate to the template's host (which could be)
+        // another template instance
+        var templateHost = this.__dataHost.__dataHost;
+        if (templateHost) {
+          templateHost._addEventListenerToNode(node, eventName, handler);
+        }
+      }
     }
-    return model;
-  }
-}
+    /**
+     * Shows or hides the template instance top level child elements. For
+     * text nodes, `textContent` is removed while "hidden" and replaced when
+     * "shown."
+     * @param {boolean} hide Set to true to hide the children;
+     * set to false to show them.
+     * @protected
+     */
+
+  }, {
+    key: '_showHideChildren',
+    value: function _showHideChildren(hide) {
+      var c = this.children;
+      for (var i = 0; i < c.length; i++) {
+        var n = c[i];
+        // Ignore non-changes
+        if (Boolean(hide) != Boolean(n.__hideTemplateChildren__)) {
+          if (n.nodeType === Node.TEXT_NODE) {
+            if (hide) {
+              n.__polymerTextContent__ = n.textContent;
+              n.textContent = '';
+            } else {
+              n.textContent = n.__polymerTextContent__;
+            }
+          } else if (n.style) {
+            if (hide) {
+              n.__polymerDisplay__ = n.style.display;
+              n.style.display = 'none';
+            } else {
+              n.style.display = n.__polymerDisplay__;
+            }
+          }
+        }
+        n.__hideTemplateChildren__ = hide;
+        if (n._showHideChildren) {
+          n._showHideChildren(hide);
+        }
+      }
+    }
+    /**
+     * Overrides default property-effects implementation to intercept
+     * textContent bindings while children are "hidden" and cache in
+     * private storage for later retrieval.
+     *
+     * @override
+     */
+
+  }, {
+    key: '_setUnmanagedPropertyToNode',
+    value: function _setUnmanagedPropertyToNode(node, prop, value) {
+      if (node.__hideTemplateChildren__ && node.nodeType == Node.TEXT_NODE && prop == 'textContent') {
+        node.__polymerTextContent__ = value;
+      } else {
+        _get(TemplateInstanceBase.prototype.__proto__ || Object.getPrototypeOf(TemplateInstanceBase.prototype), '_setUnmanagedPropertyToNode', this).call(this, node, prop, value);
+      }
+    }
+    /**
+     * Find the parent model of this template instance.  The parent model
+     * is either another templatize instance that had option `parentModel: true`,
+     * or else the host element.
+     *
+     * @return {Polymer_PropertyEffects} The parent model of this instance
+     */
+
+  }, {
+    key: 'parentModel',
+    get: function get() {
+      var model = this.__parentModel;
+      if (!model) {
+        var options = void 0;
+        model = this;
+        do {
+          // A template instance's `__dataHost` is a <template>
+          // `model.__dataHost.__dataHost` is the template's host
+          model = model.__dataHost.__dataHost;
+        } while ((options = model.__templatizeOptions) && !options.parentModel);
+        this.__parentModel = model;
+      }
+      return model;
+    }
+  }]);
+
+  return TemplateInstanceBase;
+}(base);
 
 /** @type {!DataTemplate} */
+
+
 TemplateInstanceBase.prototype.__dataHost;
 /** @type {!TemplatizeOptions} */
 TemplateInstanceBase.prototype.__templatizeOptions;
@@ -230,7 +282,7 @@ TemplateInstanceBase.prototype.__hostProps;
  * @extends {TemplateInstanceBase}
  * @implements {Polymer_MutableData}
  */
-const MutableTemplateInstanceBase = Object(__WEBPACK_IMPORTED_MODULE_2__mixins_mutable_data_js__["a" /* MutableData */])(TemplateInstanceBase);
+var MutableTemplateInstanceBase = (0, _mutableData.MutableData)(TemplateInstanceBase);
 
 function findMethodHost(template) {
   // Technically this should be the owner of the outermost template.
@@ -238,7 +290,7 @@ function findMethodHost(template) {
   // approximate this via cooperation with our dataHost always setting
   // `_methodHost` as long as there were bindings (or id's) on this
   // instance causing it to get a dataHost.
-  let templateHost = template.__dataHost;
+  var templateHost = template.__dataHost;
   return templateHost && templateHost._methodHost || templateHost;
 }
 
@@ -248,12 +300,22 @@ function findMethodHost(template) {
  */
 function createTemplatizerClass(template, templateInfo, options) {
   // Anonymous class created by the templatize
-  let base = options.mutableData ? MutableTemplateInstanceBase : TemplateInstanceBase;
+  var base = options.mutableData ? MutableTemplateInstanceBase : TemplateInstanceBase;
   /**
    * @constructor
    * @extends {base}
    */
-  let klass = class extends base {};
+  var klass = function (_base2) {
+    _inherits(klass, _base2);
+
+    function klass() {
+      _classCallCheck(this, klass);
+
+      return _possibleConstructorReturn(this, (klass.__proto__ || Object.getPrototypeOf(klass)).apply(this, arguments));
+    }
+
+    return klass;
+  }(base);
   klass.prototype.__templatizeOptions = options;
   klass.prototype._bindTemplate(template);
   addNotifyEffects(klass, template, templateInfo, options);
@@ -264,17 +326,27 @@ function createTemplatizerClass(template, templateInfo, options) {
  * @suppress {missingProperties} class.prototype is not defined for some reason
  */
 function addPropagateEffects(template, templateInfo, options) {
-  let userForwardHostProp = options.forwardHostProp;
+  var userForwardHostProp = options.forwardHostProp;
   if (userForwardHostProp) {
     // Provide data API and property effects on memoized template class
-    let klass = templateInfo.templatizeTemplateClass;
+    var klass = templateInfo.templatizeTemplateClass;
     if (!klass) {
-      let base = options.mutableData ? MutableDataTemplate : DataTemplate;
-      klass = templateInfo.templatizeTemplateClass = class TemplatizedTemplate extends base {};
+      var _base3 = options.mutableData ? MutableDataTemplate : DataTemplate;
+      klass = templateInfo.templatizeTemplateClass = function (_base4) {
+        _inherits(TemplatizedTemplate, _base4);
+
+        function TemplatizedTemplate() {
+          _classCallCheck(this, TemplatizedTemplate);
+
+          return _possibleConstructorReturn(this, (TemplatizedTemplate.__proto__ || Object.getPrototypeOf(TemplatizedTemplate)).apply(this, arguments));
+        }
+
+        return TemplatizedTemplate;
+      }(_base3);
       // Add template - >instances effects
       // and host <- template effects
-      let hostProps = templateInfo.hostProps;
-      for (let prop in hostProps) {
+      var hostProps = templateInfo.hostProps;
+      for (var prop in hostProps) {
         klass.prototype._addPropertyEffect('_host_' + prop, klass.prototype.PROPERTY_EFFECT_TYPES.PROPAGATE, { fn: createForwardHostPropEffect(prop, userForwardHostProp) });
         klass.prototype._createNotifyingProperty('_host_' + prop);
       }
@@ -303,16 +375,16 @@ function createForwardHostPropEffect(hostProp, userForwardHostProp) {
 }
 
 function addNotifyEffects(klass, template, templateInfo, options) {
-  let hostProps = templateInfo.hostProps || {};
-  for (let iprop in options.instanceProps) {
+  var hostProps = templateInfo.hostProps || {};
+  for (var iprop in options.instanceProps) {
     delete hostProps[iprop];
-    let userNotifyInstanceProp = options.notifyInstanceProp;
+    var userNotifyInstanceProp = options.notifyInstanceProp;
     if (userNotifyInstanceProp) {
       klass.prototype._addPropertyEffect(iprop, klass.prototype.PROPERTY_EFFECT_TYPES.NOTIFY, { fn: createNotifyInstancePropEffect(iprop, userNotifyInstanceProp) });
     }
   }
   if (options.forwardHostProp && template.__dataHost) {
-    for (let hprop in hostProps) {
+    for (var hprop in hostProps) {
       klass.prototype._addPropertyEffect(hprop, klass.prototype.PROPERTY_EFFECT_TYPES.NOTIFY, { fn: createNotifyHostPropEffect() });
     }
   }
@@ -370,7 +442,7 @@ function createNotifyHostPropEffect() {
  *   utilizing Polymer templating features.
  */
 
-const Templatize = {
+var Templatize = {
 
   /**
    * Returns an anonymous `Polymer.PropertyEffects` class bound to the
@@ -433,16 +505,16 @@ const Templatize = {
    *   provided
    * @suppress {invalidCasts}
    */
-  templatize(template, owner, options) {
+  templatize: function templatize(template, owner, options) {
     options = /** @type {!TemplatizeOptions} */options || {};
     if (template.__templatizeOwner) {
       throw new Error('A <template> can only be templatized once');
     }
     template.__templatizeOwner = owner;
-    let templateInfo = owner.constructor._parseTemplate(template);
+    var templateInfo = owner.constructor._parseTemplate(template);
     // Get memoized base class for the prototypical template, which
     // includes property effects for binding template & forwarding
-    let baseClass = templateInfo.templatizeInstanceClass;
+    var baseClass = templateInfo.templatizeInstanceClass;
     if (!baseClass) {
       baseClass = createTemplatizerClass(template, templateInfo, options);
       templateInfo.templatizeInstanceClass = baseClass;
@@ -450,7 +522,17 @@ const Templatize = {
     // Host property forwarding must be installed onto template instance
     addPropagateEffects(template, templateInfo, options);
     // Subclass base class and add reference for this specific template
-    let klass = class TemplateInstance extends baseClass {};
+    var klass = function (_baseClass) {
+      _inherits(TemplateInstance, _baseClass);
+
+      function TemplateInstance() {
+        _classCallCheck(this, TemplateInstance);
+
+        return _possibleConstructorReturn(this, (TemplateInstance.__proto__ || Object.getPrototypeOf(TemplateInstance)).apply(this, arguments));
+      }
+
+      return TemplateInstance;
+    }(baseClass);
     klass.prototype._methodHost = findMethodHost(template);
     klass.prototype.__dataHost = template;
     klass.prototype.__templatizeOwner = owner;
@@ -458,6 +540,7 @@ const Templatize = {
     return (/** @type {function(new:TemplateInstanceBase)} */klass
     );
   },
+
 
   /**
    * Returns the template "model" associated with a given element, which
@@ -480,8 +563,8 @@ const Templatize = {
    * @return {TemplateInstanceBase} Template instance representing the
    *   binding scope for the element
    */
-  modelForElement(template, node) {
-    let model;
+  modelForElement: function modelForElement(template, node) {
+    var model = void 0;
     while (node) {
       // An element with a __templatizeInstance marks the top boundary
       // of a scope; walk up until we find one, and then ensure that
@@ -504,30 +587,46 @@ const Templatize = {
   }
 };
 
-
-
+exports.Templatize = Templatize;
+exports.TemplateInstanceBase = TemplateInstanceBase;
 
 /***/ }),
 
 /***/ 39:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_mixin_js__ = __webpack_require__(2);
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.OptionalMutableData = exports.MutableData = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _mixin = __webpack_require__(1);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 // Common implementation for mixin & behavior
 function mutablePropertyChange(inst, property, value, old, mutableData) {
-  let isObject;
+  var isObject = void 0;
   if (mutableData) {
-    isObject = typeof value === 'object' && value !== null;
+    isObject = (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && value !== null;
     // Pull `old` for Objects from temp cache, but treat `null` as a primitive
     if (isObject) {
       old = inst.__dataTemp[property];
     }
   }
   // Strict equality check, but return false for NaN===NaN
-  let shouldChange = old !== value && (old === old || value === value);
+  var shouldChange = old !== value && (old === old || value === value);
   // Objects are stored in temporary cache (cleared at end of
   // turn), which is used for dirty-checking
   if (isObject && shouldChange) {
@@ -536,91 +635,117 @@ function mutablePropertyChange(inst, property, value, old, mutableData) {
   return shouldChange;
 }
 
-const MutableData = Object(__WEBPACK_IMPORTED_MODULE_0__utils_mixin_js__["a" /* dedupingMixin */])(superClass => {
+var MutableData = exports.MutableData = (0, _mixin.dedupingMixin)(function (superClass) {
 
   /**
    * @polymer
    * @mixinClass
    * @implements {Polymer_MutableData}
    */
-  class MutableData extends superClass {
-    /**
-     * Overrides `Polymer.PropertyEffects` to provide option for skipping
-     * strict equality checking for Objects and Arrays.
-     *
-     * This method pulls the value to dirty check against from the `__dataTemp`
-     * cache (rather than the normal `__data` cache) for Objects.  Since the temp
-     * cache is cleared at the end of a turn, this implementation allows
-     * side-effects of deep object changes to be processed by re-setting the
-     * same object (using the temp cache as an in-turn backstop to prevent
-     * cycles due to 2-way notification).
-     *
-     * @param {string} property Property name
-     * @param {*} value New property value
-     * @param {*} old Previous property value
-     * @return {boolean} Whether the property should be considered a change
-     * @protected
-     */
-    _shouldPropertyChange(property, value, old) {
-      return mutablePropertyChange(this, property, value, old, true);
+  var MutableData = function (_superClass) {
+    _inherits(MutableData, _superClass);
+
+    function MutableData() {
+      _classCallCheck(this, MutableData);
+
+      return _possibleConstructorReturn(this, (MutableData.__proto__ || Object.getPrototypeOf(MutableData)).apply(this, arguments));
     }
 
-  }
+    _createClass(MutableData, [{
+      key: '_shouldPropertyChange',
+
+      /**
+       * Overrides `Polymer.PropertyEffects` to provide option for skipping
+       * strict equality checking for Objects and Arrays.
+       *
+       * This method pulls the value to dirty check against from the `__dataTemp`
+       * cache (rather than the normal `__data` cache) for Objects.  Since the temp
+       * cache is cleared at the end of a turn, this implementation allows
+       * side-effects of deep object changes to be processed by re-setting the
+       * same object (using the temp cache as an in-turn backstop to prevent
+       * cycles due to 2-way notification).
+       *
+       * @param {string} property Property name
+       * @param {*} value New property value
+       * @param {*} old Previous property value
+       * @return {boolean} Whether the property should be considered a change
+       * @protected
+       */
+      value: function _shouldPropertyChange(property, value, old) {
+        return mutablePropertyChange(this, property, value, old, true);
+      }
+    }]);
+
+    return MutableData;
+  }(superClass);
   /** @type {boolean} */
+
+
   MutableData.prototype.mutableData = false;
 
   return MutableData;
 });
-/* harmony export (immutable) */ __webpack_exports__["a"] = MutableData;
 
-
-const OptionalMutableData = Object(__WEBPACK_IMPORTED_MODULE_0__utils_mixin_js__["a" /* dedupingMixin */])(superClass => {
+var OptionalMutableData = exports.OptionalMutableData = (0, _mixin.dedupingMixin)(function (superClass) {
 
   /**
    * @mixinClass
    * @polymer
    * @implements {Polymer_OptionalMutableData}
    */
-  class OptionalMutableData extends superClass {
+  var OptionalMutableData = function (_superClass2) {
+    _inherits(OptionalMutableData, _superClass2);
 
-    static get properties() {
-      return {
-        /**
-         * Instance-level flag for configuring the dirty-checking strategy
-         * for this element.  When true, Objects and Arrays will skip dirty
-         * checking, otherwise strict equality checking will be used.
-         */
-        mutableData: Boolean
-      };
+    function OptionalMutableData() {
+      _classCallCheck(this, OptionalMutableData);
+
+      return _possibleConstructorReturn(this, (OptionalMutableData.__proto__ || Object.getPrototypeOf(OptionalMutableData)).apply(this, arguments));
     }
 
-    /**
-     * Overrides `Polymer.PropertyEffects` to provide option for skipping
-     * strict equality checking for Objects and Arrays.
-     *
-     * When `this.mutableData` is true on this instance, this method
-     * pulls the value to dirty check against from the `__dataTemp` cache
-     * (rather than the normal `__data` cache) for Objects.  Since the temp
-     * cache is cleared at the end of a turn, this implementation allows
-     * side-effects of deep object changes to be processed by re-setting the
-     * same object (using the temp cache as an in-turn backstop to prevent
-     * cycles due to 2-way notification).
-     *
-     * @param {string} property Property name
-     * @param {*} value New property value
-     * @param {*} old Previous property value
-     * @return {boolean} Whether the property should be considered a change
-     * @protected
-     */
-    _shouldPropertyChange(property, value, old) {
-      return mutablePropertyChange(this, property, value, old, this.mutableData);
-    }
-  }
+    _createClass(OptionalMutableData, [{
+      key: '_shouldPropertyChange',
+
+
+      /**
+       * Overrides `Polymer.PropertyEffects` to provide option for skipping
+       * strict equality checking for Objects and Arrays.
+       *
+       * When `this.mutableData` is true on this instance, this method
+       * pulls the value to dirty check against from the `__dataTemp` cache
+       * (rather than the normal `__data` cache) for Objects.  Since the temp
+       * cache is cleared at the end of a turn, this implementation allows
+       * side-effects of deep object changes to be processed by re-setting the
+       * same object (using the temp cache as an in-turn backstop to prevent
+       * cycles due to 2-way notification).
+       *
+       * @param {string} property Property name
+       * @param {*} value New property value
+       * @param {*} old Previous property value
+       * @return {boolean} Whether the property should be considered a change
+       * @protected
+       */
+      value: function _shouldPropertyChange(property, value, old) {
+        return mutablePropertyChange(this, property, value, old, this.mutableData);
+      }
+    }], [{
+      key: 'properties',
+      get: function get() {
+        return {
+          /**
+           * Instance-level flag for configuring the dirty-checking strategy
+           * for this element.  When true, Objects and Arrays will skip dirty
+           * checking, otherwise strict equality checking will be used.
+           */
+          mutableData: Boolean
+        };
+      }
+    }]);
+
+    return OptionalMutableData;
+  }(superClass);
 
   return OptionalMutableData;
 });
-/* harmony export (immutable) */ __webpack_exports__["b"] = OptionalMutableData;
-
 
 // Export for use by legacy behavior
 MutableData._mutablePropertyChange = mutablePropertyChange;
@@ -628,27 +753,38 @@ MutableData._mutablePropertyChange = mutablePropertyChange;
 /***/ }),
 
 /***/ 40:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Debouncer; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixin_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__async_js__ = __webpack_require__(13);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Debouncer = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+__webpack_require__(0);
+
+__webpack_require__(1);
+
+__webpack_require__(13);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /** @typedef {{run: function(function(), number=):number, cancel: function(number)}} */
-let AsyncModule; // eslint-disable-line no-unused-vars
+var AsyncModule = void 0; // eslint-disable-line no-unused-vars
 
 /**
  * @summary Collapse multiple callbacks into one invocation after a timer.
  * @memberof Polymer
  */
-class Debouncer {
-  constructor() {
+
+var Debouncer = function () {
+  function Debouncer() {
+    _classCallCheck(this, Debouncer);
+
     this._asyncModule = null;
     this._callback = null;
     this._timer = null;
@@ -661,108 +797,132 @@ class Debouncer {
    * @param {!AsyncModule} asyncModule Object with Async interface.
    * @param {function()} callback Callback to run.
    */
-  setConfig(asyncModule, callback) {
-    this._asyncModule = asyncModule;
-    this._callback = callback;
-    this._timer = this._asyncModule.run(() => {
-      this._timer = null;
-      this._callback();
-    });
-  }
-  /**
-   * Cancels an active debouncer and returns a reference to itself.
-   */
-  cancel() {
-    if (this.isActive()) {
-      this._asyncModule.cancel(this._timer);
-      this._timer = null;
-    }
-  }
-  /**
-   * Flushes an active debouncer and returns a reference to itself.
-   */
-  flush() {
-    if (this.isActive()) {
-      this.cancel();
-      this._callback();
-    }
-  }
-  /**
-   * Returns true if the debouncer is active.
-   *
-   * @return {boolean} True if active.
-   */
-  isActive() {
-    return this._timer != null;
-  }
-  /**
-   * Creates a debouncer if no debouncer is passed as a parameter
-   * or it cancels an active debouncer otherwise. The following
-   * example shows how a debouncer can be called multiple times within a
-   * microtask and "debounced" such that the provided callback function is
-   * called once. Add this method to a custom element:
-   *
-   * _debounceWork() {
-   *   this._debounceJob = Polymer.Debouncer.debounce(this._debounceJob,
-   *       Polymer.Async.microTask, () => {
-   *     this._doWork();
-   *   });
-   * }
-   *
-   * If the `_debounceWork` method is called multiple times within the same
-   * microtask, the `_doWork` function will be called only once at the next
-   * microtask checkpoint.
-   *
-   * Note: In testing it is often convenient to avoid asynchrony. To accomplish
-   * this with a debouncer, you can use `Polymer.enqueueDebouncer` and
-   * `Polymer.flush`. For example, extend the above example by adding
-   * `Polymer.enqueueDebouncer(this._debounceJob)` at the end of the
-   * `_debounceWork` method. Then in a test, call `Polymer.flush` to ensure
-   * the debouncer has completed.
-   *
-   * @param {Debouncer?} debouncer Debouncer object.
-   * @param {!AsyncModule} asyncModule Object with Async interface
-   * @param {function()} callback Callback to run.
-   * @return {!Debouncer} Returns a debouncer object.
-   */
-  static debounce(debouncer, asyncModule, callback) {
-    if (debouncer instanceof Debouncer) {
-      debouncer.cancel();
-    } else {
-      debouncer = new Debouncer();
-    }
-    debouncer.setConfig(asyncModule, callback);
-    return debouncer;
-  }
-}
 
 
+  _createClass(Debouncer, [{
+    key: 'setConfig',
+    value: function setConfig(asyncModule, callback) {
+      var _this = this;
+
+      this._asyncModule = asyncModule;
+      this._callback = callback;
+      this._timer = this._asyncModule.run(function () {
+        _this._timer = null;
+        _this._callback();
+      });
+    }
+    /**
+     * Cancels an active debouncer and returns a reference to itself.
+     */
+
+  }, {
+    key: 'cancel',
+    value: function cancel() {
+      if (this.isActive()) {
+        this._asyncModule.cancel(this._timer);
+        this._timer = null;
+      }
+    }
+    /**
+     * Flushes an active debouncer and returns a reference to itself.
+     */
+
+  }, {
+    key: 'flush',
+    value: function flush() {
+      if (this.isActive()) {
+        this.cancel();
+        this._callback();
+      }
+    }
+    /**
+     * Returns true if the debouncer is active.
+     *
+     * @return {boolean} True if active.
+     */
+
+  }, {
+    key: 'isActive',
+    value: function isActive() {
+      return this._timer != null;
+    }
+    /**
+     * Creates a debouncer if no debouncer is passed as a parameter
+     * or it cancels an active debouncer otherwise. The following
+     * example shows how a debouncer can be called multiple times within a
+     * microtask and "debounced" such that the provided callback function is
+     * called once. Add this method to a custom element:
+     *
+     * _debounceWork() {
+     *   this._debounceJob = Polymer.Debouncer.debounce(this._debounceJob,
+     *       Polymer.Async.microTask, () => {
+     *     this._doWork();
+     *   });
+     * }
+     *
+     * If the `_debounceWork` method is called multiple times within the same
+     * microtask, the `_doWork` function will be called only once at the next
+     * microtask checkpoint.
+     *
+     * Note: In testing it is often convenient to avoid asynchrony. To accomplish
+     * this with a debouncer, you can use `Polymer.enqueueDebouncer` and
+     * `Polymer.flush`. For example, extend the above example by adding
+     * `Polymer.enqueueDebouncer(this._debounceJob)` at the end of the
+     * `_debounceWork` method. Then in a test, call `Polymer.flush` to ensure
+     * the debouncer has completed.
+     *
+     * @param {Debouncer?} debouncer Debouncer object.
+     * @param {!AsyncModule} asyncModule Object with Async interface
+     * @param {function()} callback Callback to run.
+     * @return {!Debouncer} Returns a debouncer object.
+     */
+
+  }], [{
+    key: 'debounce',
+    value: function debounce(debouncer, asyncModule, callback) {
+      if (debouncer instanceof Debouncer) {
+        debouncer.cancel();
+      } else {
+        debouncer = new Debouncer();
+      }
+      debouncer.setConfig(asyncModule, callback);
+      return debouncer;
+    }
+  }]);
+
+  return Debouncer;
+}();
+
+exports.Debouncer = Debouncer;
 
 /***/ }),
 
 /***/ 41:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
 
 
-let debouncerQueue = [];
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.flush = exports.enqueueDebouncer = undefined;
 
-const enqueueDebouncer = function (debouncer) {
+__webpack_require__(0);
+
+var debouncerQueue = [];
+
+var enqueueDebouncer = exports.enqueueDebouncer = function enqueueDebouncer(debouncer) {
   debouncerQueue.push(debouncer);
 };
-/* harmony export (immutable) */ __webpack_exports__["a"] = enqueueDebouncer;
-
 
 function flushDebouncers() {
-  const didFlush = Boolean(debouncerQueue.length);
+  var didFlush = Boolean(debouncerQueue.length);
   while (debouncerQueue.length) {
     try {
       debouncerQueue.shift().flush();
     } catch (e) {
-      setTimeout(() => {
+      setTimeout(function () {
         throw e;
       });
     }
@@ -770,8 +930,9 @@ function flushDebouncers() {
   return didFlush;
 }
 
-const flush = function () {
-  let shadyDOM, debouncers;
+var flush = exports.flush = function flush() {
+  var shadyDOM = void 0,
+      debouncers = void 0;
   do {
     shadyDOM = window.ShadyDOM && ShadyDOM.flush();
     if (window.ShadyCSS && window.ShadyCSS.ScopingShim) {
@@ -780,8 +941,6 @@ const flush = function () {
     debouncers = flushDebouncers();
   } while (shadyDOM || debouncers);
 };
-/* harmony export (immutable) */ __webpack_exports__["b"] = flush;
-
 
 /***/ })
 

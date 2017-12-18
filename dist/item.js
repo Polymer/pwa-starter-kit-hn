@@ -1,164 +1,190 @@
 webpackJsonp([5],{
 
 /***/ 32:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_polymer_polymer_polymer_element_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_polymer_polymer_lib_elements_dom_if_js__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_polymer_polymer_lib_elements_dom_repeat_js__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reducers_items_js__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__reducers_favorites_js__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__hn_summary_js__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__hn_comment_js__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__actions_items_js__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__actions_favorites_js__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__lib_connect_mixin_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__shared_styles_js__ = __webpack_require__(11);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "currentItemSelector", function() { return __WEBPACK_IMPORTED_MODULE_3__reducers_items_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "fetchItemIfNeeded", function() { return __WEBPACK_IMPORTED_MODULE_8__actions_items_js__["e"]; });
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fetchItemIfNeeded = exports.currentItemSelector = exports.HnItemElement = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _polymerElement = __webpack_require__(10);
 
+__webpack_require__(45);
 
+__webpack_require__(35);
 
+var _items = __webpack_require__(36);
 
+var _items2 = _interopRequireDefault(_items);
 
+var _favorites = __webpack_require__(37);
 
+var _favorites2 = _interopRequireDefault(_favorites);
 
+var _store = __webpack_require__(12);
 
+__webpack_require__(44);
 
-__WEBPACK_IMPORTED_MODULE_5__store_js__["a" /* store */].addReducers({
-  favorites: __WEBPACK_IMPORTED_MODULE_4__reducers_favorites_js__["a" /* default */],
-  items: __WEBPACK_IMPORTED_MODULE_3__reducers_items_js__["b" /* default */]
+__webpack_require__(49);
+
+var _items3 = __webpack_require__(43);
+
+var _favorites3 = __webpack_require__(34);
+
+var _connectMixin = __webpack_require__(15);
+
+var _sharedStyles = __webpack_require__(11);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+_store.store.addReducers({
+  favorites: _favorites2.default,
+  items: _items2.default
 });
 
-__WEBPACK_IMPORTED_MODULE_5__store_js__["a" /* store */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_9__actions_favorites_js__["d" /* loadFavorites */])());
+_store.store.dispatch((0, _favorites3.loadFavorites)());
 
-class HnItemElement extends Object(__WEBPACK_IMPORTED_MODULE_10__lib_connect_mixin_js__["a" /* connect */])(__WEBPACK_IMPORTED_MODULE_5__store_js__["a" /* store */])(__WEBPACK_IMPORTED_MODULE_0__node_modules_polymer_polymer_polymer_element_js__["a" /* Element */]) {
-  static get template() {
-    return `
-    ${__WEBPACK_IMPORTED_MODULE_11__shared_styles_js__["a" /* sharedStyles */]}
-    <button on-click="_reload">Reload</button>
-    <div hidden$="[[item.failure]]">
-      <hn-summary item="[[item]]" is-favorite="[[_isFavorite(favorites, item)]]"></hn-summary>
-      <div hidden$="[[!item.content]]" inner-h-t-m-l="[[item.content]]"></div>
-      <dom-repeat items="[[item.comments]]" as="comment">
-        <template>
-          <hn-comment id$="[[comment.id]]" comment="[[comment]]" item-id="[[item.id]]"></hn-comment>
-        </template>
-      </dom-repeat>
-    </div>
-    <dom-if if="[[item.failure]]">
-      <template>
-        <p>Item not found</p>
-      </template>
-    </dom-if>`;
+var HnItemElement = exports.HnItemElement = function (_connect) {
+  _inherits(HnItemElement, _connect);
+
+  function HnItemElement() {
+    _classCallCheck(this, HnItemElement);
+
+    return _possibleConstructorReturn(this, (HnItemElement.__proto__ || Object.getPrototypeOf(HnItemElement)).apply(this, arguments));
   }
 
-  static get properties() {
-    return {
-      item: Object
-    };
-  }
-
-  update(state) {
-    const item = Object(__WEBPACK_IMPORTED_MODULE_3__reducers_items_js__["a" /* currentItemSelector */])(state);
-    if (item) {
-      document.title = item.title;
-      this.setProperties({
-        favorites: state.favorites,
-        item
-      });
+  _createClass(HnItemElement, [{
+    key: 'update',
+    value: function update(state) {
+      var item = (0, _items.currentItemSelector)(state);
+      if (item) {
+        document.title = item.title;
+        this.setProperties({
+          favorites: state.favorites,
+          item: item
+        });
+      }
     }
-  }
+  }, {
+    key: '_isFavorite',
+    value: function _isFavorite(favorites, item) {
+      return Boolean(favorites && item && favorites[item.id]);
+    }
+  }, {
+    key: '_reload',
+    value: function _reload() {
+      _store.store.dispatch((0, _items3.fetchItem)(this.item));
+    }
+  }], [{
+    key: 'template',
+    get: function get() {
+      return '\n    ' + _sharedStyles.sharedStyles + '\n    <button on-click="_reload">Reload</button>\n    <div hidden$="[[item.failure]]">\n      <hn-summary item="[[item]]" is-favorite="[[_isFavorite(favorites, item)]]"></hn-summary>\n      <div hidden$="[[!item.content]]" inner-h-t-m-l="[[item.content]]"></div>\n      <dom-repeat items="[[item.comments]]" as="comment">\n        <template>\n          <hn-comment id$="[[comment.id]]" comment="[[comment]]" item-id="[[item.id]]"></hn-comment>\n        </template>\n      </dom-repeat>\n    </div>\n    <dom-if if="[[item.failure]]">\n      <template>\n        <p>Item not found</p>\n      </template>\n    </dom-if>';
+    }
+  }, {
+    key: 'properties',
+    get: function get() {
+      return {
+        item: Object
+      };
+    }
+  }]);
 
-  _isFavorite(favorites, item) {
-    return Boolean(favorites && item && favorites[item.id]);
-  }
-
-  _reload() {
-    __WEBPACK_IMPORTED_MODULE_5__store_js__["a" /* store */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_8__actions_items_js__["d" /* fetchItem */])(this.item));
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["HnItemElement"] = HnItemElement;
-
+  return HnItemElement;
+}((0, _connectMixin.connect)(_store.store)(_polymerElement.Element));
 
 customElements.define('hn-item', HnItemElement);
 
-
+exports.currentItemSelector = _items.currentItemSelector;
+exports.fetchItemIfNeeded = _items3.fetchItemIfNeeded;
 
 /***/ }),
 
 /***/ 49:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_polymer_polymer_polymer_element_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_polymer_polymer_lib_elements_dom_repeat_js__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_styles_js__ = __webpack_require__(11);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.HnCommentElement = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-class HnCommentElement extends __WEBPACK_IMPORTED_MODULE_0__node_modules_polymer_polymer_polymer_element_js__["a" /* Element */] {
-  static get template() {
-    return `
-    ${__WEBPACK_IMPORTED_MODULE_2__shared_styles_js__["a" /* sharedStyles */]}
-    <style>
-      .indent {
-        margin-left: 36px;
-      }
-    </style>
-    <div>
-      <button on-click="_toggleCollapsed">[–]</button>
-      <a href$="[[_getUserHref(comment)]]">[[comment.user]]</a>
-      <a href$="[[_getCommentHref(comment, itemId)]]">[[comment.time_ago]]</a></div>
-    </div>
-    <div hidden$="[[collapsed]]">
-      <div inner-h-t-m-l="[[comment.content]]"></div>
-      <div class="indent">
-        <dom-repeat items="[[comment.comments]]" as="comment">
-          <template>
-            <hn-comment id$="[[comment.id]]" comment="[[comment]]" item-id="[[itemId]]"></hn-comment>
-          </template>
-        </dom-repeat>
-      </div>
-    </div>
-    `;
+var _polymerElement = __webpack_require__(10);
+
+__webpack_require__(35);
+
+var _sharedStyles = __webpack_require__(11);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HnCommentElement = exports.HnCommentElement = function (_PolymerElement) {
+  _inherits(HnCommentElement, _PolymerElement);
+
+  function HnCommentElement() {
+    _classCallCheck(this, HnCommentElement);
+
+    return _possibleConstructorReturn(this, (HnCommentElement.__proto__ || Object.getPrototypeOf(HnCommentElement)).apply(this, arguments));
   }
 
-  static get properties() {
-    return {
-      comment: Object,
+  _createClass(HnCommentElement, [{
+    key: '_toggleCollapsed',
+    value: function _toggleCollapsed() {
+      this.collapsed = !this.collapsed;
+    }
+  }, {
+    key: '_getUserHref',
+    value: function _getUserHref(comment) {
+      return comment ? '/user?id=' + comment.user : null;
+    }
+  }, {
+    key: '_getCommentHref',
+    value: function _getCommentHref(comment, itemId) {
+      return comment ? '/item?id=' + itemId + '#' + comment.id : null;
+    }
+  }], [{
+    key: 'template',
+    get: function get() {
+      return '\n    ' + _sharedStyles.sharedStyles + '\n    <style>\n      .indent {\n        margin-left: 36px;\n      }\n    </style>\n    <div>\n      <button on-click="_toggleCollapsed">[\u2013]</button>\n      <a href$="[[_getUserHref(comment)]]">[[comment.user]]</a>\n      <a href$="[[_getCommentHref(comment, itemId)]]">[[comment.time_ago]]</a></div>\n    </div>\n    <div hidden$="[[collapsed]]">\n      <div inner-h-t-m-l="[[comment.content]]"></div>\n      <div class="indent">\n        <dom-repeat items="[[comment.comments]]" as="comment">\n          <template>\n            <hn-comment id$="[[comment.id]]" comment="[[comment]]" item-id="[[itemId]]"></hn-comment>\n          </template>\n        </dom-repeat>\n      </div>\n    </div>\n    ';
+    }
+  }, {
+    key: 'properties',
+    get: function get() {
+      return {
+        comment: Object,
 
-      itemId: String,
+        itemId: String,
 
-      collapsed: Boolean
-    };
-  }
+        collapsed: Boolean
+      };
+    }
+  }]);
 
-  _toggleCollapsed() {
-    this.collapsed = !this.collapsed;
-  }
-
-  _getUserHref(comment) {
-    return comment ? `/user?id=${comment.user}` : null;
-  }
-
-  _getCommentHref(comment, itemId) {
-    return comment ? `/item?id=${itemId}#${comment.id}` : null;
-  }
-}
-/* unused harmony export HnCommentElement */
-
+  return HnCommentElement;
+}(_polymerElement.Element);
 
 // This element registers itself because its recursive - its template depends
 // on its registered tag name.
+
+
 customElements.define('hn-comment', HnCommentElement);
 
 /***/ })
