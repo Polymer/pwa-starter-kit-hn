@@ -1,0 +1,47 @@
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+
+- url: /(.*\.js)$
+  static_files: dist/\1
+  upload: dist/.*\.js$
+  secure: always
+
+- url: /(|new|ask|show|jobs|favorites)
+  static_files: dist/index.html
+  upload: dist/index.html
+  secure: always
+  http_headers:
+    Link: 
+      </polyfills/custom-elements-es5-adapter.js>;rel=preload;as=script,
+      </main.js>;rel=preload;as=script,
+      </commons-main.js>;rel=preload;as=script,
+      </list-item-main.js>;rel=preload;as=script,
+      </list.js>;rel=preload;as=script
+
+- url: /item
+  static_files: dist/index.html
+  upload: dist/index.html
+  secure: always
+  http_headers:
+    Link: 
+      </polyfills/custom-elements-es5-adapter.js>;rel=preload;as=script,
+      </main.js>;rel=preload;as=script,
+      </commons-main.js>;rel=preload;as=script,
+      </list-item-main.js>;rel=preload;as=script,
+      </item-user-main.js>;rel=preload;as=script,
+      </item.js>;rel=preload;as=script
+
+- url: /user
+  static_files: dist/index.html
+  upload: dist/index.html
+  secure: always
+  http_headers:
+    Link: 
+      </polyfills/custom-elements-es5-adapter.js>;rel=preload;as=script,
+      </main.js>;rel=preload;as=script,
+      </commons-main.js>;rel=preload;as=script,
+      </item-user-main.js>;rel=preload;as=script,
+      </user.js>;rel=preload;as=script

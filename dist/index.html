@@ -18,38 +18,7 @@
 
   <body>
     <hn-app></hn-app>
-
-    <!--
-      Can't use wc-loader as-is - wc polyfills need to run before the bundle.
-    -->
-
-    <!--
-      If a browser supports native CE, then it also supports modules
-      (Chrome, Safari).
-    -->
-    <script type="module" src="/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-
-    <!--
-      A browser that supports modules doesn't imply support for WCs (Edge).
-
-      Firefox and Edge just need wc-sd-ce.js, but there isn't a way to
-      differentiate it from IE with just HTML.
-
-      Edge supports modules, but can't load wc-lite/sd-ce.js as type="module"
-      (Unable to get property 'Object' of undefined or null reference),
-      so don't use type="module".
-
-      IE 11 needs Promise polyfill and a few other things (see wc-loader.js),
-      so use wc-lite.js.
-    -->
-    <script defer src="/webcomponentsjs/webcomponents-lite.js"></script>
-
-    <!--
-      IE 11 specifically also needs fetch(). Browsers that support nomodule
-      also support fetch().
-    -->
-    <script nomodule defer src="/fetch.js"></script>
-
+    <script type="module" src="/polyfills/custom-elements-es5-adapter.js"></script>
     <script defer src="/main.js"></script>
   </body>
 </html>

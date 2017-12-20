@@ -1,8 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
+const MinifyPlugin = require('babel-minify-webpack-plugin');
 
 module.exports = {
-  entry: './src/components/hn-app.js',
+  entry: './src/boot.js',
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       async: 'list-item',
@@ -16,6 +17,7 @@ module.exports = {
       async: 'commons',
       minChunks: 2
     }),
+    new MinifyPlugin()
   ],
   output: {
     filename: '[name].js',
@@ -29,11 +31,13 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [["env", {
-              "targets": {
-                "browsers": ["last 2 versions"]
-              }
-            }]],
+            presets: [
+              ["env", {
+                "targets": {
+                  "browsers": ["last 2 versions"]
+                }
+              }]
+            ],
             plugins: [
               'syntax-dynamic-import',
               'transform-object-rest-spread'
