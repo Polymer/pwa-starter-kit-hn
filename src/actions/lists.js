@@ -4,7 +4,7 @@ export const FAIL_LIST = 'FAIL_LIST';
 
 export const fetchList = (list) => (dispatch) => {
   dispatch(requestList(list.id));
-  fetch(`https://node-hnapi.herokuapp.com/${list.id}`)
+  fetch(`/api/${list.id}`)
     .then(res => res.json())
     .then(items => dispatch(receiveList(list.id, items)))
     .catch(() => dispatch(failList(list.id)));

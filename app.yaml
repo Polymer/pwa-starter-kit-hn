@@ -9,7 +9,20 @@ handlers:
   upload: dist/.*\.js$
   secure: always
 
-- url: /(|new|ask|show|jobs|favorites)
+- url: /
+  static_files: dist/index.html
+  upload: dist/index.html
+  secure: always
+  http_headers:
+    Link: 
+      </polyfills/custom-elements-es5-adapter.js>;rel=preload;as=script,
+      </main.js>;rel=preload;as=script,
+      </commons-main.js>;rel=preload;as=script,
+      </list-item-main.js>;rel=preload;as=script,
+      </list.js>;rel=preload;as=script,
+      </api/news>;rel=preload;as=fetch
+
+- url: /(new|ask|show|jobs|favorites)
   static_files: dist/index.html
   upload: dist/index.html
   secure: always
@@ -45,6 +58,10 @@ handlers:
       </commons-main.js>;rel=preload;as=script,
       </item-user-main.js>;rel=preload;as=script,
       </user.js>;rel=preload;as=script
+
+- url: /api/(.*)
+  script: server.app
+  secure: always
 
 skip_files:
 - lib/
