@@ -45,3 +45,8 @@ handlers:
       </commons-main.js>;rel=preload;as=script,
       </item-user-main.js>;rel=preload;as=script,
       </user.js>;rel=preload;as=script
+
+skip_files:
+- lib/
+- node_modules/
+- src/
