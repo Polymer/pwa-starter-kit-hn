@@ -23,13 +23,6 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              ["env", {
-                "targets": {
-                  "browsers": ["last 2 versions"]
-                }
-              }]
-            ],
             plugins: [
               'syntax-dynamic-import',
               'transform-object-rest-spread'

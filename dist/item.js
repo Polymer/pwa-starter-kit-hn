@@ -1,1 +1,39 @@
-webpackJsonp([3],{39:function(a,b,c){"use strict";function d(a){return a&&a.__esModule?a:{default:a}}function e(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function f(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return b&&("object"==typeof b||"function"==typeof b)?b:a}function g(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(b,"__esModule",{value:!0}),b.fetchItemIfNeeded=b.currentItemSelector=b.HnItemElement=void 0;var h=function(){function a(a,b){for(var c,d=0;d<b.length;d++)c=b[d],c.enumerable=c.enumerable||!1,c.configurable=!0,"value"in c&&(c.writable=!0),Object.defineProperty(a,c.key,c)}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),i=c(3);c(18),c(42);var j=c(43),k=d(j),l=c(44),m=d(l),n=c(15);c(47),c(51);var o=c(46),p=c(41),q=c(17),r=c(6);n.store.addReducers({favorites:m.default,items:k.default}),n.store.dispatch((0,p.loadFavorites)());var s=b.HnItemElement=function(a){function b(){return e(this,b),f(this,(b.__proto__||Object.getPrototypeOf(b)).apply(this,arguments))}return g(b,a),h(b,[{key:"update",value:function(a){var b=(0,j.currentItemSelector)(a);b&&(document.title=b.title,this.setProperties({favorites:a.favorites,item:b}))}},{key:"_isFavorite",value:function(a,b){return!!(a&&b&&a[b.id])}},{key:"_reload",value:function(){n.store.dispatch((0,o.fetchItem)(this.item))}}],[{key:"template",get:function(){return"\n    "+r.sharedStyles+"\n    <button on-click=\"_reload\">Reload</button>\n    <div hidden$=\"[[item.failure]]\">\n      <hn-summary item=\"[[item]]\" is-favorite=\"[[_isFavorite(favorites, item)]]\"></hn-summary>\n      <div hidden$=\"[[!item.content]]\" inner-h-t-m-l=\"[[item.content]]\"></div>\n      <dom-repeat items=\"[[item.comments]]\" as=\"comment\">\n        <template>\n          <hn-comment id$=\"[[comment.id]]\" comment=\"[[comment]]\" item-id=\"[[item.id]]\"></hn-comment>\n        </template>\n      </dom-repeat>\n    </div>\n    <dom-if if=\"[[item.failure]]\">\n      <template>\n        <p>Item not found</p>\n      </template>\n    </dom-if>"}},{key:"properties",get:function(){return{item:Object}}}]),b}((0,q.connect)(n.store)(i.Element));customElements.define("hn-item",s),b.currentItemSelector=j.currentItemSelector,b.fetchItemIfNeeded=o.fetchItemIfNeeded},51:function(a,b,c){"use strict";function d(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function e(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return b&&("object"==typeof b||"function"==typeof b)?b:a}function f(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(b,"__esModule",{value:!0}),b.HnCommentElement=void 0;var g=function(){function a(a,b){for(var c,d=0;d<b.length;d++)c=b[d],c.enumerable=c.enumerable||!1,c.configurable=!0,"value"in c&&(c.writable=!0),Object.defineProperty(a,c.key,c)}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),h=c(3);c(42);var i=c(6),j=b.HnCommentElement=function(a){function b(){return d(this,b),e(this,(b.__proto__||Object.getPrototypeOf(b)).apply(this,arguments))}return f(b,a),g(b,[{key:"_toggleCollapsed",value:function(){this.collapsed=!this.collapsed}},{key:"_getUserHref",value:function(a){return a?"/user?id="+a.user:null}},{key:"_getCommentHref",value:function(a,b){return a?"/item?id="+b+"#"+a.id:null}}],[{key:"template",get:function(){return"\n    "+i.sharedStyles+"\n    <style>\n      .indent {\n        margin-left: 36px;\n      }\n    </style>\n    <div>\n      <button on-click=\"_toggleCollapsed\">[\u2013]</button>\n      <a href$=\"[[_getUserHref(comment)]]\">[[comment.user]]</a>\n      <a href$=\"[[_getCommentHref(comment, itemId)]]\">[[comment.time_ago]]</a></div>\n    </div>\n    <div hidden$=\"[[collapsed]]\">\n      <div inner-h-t-m-l=\"[[comment.content]]\"></div>\n      <div class=\"indent\">\n        <dom-repeat items=\"[[comment.comments]]\" as=\"comment\">\n          <template>\n            <hn-comment id$=\"[[comment.id]]\" comment=\"[[comment]]\" item-id=\"[[itemId]]\"></hn-comment>\n          </template>\n        </dom-repeat>\n      </div>\n    </div>\n    "}},{key:"properties",get:function(){return{comment:Object,itemId:String,collapsed:Boolean}}}]),b}(h.Element);customElements.define("hn-comment",j)}});
+webpackJsonp([3],{39:function(a,b,c){"use strict";Object.defineProperty(b,"__esModule",{value:!0});var d=c(4),e=c(18),f=c(42),g=c(43),h=c(44),i=c(15),j=c(47),k=c(51),l=c(46),m=c(41),n=c(17),o=c(6);c.d(b,"currentItemSelector",function(){return g.a}),c.d(b,"fetchItemIfNeeded",function(){return l.e}),i.a.addReducers({favorites:h.a,items:g.b}),i.a.dispatch(Object(m.d)());class p extends Object(n.a)(i.a)(d.a){static get template(){return`
+    ${o.a}
+    <button on-click="_reload">Reload</button>
+    <div hidden$="[[item.failure]]">
+      <hn-summary item="[[item]]" is-favorite="[[_isFavorite(favorites, item)]]"></hn-summary>
+      <div hidden$="[[!item.content]]" inner-h-t-m-l="[[item.content]]"></div>
+      <dom-repeat items="[[item.comments]]" as="comment">
+        <template>
+          <hn-comment id$="[[comment.id]]" comment="[[comment]]" item-id="[[item.id]]"></hn-comment>
+        </template>
+      </dom-repeat>
+    </div>
+    <dom-if if="[[item.failure]]">
+      <template>
+        <p>Item not found</p>
+      </template>
+    </dom-if>`}static get properties(){return{item:Object}}update(a){const b=Object(g.a)(a);b&&(document.title=b.title,this.setProperties({favorites:a.favorites,item:b}))}_isFavorite(a,b){return!!(a&&b&&a[b.id])}_reload(){i.a.dispatch(Object(l.d)(this.item))}}b.HnItemElement=p,customElements.define("hn-item",p)},51:function(a,b,c){"use strict";var d=c(4),e=c(42),f=c(6);class g extends d.a{static get template(){return`
+    ${f.a}
+    <style>
+      .indent {
+        margin-left: 36px;
+      }
+    </style>
+    <div>
+      <button on-click="_toggleCollapsed">[–]</button>
+      <a href$="[[_getUserHref(comment)]]">[[comment.user]]</a>
+      <a href$="[[_getCommentHref(comment, itemId)]]">[[comment.time_ago]]</a></div>
+    </div>
+    <div hidden$="[[collapsed]]">
+      <div inner-h-t-m-l="[[comment.content]]"></div>
+      <div class="indent">
+        <dom-repeat items="[[comment.comments]]" as="comment">
+          <template>
+            <hn-comment id$="[[comment.id]]" comment="[[comment]]" item-id="[[itemId]]"></hn-comment>
+          </template>
+        </dom-repeat>
+      </div>
+    </div>
+    `}static get properties(){return{comment:Object,itemId:String,collapsed:Boolean}}_toggleCollapsed(){this.collapsed=!this.collapsed}_getUserHref(a){return a?`/user?id=${a.user}`:null}_getCommentHref(a,b){return a?`/item?id=${b}#${a.id}`:null}}customElements.define("hn-comment",g)}});
