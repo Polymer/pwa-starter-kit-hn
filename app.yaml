@@ -15,9 +15,8 @@ handlers:
   secure: always
   http_headers:
     Link: 
-      </main.js>;rel=preload;as=script,
-      </list-item-main.js>;rel=preload;as=script,
-      </list.js>;rel=preload;as=script,
+      </es/components/hn-app.js>;rel=preload;as=script,
+      </es/components/hn-list.js>;rel=preload;as=script,
       </api/news>;rel=preload;as=fetch
 
 - url: /(new|ask|show|jobs|favorites)
@@ -26,9 +25,8 @@ handlers:
   secure: always
   http_headers:
     Link: 
-      </main.js>;rel=preload;as=script,
-      </list-item-main.js>;rel=preload;as=script,
-      </list.js>;rel=preload;as=script
+      </es/components/hn-app.js>;rel=preload;as=script,
+      </es/components/hn-list.js>;rel=preload;as=script
 
 - url: /item
   static_files: dist/index.html
@@ -36,10 +34,8 @@ handlers:
   secure: always
   http_headers:
     Link: 
-      </main.js>;rel=preload;as=script,
-      </list-item-main.js>;rel=preload;as=script,
-      </item-user-main.js>;rel=preload;as=script,
-      </item.js>;rel=preload;as=script
+      </es/components/hn-app.js>;rel=preload;as=script,
+      </es/components/hn-item.js>;rel=preload;as=script
 
 - url: /user
   static_files: dist/index.html
@@ -47,9 +43,8 @@ handlers:
   secure: always
   http_headers:
     Link: 
-      </main.js>;rel=preload;as=script,
-      </item-user-main.js>;rel=preload;as=script,
-      </user.js>;rel=preload;as=script
+      </es/components/hn-app.js>;rel=preload;as=script,
+      </es/components/hn-user.js>;rel=preload;as=script
 
 - url: /api/(.*)
   script: server.app
