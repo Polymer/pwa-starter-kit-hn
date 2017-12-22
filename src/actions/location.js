@@ -26,8 +26,5 @@ export const updateLocation = (location) => (dispatch, getState) => {
         dispatch(module.fetchItemIfNeeded(module.currentItemSelector(getState())));
       });
       break;
-    case 'invalid-page':
-      import(/* webpackChunkName: 'invalid-page' */ '../components/hn-invalid-page.js');
-      break;
   }
 };

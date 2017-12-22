@@ -9,14 +9,6 @@ module.exports = {
       async: 'list-item',
       chunks: ['list', 'item']
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      async: 'item-user',
-      chunks: ['item', 'user']
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      async: 'commons',
-      minChunks: 2
-    }),
     new MinifyPlugin()
   ],
   output: {

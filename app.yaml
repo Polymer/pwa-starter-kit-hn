@@ -15,9 +15,7 @@ handlers:
   secure: always
   http_headers:
     Link: 
-      </polyfills/custom-elements-es5-adapter.js>;rel=preload;as=script,
       </main.js>;rel=preload;as=script,
-      </commons-main.js>;rel=preload;as=script,
       </list-item-main.js>;rel=preload;as=script,
       </list.js>;rel=preload;as=script,
       </api/news>;rel=preload;as=fetch
@@ -28,9 +26,7 @@ handlers:
   secure: always
   http_headers:
     Link: 
-      </polyfills/custom-elements-es5-adapter.js>;rel=preload;as=script,
       </main.js>;rel=preload;as=script,
-      </commons-main.js>;rel=preload;as=script,
       </list-item-main.js>;rel=preload;as=script,
       </list.js>;rel=preload;as=script
 
@@ -40,9 +36,7 @@ handlers:
   secure: always
   http_headers:
     Link: 
-      </polyfills/custom-elements-es5-adapter.js>;rel=preload;as=script,
       </main.js>;rel=preload;as=script,
-      </commons-main.js>;rel=preload;as=script,
       </list-item-main.js>;rel=preload;as=script,
       </item-user-main.js>;rel=preload;as=script,
       </item.js>;rel=preload;as=script
@@ -53,9 +47,7 @@ handlers:
   secure: always
   http_headers:
     Link: 
-      </polyfills/custom-elements-es5-adapter.js>;rel=preload;as=script,
       </main.js>;rel=preload;as=script,
-      </commons-main.js>;rel=preload;as=script,
       </item-user-main.js>;rel=preload;as=script,
       </user.js>;rel=preload;as=script
 

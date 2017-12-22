@@ -1,4 +1,7 @@
 import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
+/* Always load dom-if here for more efficient caching */
+import '../../node_modules/@polymer/polymer/lib/elements/dom-if.js';
+import './hn-invalid-page.js';
 import location, { pageSelector } from '../reducers/location.js';
 import { store } from '../store.js';
 import { updateLocation } from '../actions/location.js';
