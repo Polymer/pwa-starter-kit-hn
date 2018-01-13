@@ -20,7 +20,5 @@ Dynamically-loaded elements are loaded as a side-effect by the `updateLocation` 
 * actions/
 * reducers/
   * Like [one of the Redux examples](https://github.com/reactjs/redux/tree/master/examples/real-world/src), actions and reducers are in their own directories
-* elements/
-  * Custom element definitions
-* modules/
-  * Code depended on by elements but not necessarily related to that element definition. A module may be depended on by multiple elements.
+* components/
+  * Custom element definitions that are statically or dynamically imported. Dynamically-imported components may also export functions that are used by the `updateLocation` action.
