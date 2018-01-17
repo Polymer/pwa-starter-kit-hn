@@ -32,8 +32,8 @@ export class HnCommentElement extends LitElement {
       <button class="collapsed-btn" on-click="${() => this._toggleCollapsed()}">
         [${props.collapsed ? `+${this._calculateThreadSize(comment)}` : '-'}]
       </button>
-      <a class="user" href="${this._getUserHref(comment)}">${comment.user}</a>
-      <a href="${this._getCommentHref(comment, props.itemId)}">${comment.time_ago}</a></div>
+      <a class="user" href$="${this._getUserHref(comment)}">${comment.user}</a>
+      <a href$="${this._getCommentHref(comment, props.itemId)}">${comment.time_ago}</a></div>
     </div>
     <div class="content" hidden="${props.collapsed}">
       <div>${unsafeHTML(comment.content)}</div>

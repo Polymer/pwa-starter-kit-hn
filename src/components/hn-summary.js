@@ -29,14 +29,14 @@ export class HnSummaryElement extends LitElement {
         color: #ccc;
       }
     </style>
-    <a class="title" href="${item.url}">${item.title}</a>
+    <a class="title" href$="${item.url}">${item.title}</a>
     <span class="domain" hidden="${!item.domain}">(${item.domain})</span>
     <div class="info">
       ${item.points} points by
-      <a href="${this._getUserHref(item)}">${item.user}</a>
+      <a href$="${this._getUserHref(item)}">${item.user}</a>
       ${item.time_ago}
       <span class="spacer">| </span>
-      <a href="${this._getItemHref(item)}">${item.comments_count} comments</a>
+      <a href$="${this._getItemHref(item)}">${item.comments_count} comments</a>
       <span class="spacer"> | </span>
       <button class="add-to-favorites" hidden="${props.isFavorite}" on-click="${() => this._markItem()}">&#9829; Add to Favorites</button>
       <button hidden="${!props.isFavorite}" on-click="${() => this._unmarkItem()}">&#9829; Remove from Favorites</button>
