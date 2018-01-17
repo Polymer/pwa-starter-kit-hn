@@ -53,3 +53,11 @@ export const urlSearchParamsSelector = createSelector(
   searchSelector,
   search => new URLSearchParams(search)
 );
+
+export const pageParamSelector = createSelector(
+  urlSearchParamsSelector,
+  params => {
+    const stringValue = params.get('page');
+    return stringValue ? parseInt(stringValue, 10) : 1;
+  }
+);

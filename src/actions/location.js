@@ -13,7 +13,11 @@ export const updateLocation = (location) => (dispatch, getState) => {
   switch (pageSelector(getState())) {
     case 'list':
       import('../components/hn-list.js').then(module => {
-        dispatch(module.fetchListIfNeeded(module.currentListSelector(getState())));
+        const state = getState();
+        dispatch(module.fetchList(
+          module.currentListSelector(state),
+          module.pageParamSelector(state)
+        ));
       });
       break;
     case 'user':
