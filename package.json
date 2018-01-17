@@ -3,11 +3,23 @@
   "flat": true,
   "version": "1.0.0",
   "contributors": [],
-  "scripts": {},
+  "scripts": {
+    "es": "npx babel src --out-dir es/src; npx babel lib --out-dir es/lib; npx babel node_modules/@0xcda7a --out-dir es/node_modules/@0xcda7a; npx babel node_modules/@polymer --out-dir es/node_modules/@polymer; npx babel node_modules/lit-html --out-dir es/node_modules/lit-html; npx babel node_modules/redux-thunk --out-dir es/node_modules/redux-thunk; npx babel node_modules/reselect --out-dir es/node_modules/reselect",
+    "bundle": "node ../../Polymer/polymer-bundler/lib/bin/polymer-bundler.js --out-dir bundled --shell es/src/components/hn-app.js es/src/components/hn-app.js",
+    "minify": "npx babel bundled/es --out-dir dist",
+    "clean": "rm -rf es bundled dist",
+    "build": "npm run clean && npm run es && npm run bundle && npm run minify"
+  },
   "dependencies": {
     "@0xcda7a/redux-es6": "^3.7.2",
-    "@polymer/polymer": "^3.0.0-pre.1",
+    "@polymer/lit-element": "^0.1.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-minify": "^0.2.0"
   }
 }
