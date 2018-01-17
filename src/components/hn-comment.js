@@ -1,34 +1,51 @@
-import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
-import '../../node_modules/@polymer/polymer/lib/elements/dom-repeat.js';
+import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
+import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
+import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
 import { sharedStyles } from './shared-styles.js';
 
-export class HnCommentElement extends PolymerElement {
-  static get template() {
-    return `
-    ${sharedStyles}
+export class HnCommentElement extends LitElement {
+  render(props) {
+    let comment = props.comment || {};
+    let comments = comment.comments || [];
+    return html`
+    <style>${sharedStyles}</style>
     <style>
       .indent {
-        margin-left: 36px;
+        margin-left: 18px;
+      }
+      .info {
+        margin-bottom: 12px;
+        color: #555;
+      }
+      .collapsed-btn, .user {
+        margin-right: 4px;
+      }
+      .content {
+        margin-left: 18px;
+        overflow-wrap: break-word;
+      }
+      .content pre {
+        white-space: pre-line;
       }
     </style>
-    <div>
-      <button on-click="_toggleCollapsed">[–]</button>
-      <a href$="[[_getUserHref(comment)]]">[[comment.user]]</a>
-      <a href$="[[_getCommentHref(comment, itemId)]]">[[comment.time_ago]]</a></div>
+    <div class="info">
+      <button class="collapsed-btn" on-click="${() => this._toggleCollapsed()}">
+        [${props.collapsed ? `+${this._calculateThreadSize(comment)}` : '-'}]
+      </button>
+      <a class="user" href="${this._getUserHref(comment)}">${comment.user}</a>
+      <a href="${this._getCommentHref(comment, props.itemId)}">${comment.time_ago}</a></div>
     </div>
-    <div hidden$="[[collapsed]]">
-      <div inner-h-t-m-l="[[comment.content]]"></div>
+    <div class="content" hidden="${props.collapsed}">
+      <div>${unsafeHTML(comment.content)}</div>
       <div class="indent">
-        <dom-repeat items="[[comment.comments]]" as="comment">
-          <template>
-            <hn-comment id$="[[comment.id]]" comment="[[comment]]" item-id="[[itemId]]"></hn-comment>
-          </template>
-        </dom-repeat>
+        ${repeat(comments, (comment) => html`
+          <hn-comment id$="${comment.id}" comment="${comment}" itemId="${props.itemId}"></hn-comment>
+        `)}
       </div>
     </div>
     `;
   }
-  
+
   static get properties() {
     return {
       comment: Object,
@@ -49,6 +66,16 @@ export class HnCommentElement extends PolymerElement {
 
   _getCommentHref(comment, itemId) {
     return comment ? `/item?id=${itemId}#${comment.id}`: null;
+  }
+
+  _calculateThreadSize(comment) {
+    let threadSize = 0;
+    let flat = (comment) => {
+      threadSize++;
+      comment.comments.forEach(flat);
+    };
+    flat(comment);
+    return threadSize;
   }
 }
 

@@ -1,4 +1,4 @@
-import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
+import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
 import location, { pageSelector } from '../reducers/location.js';
 import { store } from '../store.js';
 import { updateLocation } from '../actions/location.js';
@@ -12,21 +12,14 @@ store.addReducers({
 
 installRouter(() => store.dispatch(updateLocation(window.location)));
 
-export class HnAppElement extends connect(store)(PolymerElement) {
-  static get template() {
-    return `
-    ${sharedStyles}
+export class HnAppElement extends connect(store)(LitElement) {
+  render(props) {
+    return html`
+    <style>${sharedStyles}</style>
     <style>
-      header {
-        margin: 1em 0;
-      }
-      header a {
-        padding: 4px;
-        border: 2px solid;
-        border-bottom: none;
-      }
       [page] > * {
         display: none;
+        padding: 0 16px;
       }
       [page=list] hn-list,
       [page=item] hn-item,
@@ -35,22 +28,14 @@ export class HnAppElement extends connect(store)(PolymerElement) {
         display: block;
       }
     </style>
-    <header>
-      <a href="/">top</a>
-      <a href="/new">new</a>
-      <a href="/ask">ask</a>
-      <a href="/show">show</a>
-      <a href="/jobs">jobs</a>
-      <a href="/favorites">favorites</a>
-    </header>
-    <div page$="[[page]]">
+    <div page$="${props.page}">
       <hn-list></hn-list>
       <hn-item></hn-item>
       <hn-user></hn-user>
       <hn-invalid-page></hn-invalid-page>
     </div>`;
   }
-  
+
   static get properties() {
     return {
       page: String
@@ -58,9 +43,7 @@ export class HnAppElement extends connect(store)(PolymerElement) {
   }
 
   update(state) {
-    this.setProperties({
-      page: pageSelector(state)
-    });
+    this.page = pageSelector(state);
   }
 }
 

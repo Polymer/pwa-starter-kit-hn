@@ -11,12 +11,49 @@
 
     <style>
       body {
-        font-family: sans-serif;
+        font-family: Roboto, Arial, Helvetica, sans-serif;
+        max-width: 1280px;
+        margin: 0 auto;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        height: 56px;
+        padding: 0 8px;
+        box-sizing: border-box;
+        background-color: #333;
+        white-space: nowrap;
+      }
+      nav > a {
+        padding: 4px 0;
+        margin: 8px;
+        color: #fff;
+        font-size: 1.1em;
+        letter-spacing: .075em;
+        text-decoration: none;
+      }
+      [list="top"] .top,
+      [list="new"] .new,
+      [list="ask"] .ask,
+      [list="show"] .show,
+      [list="jobs"] .jobs,
+      [list="favorites"] .favorites {
+        border-bottom: 1px solid #fff;
       }
     </style>
   </head>
 
   <body>
+    <nav>
+      <a href="/" class="top">Top</a>
+      <a href="/new" class="new">New</a>
+      <a href="/ask" class="ask">Ask</a>
+      <a href="/show" class="show">Show</a>
+      <a href="/jobs" class="jobs">Jobs</a>
+      <a href="/favorites" class="favorites">Favorites</a>
+    </nav>
     <hn-app></hn-app>
     <script type="module" src="/src/components/hn-app.js"></script>
   </body>

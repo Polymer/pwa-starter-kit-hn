@@ -1,5 +1,5 @@
-import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
-import '../../node_modules/@polymer/polymer/lib/elements/dom-repeat.js';
+import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
+import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
 import lists, { currentItemsSelector, currentListSelector } from '../reducers/lists.js';
 import items from '../reducers/items.js';
 import favorites from '../reducers/favorites.js';
@@ -18,19 +18,18 @@ store.addReducers({
 
 store.dispatch(loadFavorites());
 
-export class HnListElement extends connect(store)(PolymerElement) {
-  static get template() {
-    return `
-    ${sharedStyles}
-    <button on-click="_reload">Reload</button>
-    <dom-repeat items="[[items]]">
-      <template>
-        <hn-summary item="[[item]]" is-favorite="[[_isFavorite(favorites, item)]]"></hn-summary>
-      </template>
-    </dom-repeat>
+export class HnListElement extends connect(store)(LitElement) {
+  render(props) {
+    let items = props.items || [];
+    return html`
+    <style>${sharedStyles}</style>
+    <button class="reload-btn" on-click="${() => this._reload()}">Reload</button>
+    ${repeat(items, (item) => html`
+      <hn-summary item="${item}" isFavorite="${this._isFavorite(props.favorites, item)}"></hn-summary>
+    `)}
     `;
   }
-  
+
   static get properties() {
     return {
       list: Object,
@@ -45,22 +44,19 @@ export class HnListElement extends connect(store)(PolymerElement) {
     const list = currentListSelector(state);
     if (list) {
       document.title = list.id;
-      const props = {
-        favorites: state.favorites,
-        list
-      };
+      this.favorites = state.favorites;
+      this.list = list;
       const items = currentItemsSelector(state);
       if (items) {
-        props.items = items;
+        this.items = items;
       }
-      this.setProperties(props);
     }
   }
 
   _isFavorite(favorites, item) {
     return Boolean(favorites && item && favorites[item.id]);
   }
-  
+
   _reload() {
     store.dispatch(fetchList(this.list));
   }

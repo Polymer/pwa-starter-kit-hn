@@ -6,7 +6,9 @@
   "scripts": {},
   "dependencies": {
     "@0xcda7a/redux-es6": "^3.7.2",
-    "@polymer/polymer": "^3.0.0-pre.1",
+    "@polymer/polymer": "^3.0.0-pre.4",
+    "@polymer/lit-element": "^0.1.0",
+    "lit-html": "^0.8.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
   }

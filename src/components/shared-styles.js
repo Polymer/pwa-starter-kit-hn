@@ -1,18 +1,19 @@
 export const sharedStyles = `
-<style>
-  :host {
-    color: #666;
-  }
-
   a {
-    color: #000;
+    color: inherit;
   }
 
   button {
-    padding: 4px;
+    padding: 0;
     background: none;
-    border: 2px solid;
-    font-weight: bold;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
   }
-</style>
+
+  .reload-btn {
+    border-bottom: 1px solid #000;
+    font-size: 1.05em;
+    cursor: pointer;
+  }
 `;

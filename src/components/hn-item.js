@@ -1,6 +1,6 @@
-import { Element as PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
-import '../../node_modules/@polymer/polymer/lib/elements/dom-if.js';
-import '../../node_modules/@polymer/polymer/lib/elements/dom-repeat.js';
+import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
+import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
+import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
 import items, { currentItemSelector } from '../reducers/items.js';
 import favorites from '../reducers/favorites.js';
 import { store } from '../store.js';
@@ -18,30 +18,35 @@ store.addReducers({
 
 store.dispatch(loadFavorites());
 
-export class HnItemElement extends connect(store)(PolymerElement) {
-  static get template() {
-    return `
-    ${sharedStyles}
-    <button on-click="_reload">Reload</button>
-    <div hidden$="[[item.failure]]">
-      <hn-summary item="[[item]]" is-favorite="[[_isFavorite(favorites, item)]]"></hn-summary>
-      <div hidden$="[[!item.content]]" inner-h-t-m-l="[[item.content]]"></div>
-      <dom-repeat items="[[item.comments]]" as="comment">
-        <template>
-          <hn-comment id$="[[comment.id]]" comment="[[comment]]" item-id="[[item.id]]"></hn-comment>
-        </template>
-      </dom-repeat>
+export class HnItemElement extends connect(store)(LitElement) {
+  render(props) {
+    let item = props.item || {};
+    let comments = item.comments || [];
+    return html`
+    <style>${sharedStyles}</style>
+    <style>
+      hn-summary {
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e5e5e5;
+      }
+    </style>
+    <button class="reload-btn" on-click="() => this._reload()}">Reload</button>
+    <div hidden="${item.failure}">
+      <hn-summary item="${item}" isFavorite="${this._isFavorite(props.favorites, item)}"></hn-summary>
+      <div hidden="${!item.content}">${unsafeHTML(item.content)}</div>
+      ${repeat(comments, (comment) => html`
+        <hn-comment id$="${comment.id}" comment="${comment}" itemId="${item.id}"></hn-comment>
+      `)}
     </div>
-    <dom-if if="[[item.failure]]">
-      <template>
-        <p>Item not found</p>
-      </template>
-    </dom-if>`;
+    ${item.failure ? html`<p>Item not found</p>` : ''}
+    `;
   }
-  
+
   static get properties() {
     return {
-      item: Object
+      item: Object,
+
+      favorites: Array
     }
   }
 
@@ -49,17 +54,15 @@ export class HnItemElement extends connect(store)(PolymerElement) {
     const item = currentItemSelector(state);
     if (item) {
       document.title = item.title;
-      this.setProperties({
-        favorites: state.favorites,
-        item
-      });
+      this.favorites = state.favorites;
+      this.item = item;
     }
   }
 
   _isFavorite(favorites, item) {
     return Boolean(favorites && item && favorites[item.id]);
   }
-  
+
   _reload() {
     store.dispatch(fetchItem(this.item));
   }
