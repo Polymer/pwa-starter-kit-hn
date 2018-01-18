@@ -8,15 +8,13 @@
     <title>Polymer Hacker News</title>
     <meta name="description" content="Polymer Hacker News">
 
-    <base href="/">
-
     <link rel="icon" href="images/favicon.ico">
 
     <!-- See https://goo.gl/OOhYW5 -->
     <link rel="manifest" href="manifest.json">
 
     <!-- See https://goo.gl/qRE0vM -->
-    <meta name="theme-color" content="#283593">
+    <meta name="theme-color" content="#333333">
 
     <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -36,12 +34,8 @@
 
     <!-- Tile icon for Windows 8 (144x144 + tile color) -->
     <meta name="msapplication-TileImage" content="images/manifest/icon-144x144.png">
-    <meta name="msapplication-TileColor" content="#3f51b5">
+    <meta name="msapplication-TileColor" content="#333333">
     <meta name="msapplication-tap-highlight" content="no">
-
-    <meta name="theme-color" content="#ffffff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <style>
       body {
@@ -93,7 +87,7 @@
       <a href="/jobs" class="jobs">Jobs</a>
       <a href="/favorites" class="favorites">Favorites</a>
     </nav>
-    <hn-app></hn-app>
+    <hn-app role="main"></hn-app>
 
     <script type="module" src="src/components/hn-app.js"></script>
 
