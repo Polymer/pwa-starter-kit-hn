@@ -20,8 +20,7 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnItemElement extends connect(store)(LitElement) {
-  render(props) {
-    const item = props.item || {};
+  render({ favorites, item }) {
     const comments = item.comments || [];
     return html`
     <style>${sharedStyles}</style>
@@ -38,11 +37,11 @@ export class HnItemElement extends connect(store)(LitElement) {
     <div hidden="${item.failure}">
       <hn-summary
           item="${item}"
-          isFavorite="${props.favorites && item && props.favorites[item.id]}">
+          isFavorite="${favorites && item && favorites[item.id]}">
       </hn-summary>
       <div hidden="${!item.content}">${unsafeHTML(item.content)}</div>
       ${repeat(comments, (comment) => html`
-        <hn-comment id$="${comment.id}" comment="${comment}" itemId="${item.id}"></hn-comment>
+        <hn-comment id="${comment.id}" comment="${comment}" itemId="${item.id}"></hn-comment>
       `)}
     </div>
     ${item.failure ? html`<p>Item not found</p>` : ''}

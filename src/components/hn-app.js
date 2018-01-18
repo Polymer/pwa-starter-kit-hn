@@ -13,7 +13,7 @@ store.addReducers({
 installRouter(() => store.dispatch(updateLocation(window.location)));
 
 export class HnAppElement extends connect(store)(LitElement) {
-  render(props) {
+  render({ page }) {
     return html`
     <style>${sharedStyles}</style>
     <style>
@@ -28,7 +28,7 @@ export class HnAppElement extends connect(store)(LitElement) {
         display: block;
       }
     </style>
-    <div page$="${props.page}">
+    <div page$="${page}">
       <hn-list></hn-list>
       <hn-item></hn-item>
       <hn-user></hn-user>

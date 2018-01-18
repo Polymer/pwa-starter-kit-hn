@@ -4,9 +4,8 @@ import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnCommentElement extends LitElement {
-  render(props) {
-    let comment = props.comment || {};
-    let comments = comment.comments || [];
+  render({ collapsed, comment = {}, itemId }) {
+    const comments = comment.comments || [];
     return html`
     <style>${sharedStyles}</style>
     <style>
@@ -30,16 +29,16 @@ export class HnCommentElement extends LitElement {
     </style>
     <div class="info">
       <button class="collapsed-btn" on-click="${() => this._toggleCollapsed()}">
-        [${props.collapsed ? `+${this._calculateThreadSize(comment)}` : '-'}]
+        [${collapsed ? `+${this._calculateThreadSize(comment)}` : '-'}]
       </button>
-      <a class="user" href$="${this._getUserHref(comment)}">${comment.user}</a>
-      <a href$="${this._getCommentHref(comment, props.itemId)}">${comment.time_ago}</a></div>
+      <a class="user" href="${`/user?id=${comment.user}`}">${comment.user}</a>
+      <a href="${`/item?id=${itemId}#${comment.id}`}">${comment.time_ago}</a></div>
     </div>
-    <div class="content" hidden="${props.collapsed}">
+    <div class="content" hidden="${collapsed}">
       <div>${unsafeHTML(comment.content)}</div>
       <div class="indent">
         ${repeat(comments, (comment) => html`
-          <hn-comment id$="${comment.id}" comment="${comment}" itemId="${props.itemId}"></hn-comment>
+          <hn-comment id="${comment.id}" comment="${comment}" itemId="${itemId}"></hn-comment>
         `)}
       </div>
     </div>
@@ -58,14 +57,6 @@ export class HnCommentElement extends LitElement {
 
   _toggleCollapsed() {
     this.collapsed = !this.collapsed;
-  }
-
-  _getUserHref(comment) {
-    return comment ? `/user?id=${comment.user}` : null;
-  }
-
-  _getCommentHref(comment, itemId) {
-    return comment ? `/item?id=${itemId}#${comment.id}`: null;
   }
 
   _calculateThreadSize(comment) {

@@ -11,8 +11,7 @@ store.addReducers({
 });
 
 export class HnUserElement extends connect(store)(LitElement) {
-  render(props) {
-    const user = props.user || {};
+  render({ user }) {
     return html`
     <style>${sharedStyles}</style>
     <style>

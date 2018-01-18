@@ -21,18 +21,17 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnListElement extends connect(store)(LitElement) {
-  render(props) {
-    const pages = props.list.pages;
-    const loading = pages && pages[props.page] && pages[props.page].isFetching;
-    const items = props.items || [];
+  render({ favorites, items = [], list, page }) {
+    const pages = list.pages;
+    const loading = pages && pages[page] && pages[page].isFetching;
     return html`
     <style>${sharedStyles}</style>
     ${
-      props.list.id !== 'favorites' ?
+      list.id !== 'favorites' ?
       html`
         <hn-loading-button
             loading="${loading}"
-            on-click="${() => store.dispatch(fetchList(props.list, props.page))}">
+            on-click="${() => store.dispatch(fetchList(list, page))}">
         </hn-loading-button>
       ` :
       null
@@ -40,14 +39,14 @@ export class HnListElement extends connect(store)(LitElement) {
     ${repeat(items, (item) => html`
       <hn-summary
           item="${item}"
-          isFavorite="${props.favorites && item && props.favorites[item.id]}">
+          isFavorite="${favorites && item && favorites[item.id]}">
       </hn-summary>
     `)}
     ${
-      props.list.id !== 'favorites' ?
+      list.id !== 'favorites' ?
       html`
-        <a href="${`?page=${Math.max(props.page-1, 1)}`}">Previous Page</a>
-        <a href="${`?page=${props.page+1}`}">Next Page</a>
+        <a href="${`?page=${Math.max(page-1, 1)}`}">Previous Page</a>
+        <a href="${`?page=${page+1}`}">Next Page</a>
       ` :
       null
     }
