@@ -10,10 +10,4 @@ export const sharedStyles = `
     color: inherit;
     cursor: pointer;
   }
-
-  .reload-btn {
-    border-bottom: 1px solid #000;
-    font-size: 1.05em;
-    cursor: pointer;
-  }
 `;

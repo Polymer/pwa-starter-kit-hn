@@ -4,6 +4,7 @@ import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
 import items, { currentItemSelector } from '../reducers/items.js';
 import favorites from '../reducers/favorites.js';
 import { store } from '../store.js';
+import './hn-loading-button.js';
 import './hn-summary.js';
 import './hn-comment.js';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
@@ -20,8 +21,8 @@ store.dispatch(loadFavorites());
 
 export class HnItemElement extends connect(store)(LitElement) {
   render(props) {
-    let item = props.item || {};
-    let comments = item.comments || [];
+    const item = props.item || {};
+    const comments = item.comments || [];
     return html`
     <style>${sharedStyles}</style>
     <style>
@@ -30,9 +31,15 @@ export class HnItemElement extends connect(store)(LitElement) {
         border-bottom: 1px solid #e5e5e5;
       }
     </style>
-    <button class="reload-btn" on-click="() => this._reload()}">Reload</button>
+    <hn-loading-button
+        loading="${item.isFetching}"
+        on-click="${() => store.dispatch(fetchItem(item))}">
+    </hn-loading-button>
     <div hidden="${item.failure}">
-      <hn-summary item="${item}" isFavorite="${this._isFavorite(props.favorites, item)}"></hn-summary>
+      <hn-summary
+          item="${item}"
+          isFavorite="${props.favorites && item && props.favorites[item.id]}">
+      </hn-summary>
       <div hidden="${!item.content}">${unsafeHTML(item.content)}</div>
       ${repeat(comments, (comment) => html`
         <hn-comment id$="${comment.id}" comment="${comment}" itemId="${item.id}"></hn-comment>
@@ -57,14 +64,6 @@ export class HnItemElement extends connect(store)(LitElement) {
       this.favorites = state.favorites;
       this.item = item;
     }
-  }
-
-  _isFavorite(favorites, item) {
-    return Boolean(favorites && item && favorites[item.id]);
-  }
-
-  _reload() {
-    store.dispatch(fetchItem(this.item));
   }
 }
 

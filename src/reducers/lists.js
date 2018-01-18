@@ -97,7 +97,14 @@ export const currentListSelector = createSelector(
       case 'jobs':
         return lists[splitPath[0]] || { id: splitPath[0] };
       case 'favorites':
-        return { id: 'favorites', items: Object.keys(favorites).map(id => parseInt(id, 10)) };
+        return {
+          id: 'favorites',
+          pages: {
+            '1': {
+              items: Object.keys(favorites).map(id => parseInt(id, 10))
+            }
+          }
+        };
       default:
         return null;
     }

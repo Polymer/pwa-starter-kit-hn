@@ -1,0 +1,48 @@
+import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
+
+export class HnLoadingButton extends LitElement {
+  render(props) {
+    return html`
+    <style>
+      button {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 56px;
+        height: 56px;
+        background: var(--theme-color, #333);
+        border: none;
+        border-radius: 50%;
+        box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+      }
+      button[disabled] {
+        opacity: 0.5;
+      }
+      svg {
+        fill: #FFF;
+      }
+      button[disabled] svg {
+        animation: spin 1s infinite;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg) }
+        to { transform: rotate(360deg) }
+      }
+    </style>
+    <button disabled="${props.loading}">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" height="24" viewBox="0 0 24 24" width="24">
+        <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+    </button>
+    `;
+  }
+
+  static get properties() {
+    return {
+      loading: Boolean
+    }
+  }
+}
+
+customElements.define('hn-loading-button', HnLoadingButton);

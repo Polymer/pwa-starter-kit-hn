@@ -14,7 +14,7 @@ export const updateLocation = (location) => (dispatch, getState) => {
     case 'list':
       import('../components/hn-list.js').then(module => {
         const state = getState();
-        dispatch(module.fetchList(
+        dispatch(module.fetchListIfNeeded(
           module.currentListSelector(state),
           module.pageParamSelector(state)
         ));

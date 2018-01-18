@@ -3,13 +3,19 @@ export const RECEIVE_LIST = 'RECEIVE_LIST';
 export const FAIL_LIST = 'FAIL_LIST';
 
 export const fetchList = (list, page) => (dispatch) => {
+  dispatch(requestList(list.id, page));
+  fetch(`https://node-hnapi.herokuapp.com/${list.id}?page=${page}`)
+    .then(res => res.json())
+    .then(items => dispatch(receiveList(list.id, page, items)))
+    .catch(() => dispatch(failList(list.id, page)));
+};
+
+export const fetchListIfNeeded = (list, page) => (dispatch) => {
   if (!list) return;
-  if (!list.pages || !list.pages[page] || (!list.pages[page].items && !list.pages[page].isFetching)) {
-    dispatch(requestList(list.id, page));
-    return fetch(`https://node-hnapi.herokuapp.com/${list.id}?page=${page}`)
-      .then(res => res.json())
-      .then(items => dispatch(receiveList(list.id, page, items)))
-      .catch(() => dispatch(failList(list.id, page)));
+  if (!list.pages ||
+      !list.pages[page] ||
+      (!list.pages[page].items && !list.pages[page].isFetching)) {
+    dispatch(fetchList(list, page));
   }
 };
 

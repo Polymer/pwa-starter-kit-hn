@@ -1,6 +1,7 @@
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
 import users, { currentUserSelector } from '../reducers/users.js';
 import { store } from '../store.js';
+import './hn-loading-button.js';
 import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
 import { connect } from '../../lib/connect-mixin.js';
 import { sharedStyles } from './shared-styles.js';
@@ -11,7 +12,7 @@ store.addReducers({
 
 export class HnUserElement extends connect(store)(LitElement) {
   render(props) {
-    let user = props.user || {};
+    const user = props.user || {};
     return html`
     <style>${sharedStyles}</style>
     <style>
@@ -19,7 +20,10 @@ export class HnUserElement extends connect(store)(LitElement) {
         margin: 1em 0;
       }
     </style>
-    <button class="reload-btn" on-click="${() => this._reload()}">Reload</button>
+    <hn-loading-button
+        loading="${user.isFetching}"
+        on-click="${() => store.dispatch(fetchUser(user))}">
+    </hn-loading-button>
     <table hidden="${user.failure}">
       <tr>
         <td>User:</td><td>${user.id}</td>
@@ -47,10 +51,6 @@ export class HnUserElement extends connect(store)(LitElement) {
       document.title = user.id;
       this.user = user;
     }
-  }
-
-  _reload() {
-    store.dispatch(fetchUser(this.user));
   }
 }
 

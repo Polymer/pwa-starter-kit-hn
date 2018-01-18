@@ -5,8 +5,9 @@ import { pageParamSelector } from '../reducers/location.js';
 import items from '../reducers/items.js';
 import favorites from '../reducers/favorites.js';
 import { store } from '../store.js';
+import './hn-loading-button.js';
 import './hn-summary.js';
-import { fetchList } from '../actions/lists.js';
+import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
 import { connect } from '../../lib/connect-mixin.js';
 import { sharedStyles } from './shared-styles.js';
@@ -21,15 +22,35 @@ store.dispatch(loadFavorites());
 
 export class HnListElement extends connect(store)(LitElement) {
   render(props) {
-    let items = props.items || [];
+    const pages = props.list.pages;
+    const loading = pages && pages[props.page] && pages[props.page].isFetching;
+    const items = props.items || [];
     return html`
     <style>${sharedStyles}</style>
-    <button class="reload-btn" on-click="${() => this._reload()}">Reload</button>
+    ${
+      props.list.id !== 'favorites' ?
+      html`
+        <hn-loading-button
+            loading="${loading}"
+            on-click="${() => store.dispatch(fetchList(props.list, props.page))}">
+        </hn-loading-button>
+      ` :
+      null
+    }
     ${repeat(items, (item) => html`
-      <hn-summary item="${item}" isFavorite="${this._isFavorite(props.favorites, item)}"></hn-summary>
+      <hn-summary
+          item="${item}"
+          isFavorite="${props.favorites && item && props.favorites[item.id]}">
+      </hn-summary>
     `)}
-    <a href$="${this._getPreviousPageHref(props.page)}">Previous Page</a>
-    <a href$="${this._getNextPageHref(props.page)}">Next Page</a>
+    ${
+      props.list.id !== 'favorites' ?
+      html`
+        <a href="${`?page=${Math.max(props.page-1, 1)}`}">Previous Page</a>
+        <a href="${`?page=${props.page+1}`}">Next Page</a>
+      ` :
+      null
+    }
     `;
   }
 
@@ -49,6 +70,7 @@ export class HnListElement extends connect(store)(LitElement) {
     const list = currentListSelector(state);
     if (list) {
       document.title = list.id;
+      document.body.setAttribute('list', list.id);
       this.favorites = state.favorites;
       this.list = list;
       this.page = pageParamSelector(state);
@@ -58,24 +80,8 @@ export class HnListElement extends connect(store)(LitElement) {
       }
     }
   }
-
-  _isFavorite(favorites, item) {
-    return Boolean(favorites && item && favorites[item.id]);
-  }
-
-  _reload() {
-    store.dispatch(fetchList(this.list, this.page));
-  }
-
-  _getPreviousPageHref(page) {
-    return page > 1 ? `?page=${page-1}` : null;
-  }
-
-  _getNextPageHref(page) {
-    return `?page=${page+1}`;
-  }
 }
 
 customElements.define('hn-list', HnListElement);
 
-export { currentListSelector, fetchList, pageParamSelector };
+export { currentListSelector, fetchListIfNeeded, pageParamSelector };

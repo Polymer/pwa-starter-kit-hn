@@ -16,6 +16,7 @@
         margin: 0 auto;
         font-size: 13px;
         line-height: 1.4;
+        --theme-color: #333;
       }
       nav {
         display: flex;
@@ -23,7 +24,7 @@
         height: 56px;
         padding: 0 8px;
         box-sizing: border-box;
-        background-color: #333;
+        background-color: var(--theme-color, #333);
         white-space: nowrap;
       }
       nav > a {
@@ -34,12 +35,12 @@
         letter-spacing: .075em;
         text-decoration: none;
       }
-      [list="top"] .top,
-      [list="new"] .new,
-      [list="ask"] .ask,
-      [list="show"] .show,
-      [list="jobs"] .jobs,
-      [list="favorites"] .favorites {
+      body[list=news] .news,
+      body[list=newest] .newest,
+      body[list=ask] .ask,
+      body[list=show] .show,
+      body[list=jobs] .jobs,
+      body[list=favorites] .favorites {
         border-bottom: 1px solid #fff;
       }
     </style>
@@ -47,8 +48,8 @@
 
   <body>
     <nav>
-      <a href="/" class="top">Top</a>
-      <a href="/new" class="new">New</a>
+      <a href="/" class="news">Top</a>
+      <a href="/new" class="newest">New</a>
       <a href="/ask" class="ask">Ask</a>
       <a href="/show" class="show">Show</a>
       <a href="/jobs" class="jobs">Jobs</a>
