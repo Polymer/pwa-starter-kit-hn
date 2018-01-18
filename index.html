@@ -1,23 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>Polymer Hacker News</title>
+    <meta name="description" content="Polymer Hacker News">
+
+    <base href="/">
+
+    <link rel="icon" href="images/favicon.ico">
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- See https://goo.gl/qRE0vM -->
+    <meta name="theme-color" content="#283593">
+
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Polymer Hacker News">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="My App">
+
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="images/manifest/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/manifest/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="images/manifest/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/manifest/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/manifest/icon-192x192.png">
+
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/manifest/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#3f51b5">
+    <meta name="msapplication-tap-highlight" content="no">
+
     <meta name="theme-color" content="#ffffff">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <title>HN</title>
-
     <style>
       body {
+        --theme-color: #333;
+
         font-family: Roboto, Arial, Helvetica, sans-serif;
         max-width: 1280px;
         margin: 0 auto;
         font-size: 13px;
         line-height: 1.4;
-        --theme-color: #333;
       }
+
       nav {
         display: flex;
         align-items: center;
@@ -27,6 +63,7 @@
         background-color: var(--theme-color, #333);
         white-space: nowrap;
       }
+
       nav > a {
         padding: 4px 0;
         margin: 8px;
@@ -35,6 +72,7 @@
         letter-spacing: .075em;
         text-decoration: none;
       }
+
       body[list=news] .news,
       body[list=newest] .newest,
       body[list=ask] .ask,
@@ -56,6 +94,7 @@
       <a href="/favorites" class="favorites">Favorites</a>
     </nav>
     <hn-app></hn-app>
-    <script type="module" src="/src/components/hn-app.js"></script>
+
+    <script type="module" src="src/components/hn-app.js"></script>
   </body>
 </html>
