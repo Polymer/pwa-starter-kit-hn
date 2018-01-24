@@ -36,6 +36,12 @@ export class HnListElement extends connect(store)(LitElement) {
     const loading = pages && pages[page] && pages[page].isFetching;
     return html`
     <style>${sharedStyles}</style>
+    <style>
+      :host > a {
+        display: inline-block;
+        margin: 0 8px 8px 0;
+      }
+    </style>
     ${
       list.id !== 'favorites' ?
       html`
@@ -53,7 +59,7 @@ export class HnListElement extends connect(store)(LitElement) {
       </hn-summary>
     `)}
     ${
-      list.id !== 'favorites' ?
+      list.id !== 'favorites' && items.length ?
       html`
         <a href="${`?page=${Math.max(page-1, 1)}`}">Previous Page</a>
         <a href="${`?page=${page+1}`}">Next Page</a>
