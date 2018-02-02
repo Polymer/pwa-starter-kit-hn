@@ -19,7 +19,7 @@ import './hn-loading-button.js';
 import './hn-summary.js';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
-import { connect } from '../../lib/connect-mixin.js';
+import { connect } from '../../node_modules/redux-helpers/connect-mixin.js';
 import { sharedStyles } from './shared-styles.js';
 
 store.addReducers({

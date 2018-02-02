@@ -13,7 +13,7 @@ import users, { currentUserSelector } from '../reducers/users.js';
 import { store } from '../store.js';
 import './hn-loading-button.js';
 import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
-import { connect } from '../../lib/connect-mixin.js';
+import { connect } from '../../node_modules/redux-helpers/connect-mixin.js';
 import { sharedStyles } from './shared-styles.js';
 
 store.addReducers({

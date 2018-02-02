@@ -12,8 +12,8 @@ import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-el
 import location, { pageSelector } from '../reducers/location.js';
 import { store } from '../store.js';
 import { updateLocation } from '../actions/location.js';
-import { connect } from '../../lib/connect-mixin.js';
-import { installRouter } from '../../lib/router.js';
+import { connect } from '../../node_modules/redux-helpers/connect-mixin.js';
+import { installRouter }from '../../node_modules/redux-helpers/router.js'
 import { sharedStyles } from './shared-styles.js';
 
 store.addReducers({
@@ -54,6 +54,37 @@ export class HnAppElement extends connect(store)(LitElement) {
 
   update(state) {
     this.page = pageSelector(state);
+
+    switch (this.page) {
+      case 'list':
+        import('../components/hn-list.js').then(module => {
+          const state = store.getState();
+          store.dispatch(module.fetchListIfNeeded(
+            module.currentListSelector(state),
+            module.pageParamSelector(state)
+          ));
+        });
+        break;
+      case 'user':
+        import('../components/hn-user.js').then(module => {
+          const state = store.getState();
+          store.dispatch(module.fetchUserIfNeeded(
+            module.currentUserSelector(state)
+          ));
+        });
+        break;
+      case 'item':
+        import('../components/hn-item.js').then(module => {
+          const state = store.getState();
+          store.dispatch(module.fetchItemIfNeeded(
+            module.currentItemSelector(state)
+          ));
+        });
+        break;
+      case 'invalid-page':
+        import('../components/hn-invalid-page.js');
+        break;
+    }
   }
 }
 
