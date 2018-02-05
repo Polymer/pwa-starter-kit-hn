@@ -20,8 +20,6 @@ store.addReducers({
   location,
 });
 
-installRouter(() => store.dispatch(updateLocation(window.location)));
-
 export class HnAppElement extends connect(store)(LitElement) {
   render({ page }) {
     return html`
@@ -52,8 +50,18 @@ export class HnAppElement extends connect(store)(LitElement) {
     };
   }
 
+  ready() {
+    super.ready();
+
+    installRouter(() => this._updateLocation());
+  }
+
   update(state) {
     this.page = pageSelector(state);
+  }
+
+  _updateLocation() {
+    store.dispatch(updateLocation(window.location));
 
     switch (this.page) {
       case 'list':
