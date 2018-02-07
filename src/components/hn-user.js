@@ -54,7 +54,7 @@ export class HnUserElement extends connect(store)(LitElement) {
     }
   }
 
-  update(state) {
+  stateChanged(state) {
     const user = currentUserSelector(state);
     if (user) {
       document.title = user.id;

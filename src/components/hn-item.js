@@ -66,7 +66,7 @@ export class HnItemElement extends connect(store)(LitElement) {
     }
   }
 
-  update(state) {
+  stateChanged(state) {
     const item = currentItemSelector(state);
     if (item) {
       document.title = item.title;
