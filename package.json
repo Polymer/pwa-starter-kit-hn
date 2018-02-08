@@ -8,7 +8,7 @@
     "@0xcda7a/redux-es6": "^3.7.2",
     "@polymer/lit-element": "^0.1.0",
     "lit-html": "^0.8.0",
-    "redux-helpers": "polymerlabs/redux-helpers",
+    "redux-helpers": "PolymerLabs/redux-helpers",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
   }
