@@ -11,7 +11,7 @@
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
 import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
 import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
-import { connect } from '../../node_modules/redux-helpers/connect-mixin.js';
+import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
 import { loadFavorites } from '../actions/favorites.js';
 import items, { currentItemSelector } from '../reducers/items.js';

@@ -10,7 +10,7 @@
 
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
 import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
-import { connect } from '../../node_modules/redux-helpers/connect-mixin.js';
+import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
 import lists, { currentItemsSelector, currentListSelector } from '../reducers/lists.js';
