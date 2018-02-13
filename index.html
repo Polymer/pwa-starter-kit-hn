@@ -49,6 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       body {
         --theme-color: #ff6500;
+        --content-max-width: 800px;
 
         font-family: Roboto, Arial, Helvetica, sans-serif;
         font-size: 13px;
@@ -66,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         overflow-y: scroll;
         flex-direction: row;
         box-sizing: border-box;
-        max-width: 800px;
+        max-width: var(--content-max-width);
         height: 100%;
         margin: 0 auto;
         padding: 0 8px;

@@ -24,7 +24,7 @@ export class HnAppElement extends connect(store)(LitElement) {
       [page] > * {
         display: none;
         box-sizing: border-box;
-        max-width: 800px;
+        max-width: var(--content-max-width);
         margin: 0 auto;
         padding: 0 16px;
       }
