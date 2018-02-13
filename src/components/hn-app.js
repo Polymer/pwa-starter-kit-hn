@@ -9,11 +9,11 @@
  */
 
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
+import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
+import { installRouter } from '../../node_modules/pwa-helpers/router.js'
+import { updateLocation } from '../actions/location.js';
 import { pageSelector } from '../reducers/location.js';
 import { store } from '../store.js';
-import { updateLocation } from '../actions/location.js';
-import { connect } from '../../node_modules/redux-helpers/connect-mixin.js';
-import { installRouter }from '../../node_modules/redux-helpers/router.js'
 import { sharedStyles } from './shared-styles.js';
 
 export class HnAppElement extends connect(store)(LitElement) {

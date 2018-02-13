@@ -8,12 +8,12 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { createSelector } from '../../node_modules/reselect/src/index.js';
 import {
   REQUEST_LIST,
   RECEIVE_LIST,
   FAIL_LIST
 } from '../actions/lists.js';
-import { createSelector } from '../../node_modules/reselect/src/index.js';
 import { splitPathnameSelector, pageParamSelector } from './location.js';
 import { itemsSelector } from './items.js';
 import { favoritesSelector } from './favorites.js';

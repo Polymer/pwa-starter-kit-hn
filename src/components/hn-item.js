@@ -11,16 +11,16 @@
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
 import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
 import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
+import { connect } from '../../node_modules/redux-helpers/connect-mixin.js';
+import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
+import { loadFavorites } from '../actions/favorites.js';
 import items, { currentItemSelector } from '../reducers/items.js';
 import favorites from '../reducers/favorites.js';
 import { store } from '../store.js';
+import { sharedStyles } from './shared-styles.js';
 import './hn-loading-button.js';
 import './hn-summary.js';
 import './hn-comment.js';
-import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
-import { loadFavorites } from '../actions/favorites.js';
-import { connect } from '../../node_modules/redux-helpers/connect-mixin.js';
-import { sharedStyles } from './shared-styles.js';
 
 store.addReducers({
   favorites,

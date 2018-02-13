@@ -9,8 +9,8 @@
  */
 
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { store } from '../store.js';
 import { saveFavorite, deleteFavorite } from '../actions/favorites.js';
+import { store } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnSummaryElement extends LitElement {
