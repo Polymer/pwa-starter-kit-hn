@@ -35,9 +35,12 @@ export class HnItemElement extends connect(store)(LitElement) {
     return html`
     <style>${sharedStyles}</style>
     <style>
-      hn-summary {
-        padding-bottom: 16px;
-        border-bottom: 1px solid #e5e5e5;
+      hn-summary,
+      .content,
+      hn-comment {
+        padding: 16px;
+        border-bottom: 1px solid #eeeeee;
+        background-color: #ffffff;
       }
     </style>
     <hn-loading-button
@@ -49,7 +52,7 @@ export class HnItemElement extends connect(store)(LitElement) {
           item="${item}"
           isFavorite="${favorites && item && favorites[item.id]}">
       </hn-summary>
-      <div hidden="${!item.content}">${unsafeHTML(item.content)}</div>
+      <div class="content" hidden="${!item.content}">${unsafeHTML(item.content)}</div>
       ${repeat(comments, (comment) => html`
         <hn-comment id="${comment.id}" comment="${comment}" itemId="${item.id}"></hn-comment>
       `)}

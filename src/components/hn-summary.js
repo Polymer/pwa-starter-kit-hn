@@ -20,22 +20,27 @@ export class HnSummaryElement extends LitElement {
     <style>
       :host {
         display: block;
-        margin: 16px 0;
+        padding: 16px;
+        border-bottom: 1px solid #e5e5e5;
+        background-color: #ffffff;
+      }
+      :host(:last-of-type) {
+        border-bottom: none;
       }
       .title {
         font-size: 1.2em;
-        font-weight: 500;
+        text-decoration: none;
       }
       .domain {
         padding-left: 4px;
-        color: #555;
+        color: #717171;
       }
       .info {
         padding-top: 4px;
-        color: #555;
+        color: #717171;
       }
       .add-to-favorites {
-        color: #ccc;
+        color: #cccccc;
       }
     </style>
     <a class="title" href="${item.url}">${item.title}</a>

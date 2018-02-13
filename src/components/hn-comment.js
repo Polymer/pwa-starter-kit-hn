@@ -19,6 +19,9 @@ export class HnCommentElement extends LitElement {
     return html`
     <style>${sharedStyles}</style>
     <style>
+      :host {
+        display: block;
+      }
       .indent {
         margin-left: 18px;
       }
