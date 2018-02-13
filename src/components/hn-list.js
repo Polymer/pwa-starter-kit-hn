@@ -41,6 +41,15 @@ export class HnListElement extends connect(store)(LitElement) {
         display: inline-block;
         margin: 0 8px 8px 0;
       }
+      .pagination {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 16px 0;
+      }
+      .pagination > a:first-of-type {
+        margin-right: 16px;
+      }
     </style>
     ${
       list.id !== 'favorites' ?
@@ -61,8 +70,10 @@ export class HnListElement extends connect(store)(LitElement) {
     ${
       list.id !== 'favorites' && items.length ?
       html`
-        <a href="${`?page=${Math.max(page-1, 1)}`}">Previous Page</a>
-        <a href="${`?page=${page+1}`}">Next Page</a>
+        <div class="pagination">
+          <a href="${`?page=${Math.max(page-1, 1)}`}">Previous Page</a>
+          <a href="${`?page=${page+1}`}">Next Page</a>
+        </div>
       ` :
       null
     }
