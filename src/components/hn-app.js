@@ -23,6 +23,9 @@ export class HnAppElement extends connect(store)(LitElement) {
     <style>
       [page] > * {
         display: none;
+        box-sizing: border-box;
+        max-width: 800px;
+        margin: 0 auto;
         padding: 0 16px;
       }
       [page=list] hn-list,

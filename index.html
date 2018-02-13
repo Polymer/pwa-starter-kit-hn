@@ -48,32 +48,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <style>
       body {
-        --theme-color: #333;
+        --theme-color: #ff6500;
 
         font-family: Roboto, Arial, Helvetica, sans-serif;
-        max-width: 1280px;
-        margin: 0 auto;
         font-size: 13px;
         line-height: 1.4;
+        margin: 0 auto;
       }
 
       nav {
-        display: flex;
-        align-items: center;
         height: 56px;
-        padding: 0 8px;
-        box-sizing: border-box;
-        background-color: var(--theme-color, #333);
-        white-space: nowrap;
+        background-color: var(--theme-color);
       }
 
-      nav > a {
-        padding: 4px 0;
-        margin: 8px;
-        color: #fff;
+      nav > .nav-content {
+        display: flex;
+        overflow-y: scroll;
+        flex-direction: row;
+        box-sizing: border-box;
+        max-width: 800px;
+        height: 100%;
+        margin: 0 auto;
+        padding: 0 8px;
+        white-space: nowrap;
+        align-items: center;
+      }
+
+      nav > .nav-content > a {
         font-size: 1.25em;
-        letter-spacing: .075em;
+        margin: 8px;
+        padding: 4px 0;
         text-decoration: none;
+        letter-spacing: .075em;
+        color: #ffffff;
       }
 
       body[list=news] .news,
@@ -89,12 +96,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <body>
     <nav>
-      <a href="/" class="news">Top</a>
-      <a href="/new" class="newest">New</a>
-      <a href="/ask" class="ask">Ask</a>
-      <a href="/show" class="show">Show</a>
-      <a href="/jobs" class="jobs">Jobs</a>
-      <a href="/favorites" class="favorites">Favorites</a>
+      <div class="nav-content">
+        <a href="/" class="news">Top</a>
+        <a href="/new" class="newest">New</a>
+        <a href="/ask" class="ask">Ask</a>
+        <a href="/show" class="show">Show</a>
+        <a href="/jobs" class="jobs">Jobs</a>
+        <a href="/favorites" class="favorites">Favorites</a>
+      </div>
     </nav>
     <hn-app role="main"></hn-app>
 
