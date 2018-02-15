@@ -9,12 +9,12 @@
  */
 
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
+import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
+import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
 import users, { currentUserSelector } from '../reducers/users.js';
 import { store } from '../store.js';
-import './hn-loading-button.js';
-import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
-import { connect } from '../../node_modules/redux-helpers/connect-mixin.js';
 import { sharedStyles } from './shared-styles.js';
+import './hn-loading-button.js';
 
 store.addReducers({
   users,
