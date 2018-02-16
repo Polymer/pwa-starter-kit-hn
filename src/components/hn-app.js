@@ -49,46 +49,11 @@ export class HnAppElement extends connect(store)(LitElement) {
   ready() {
     super.ready();
 
-    installRouter(() => this._updateLocation());
+    installRouter(() => store.dispatch(updateLocation(window.location)));
   }
 
   stateChanged(state) {
     this.page = pageSelector(state);
-  }
-
-  _updateLocation() {
-    store.dispatch(updateLocation(window.location));
-
-    switch (this.page) {
-      case 'list':
-        import('../components/hn-list.js').then(module => {
-          const state = store.getState();
-          store.dispatch(module.fetchListIfNeeded(
-            module.currentListSelector(state),
-            module.pageParamSelector(state)
-          ));
-        });
-        break;
-      case 'user':
-        import('../components/hn-user.js').then(module => {
-          const state = store.getState();
-          store.dispatch(module.fetchUserIfNeeded(
-            module.currentUserSelector(state)
-          ));
-        });
-        break;
-      case 'item':
-        import('../components/hn-item.js').then(module => {
-          const state = store.getState();
-          store.dispatch(module.fetchItemIfNeeded(
-            module.currentItemSelector(state)
-          ));
-        });
-        break;
-      case 'invalid-page':
-        import('../components/hn-invalid-page.js');
-        break;
-    }
   }
 }
 

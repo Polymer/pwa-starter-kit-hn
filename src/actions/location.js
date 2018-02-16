@@ -12,9 +12,43 @@ import { pageSelector } from '../reducers/location.js';
 
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';
 
-export const updateLocation = (location) => {
-  return {
+export const updateLocation = (location) => (dispatch, getState) => {
+  dispatch({
     type: UPDATE_LOCATION,
     location
-  };
+  });
+	
+  // NOTE: The below actions need to be created with the updated state (i.e. the state	
+  // with the new location.path).
+  const state = getState();
+  switch (pageSelector(state)) {
+    case 'list':
+      import('../components/hn-list.js').then(module => {
+        const state = getState();
+        dispatch(module.fetchListIfNeeded(
+          module.currentListSelector(state),
+          module.pageParamSelector(state)
+        ));
+      });
+      break;
+    case 'user':
+      import('../components/hn-user.js').then(module => {
+        const state = getState();
+        dispatch(module.fetchUserIfNeeded(
+          module.currentUserSelector(state)
+        ));
+      });
+      break;
+    case 'item':
+      import('../components/hn-item.js').then(module => {
+        const state = getState();
+        dispatch(module.fetchItemIfNeeded(
+          module.currentItemSelector(state)
+        ));
+      });
+      break;
+    case 'invalid-page':
+      import('../components/hn-invalid-page.js');
+      break;
+  }
 };
