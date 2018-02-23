@@ -49,7 +49,7 @@ export class HnAppElement extends connect(store)(LitElement) {
   ready() {
     super.ready();
 
-    installRouter(() => store.dispatch(updateLocation(window.location)));
+    installRouter((location) => store.dispatch(updateLocation(location)));
   }
 
   stateChanged(state) {
