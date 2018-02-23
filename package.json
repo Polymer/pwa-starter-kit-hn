@@ -2,6 +2,11 @@
   "name": "polymer-redux-hn",
   "flat": true,
   "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PolymerLabs/polymer-redux-hn.git"
+  },
   "contributors": [],
   "scripts": {},
   "dependencies": {
