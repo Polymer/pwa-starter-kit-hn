@@ -11,7 +11,7 @@
   "scripts": {},
   "dependencies": {
     "@0xcda7a/redux-es6": "^3.7.2",
-    "@polymer/lit-element": "^0.1.0",
+    "@polymer/lit-element": "^0.2.2",
     "lit-html": "^0.8.0",
     "pwa-helpers": "PolymerLabs/pwa-helpers",
     "redux-thunk": "^2.2.0",
