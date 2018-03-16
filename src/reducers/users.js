@@ -14,7 +14,7 @@ import {
   RECEIVE_USER,
   FAIL_USER
 } from '../actions/users.js';
-import { splitPathnameSelector, urlSearchParamsSelector } from './location.js';
+import { idSelector } from './app.js';
 
 const users = (state = {}, action) => {
   switch (action.type) {
@@ -64,15 +64,8 @@ const usersSelector = state => state.users;
 
 export const currentUserSelector = createSelector(
   usersSelector,
-  splitPathnameSelector,
-  urlSearchParamsSelector,
-  (users, splitPath, params) => {
-    switch (splitPath[0]) {
-      case 'user':
-        const id = params.get('id');
-        return users[id] || { id };
-      default:
-        return null;
-    }
+  idSelector,
+  (users, id) => {
+    return id ? users[id] || { id } : null;
   }
 );

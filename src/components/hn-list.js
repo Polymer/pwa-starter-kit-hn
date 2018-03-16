@@ -14,7 +14,6 @@ import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
 import lists, { currentItemsSelector, currentListSelector } from '../reducers/lists.js';
-import { pageParamSelector } from '../reducers/location.js';
 import items from '../reducers/items.js';
 import favorites from '../reducers/favorites.js';
 import { store } from '../store.js';
@@ -88,7 +87,7 @@ export class HnListElement extends connect(store)(LitElement) {
       document.body.setAttribute('list', list.id);
       this.favorites = state.favorites;
       this.list = list;
-      this.page = pageParamSelector(state);
+      this.page = state.app.page;
       const items = currentItemsSelector(state);
       if (items) {
         this.items = items;
@@ -99,4 +98,4 @@ export class HnListElement extends connect(store)(LitElement) {
 
 customElements.define('hn-list', HnListElement);
 
-export { currentListSelector, fetchListIfNeeded, pageParamSelector };
+export { currentListSelector, fetchListIfNeeded };
