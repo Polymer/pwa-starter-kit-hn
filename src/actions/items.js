@@ -14,7 +14,7 @@ export const FAIL_ITEM = 'FAIL_ITEM';
 
 export const fetchItem = (item) => (dispatch) => {
   dispatch(requestItem(item.id));
-  fetch(`https://node-hnapi.herokuapp.com/item/${item.id}`)
+  fetch(`/api/item/${item.id}`)
     .then(res => res.json())
     .then(data => dispatch(receiveItem(item.id, data)))
     .catch(() => dispatch(failItem(item.id)));

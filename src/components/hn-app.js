@@ -57,3 +57,9 @@ export class HnAppElement extends connect(store)(LitElement) {
 }
 
 customElements.define('hn-app', HnAppElement);
+
+if ('serviceWorker' in window.navigator) {
+  window.addEventListener('load', function() {
+    window.navigator.serviceWorker.register('/sw.js')
+  });
+}
