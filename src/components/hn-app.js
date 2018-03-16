@@ -11,31 +11,30 @@
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
 import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
 import { installRouter } from '../../node_modules/pwa-helpers/router.js'
-import { updateLocation } from '../actions/location.js';
-import { pageSelector } from '../reducers/location.js';
+import { updateLocation } from '../actions/app.js';
 import { store } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnAppElement extends connect(store)(LitElement) {
-  render({ page }) {
+  render({ view }) {
     return html`
     <style>${sharedStyles}</style>
     <style>
-      [page] > * {
+      [view] > * {
         display: none;
         box-sizing: border-box;
         max-width: var(--content-max-width);
         margin: 0 auto;
         padding: 0 16px;
       }
-      [page=list] hn-list,
-      [page=item] hn-item,
-      [page=user] hn-user,
-      [page=invalid-page] hn-invalid-page {
+      [view=list] hn-list,
+      [view=item] hn-item,
+      [view=user] hn-user,
+      [view=invalid-page] hn-invalid-page {
         display: block;
       }
     </style>
-    <div page$="${page}">
+    <div view$="${view}">
       <hn-list></hn-list>
       <hn-item></hn-item>
       <hn-user></hn-user>
@@ -45,18 +44,18 @@ export class HnAppElement extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      page: String
+      view: String
     };
   }
 
   ready() {
     super.ready();
 
-    installRouter(() => store.dispatch(updateLocation(window.location)));
+    installRouter((location) => store.dispatch(updateLocation(location)));
   }
 
   stateChanged(state) {
-    this.page = pageSelector(state);
+    this.view = state.app.view;
   }
 }
 
