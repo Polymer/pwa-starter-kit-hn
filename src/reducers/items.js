@@ -17,7 +17,7 @@ import {
 import { ADD_FAVORITE } from '../actions/favorites.js';
 // HACK: Don't need to import list actions just for this.
 // import { RECEIVE_LIST } from '../actions/lists.js';
-import { splitPathnameSelector, urlSearchParamsSelector } from './location.js';
+import { idSelector } from './app.js';
 
 const items = (state = {}, action) => {
   switch (action.type) {
@@ -77,15 +77,8 @@ export const itemsSelector = state => state.items;
 
 export const currentItemSelector = createSelector(
   itemsSelector,
-  splitPathnameSelector,
-  urlSearchParamsSelector,
-  (items, splitPath, params) => {
-    switch (splitPath[0]) {
-      case 'item':
-        const id = params.get('id');
-        return items[id] || { id };
-      default:
-        return null;
-    }
+  idSelector,
+  (items, id) => {
+    return id ? items[id] || { id } : null;
   }
 );

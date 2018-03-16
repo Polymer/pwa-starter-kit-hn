@@ -14,7 +14,6 @@ import {
   RECEIVE_LIST,
   FAIL_LIST
 } from '../actions/lists.js';
-import { splitPathnameSelector, pageParamSelector } from './location.js';
 import { itemsSelector } from './items.js';
 import { favoritesSelector } from './favorites.js';
 
@@ -92,38 +91,32 @@ export default lists;
 
 const listsSelector = state => state.lists;
 
+const listSelector = state => state.app.list;
+
 export const currentListSelector = createSelector(
   listsSelector,
   favoritesSelector,
-  splitPathnameSelector,
-  (lists, favorites, splitPath) => {
-    switch (splitPath[0]) {
-      case '':
-        return lists['news'] || { id: 'news' };
-      case 'new':
-        return lists['newest'] || { id: 'newest' };
-      case 'ask':
-      case 'show':
-      case 'jobs':
-        return lists[splitPath[0]] || { id: splitPath[0] };
-      case 'favorites':
-        return {
-          id: 'favorites',
-          pages: {
-            '1': {
-              items: Object.keys(favorites).map(id => parseInt(id, 10))
-            }
+  listSelector,
+  (lists, favorites, list) => {
+    if (list === 'favorites') {
+      return {
+        id: 'favorites',
+        pages: {
+          '1': {
+            items: Object.keys(favorites).map(id => parseInt(id, 10))
           }
-        };
-      default:
-        return null;
+        }
+      };
     }
+    return lists[list] || { id: list };
   }
 );
 
+const pageSelector = state => state.app.page;
+
 export const currentItemsSelector = createSelector(
   currentListSelector,
-  pageParamSelector,
+  pageSelector,
   itemsSelector,
   (list, pageId, items) => {
     const pages = list.pages;

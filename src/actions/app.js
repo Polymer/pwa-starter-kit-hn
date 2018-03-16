@@ -8,30 +8,48 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { pageSelector } from '../reducers/location.js';
-
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';
 
 export const updateLocation = (location) => (dispatch, getState) => {
-  dispatch({
-    type: UPDATE_LOCATION,
-    location
-  });
-	
-  // NOTE: The below actions need to be created with the updated state (i.e. the state	
-  // with the new location.path).
-  const state = getState();
-  switch (pageSelector(state)) {
-    case 'list':
+  const path = window.decodeURIComponent(location.pathname);
+  const splitPath = (path || '').slice(1).split('/');
+  const params = new URLSearchParams(location.search);
+  const pageStr = params.get('page');
+  const page = pageStr ? parseInt(pageStr, 10) : 1;
+  const id = params.get('id');
+  let list;
+  let view;
+  switch (splitPath[0]) {
+    case '':
+    case 'new':
+    case 'ask':
+    case 'show':
+    case 'jobs':
+    case 'favorites':
+      switch (splitPath[0]) {
+        case '':
+          list = 'news';
+          break;
+        case 'new':
+          list = 'newest';
+          break;
+        case 'ask':
+        case 'show':
+        case 'jobs':
+        case 'favorites':
+          list = splitPath[0];
+      }
+      view = 'list';
       import('../components/hn-list.js').then(module => {
         const state = getState();
         dispatch(module.fetchListIfNeeded(
           module.currentListSelector(state),
-          module.pageParamSelector(state)
+          page
         ));
       });
       break;
     case 'user':
+      view = 'user';
       import('../components/hn-user.js').then(module => {
         const state = getState();
         dispatch(module.fetchUserIfNeeded(
@@ -40,6 +58,7 @@ export const updateLocation = (location) => (dispatch, getState) => {
       });
       break;
     case 'item':
+      view = 'item';
       import('../components/hn-item.js').then(module => {
         const state = getState();
         dispatch(module.fetchItemIfNeeded(
@@ -47,8 +66,16 @@ export const updateLocation = (location) => (dispatch, getState) => {
         ));
       });
       break;
-    case 'invalid-page':
+    default:
+      view = 'invalid-page';
       import('../components/hn-invalid-page.js');
-      break;
   }
+
+  dispatch({
+    type: UPDATE_LOCATION,
+    view,
+    list,
+    page,
+    id
+  });
 };
