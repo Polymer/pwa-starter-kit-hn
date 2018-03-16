@@ -13,7 +13,7 @@ Client side routing is done by the src/modules/router.js module, which intercept
 
 ## Lazy-loading
 
-Dynamically-loaded elements are loaded as a side-effect by the `updateLocation` action in src/actions/location.js. These elements may export actions and selectors that are asynchronously used by the `updateLocation` action for a particular page.
+Dynamically-loaded elements are loaded as a side-effect by the `updateLocation` action in src/actions/app.js. These elements may export actions and selectors that are asynchronously used by the `updateLocation` action for a particular page.
 
 ## File structure
 
