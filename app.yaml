@@ -1,0 +1,29 @@
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+
+- url: /node_modules/@webcomponents/webcomponentsjs
+  static_dir: webcomponentsjs
+  secure: always
+
+- url: /api/(.*)
+  script: server.app
+  secure: always
+
+- url: /([^.]*)
+  static_files: dist/index.html
+  upload: dist/index.html
+  secure: always
+
+- url: /(.*)
+  static_files: dist/\1
+  upload: dist/.*
+  secure: always
+
+skip_files:
+- bundled/
+- images/
+- node_modules/
+- src/

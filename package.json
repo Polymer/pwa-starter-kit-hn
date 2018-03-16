@@ -9,7 +9,14 @@
   },
   "contributors": [],
   "scripts": {
-    "start": "polyserve --npm --module-resolution=node"
+    "start": "polyserve --npm --module-resolution=node",
+    "bundle": "polymer-bundler --module-resolution node --out-dir bundled --shell src/components/hn-app.js src/components/hn-app.js",
+    "minify": "babel bundled --out-dir dist",
+    "copy": "cp -r images index.html manifest.json dist",
+    "sw": "workbox generateSW workbox-config.js",
+    "copy-polyfills": "cp -r node_modules/@webcomponents/webcomponentsjs .",
+    "clean": "rm -rf bundled dist webcomponentsjs",
+    "build": "npm run clean && npm run bundle && npm run minify && npm run copy && npm run sw && npm run copy-polyfills"
   },
   "dependencies": {
     "@polymer/lit-element": "polymerlabs/lit-element#shady",
@@ -20,6 +27,11 @@
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "polyserve": "^0.25.2"
+    "babel-cli": "^6.26.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-minify": "^0.2.0",
+    "polyserve": "^0.26.0",
+    "workbox-cli": "^3.0.0"
   }
 }
