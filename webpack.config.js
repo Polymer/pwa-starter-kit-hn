@@ -5,7 +5,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        // exclude: /node_modules/,
+        exclude: /custom-elements-es5-adapter\.js$/,
         use: {
           loader: "babel-loader"
         }
@@ -24,7 +24,6 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: "index.html",
-    //   // filename: "./index.html"
       // https://github.com/jantimon/html-webpack-plugin/issues/870
       chunksSortMode: "none"
     })

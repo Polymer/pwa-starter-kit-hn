@@ -31,7 +31,7 @@ export class HnAppElement extends connect(store)(LitElement) {
         display: block;
       }
     </style>
-    <div view$="${view}">
+    <div view="${view}">
       <hn-list></hn-list>
       <hn-item></hn-item>
       <hn-user></hn-user>
