@@ -8,14 +8,14 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { createSelector } from '../../node_modules/reselect/src/index.js';
+import { createSelector } from 'reselect';
 import {
   REQUEST_LIST,
   RECEIVE_LIST,
   FAIL_LIST
-} from '../actions/lists.js';
-import { itemsSelector } from './items.js';
-import { favoritesSelector } from './favorites.js';
+} from '../actions/lists';
+import { itemsSelector } from './items';
+import { favoritesSelector } from './favorites';
 
 const lists = (state = {}, action) => {
   switch (action.type) {

@@ -11,7 +11,7 @@
 import {
   ADD_FAVORITE,
   REMOVE_FAVORITE
-} from '../actions/favorites.js';
+} from '../actions/favorites';
 
 const favorites = (state = {}, action) => {
   switch (action.type) {

@@ -8,13 +8,13 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { createSelector } from '../../node_modules/reselect/src/index.js';
+import { createSelector } from 'reselect';
 import {
   REQUEST_USER,
   RECEIVE_USER,
   FAIL_USER
-} from '../actions/users.js';
-import { idSelector } from './app.js';
+} from '../actions/users';
+import { idSelector } from './app';
 
 const users = (state = {}, action) => {
   switch (action.type) {

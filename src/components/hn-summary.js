@@ -8,10 +8,10 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { saveFavorite, deleteFavorite } from '../actions/favorites.js';
-import { store } from '../store.js';
-import { sharedStyles } from './shared-styles.js';
+import { LitElement, html } from '@polymer/lit-element/lit-element';
+import { saveFavorite, deleteFavorite } from '../actions/favorites';
+import { store } from '../store';
+import { sharedStyles } from './shared-styles';
 
 export class HnSummaryElement extends LitElement {
   render({ isFavorite, item = {} }) {

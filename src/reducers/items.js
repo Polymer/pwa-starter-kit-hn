@@ -8,16 +8,16 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { createSelector } from '../../node_modules/reselect/src/index.js';
+import { createSelector } from 'reselect';
 import {
   REQUEST_ITEM,
   RECEIVE_ITEM,
   FAIL_ITEM
-} from '../actions/items.js';
-import { ADD_FAVORITE } from '../actions/favorites.js';
+} from '../actions/items';
+import { ADD_FAVORITE } from '../actions/favorites';
 // HACK: Don't need to import list actions just for this.
-// import { RECEIVE_LIST } from '../actions/lists.js';
-import { idSelector } from './app.js';
+// import { RECEIVE_LIST } from '../actions/lists';
+import { idSelector } from './app';
 
 const items = (state = {}, action) => {
   switch (action.type) {

@@ -8,19 +8,19 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
-import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
-import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
-import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
-import { loadFavorites } from '../actions/favorites.js';
-import items, { currentItemSelector } from '../reducers/items.js';
-import favorites from '../reducers/favorites.js';
-import { store } from '../store.js';
-import { sharedStyles } from './shared-styles.js';
-import './hn-loading-button.js';
-import './hn-summary.js';
-import './hn-comment.js';
+import { LitElement, html } from '@polymer/lit-element/lit-element';
+import { repeat } from 'lit-html/lib/repeat';
+import { unsafeHTML } from 'lit-html/lib/unsafe-html';
+import { connect } from 'pwa-helpers/connect-mixin';
+import { fetchItem, fetchItemIfNeeded } from '../actions/items';
+import { loadFavorites } from '../actions/favorites';
+import items, { currentItemSelector } from '../reducers/items';
+import favorites from '../reducers/favorites';
+import { store } from '../store';
+import { sharedStyles } from './shared-styles';
+import './hn-loading-button';
+import './hn-summary';
+import './hn-comment';
 
 store.addReducers({
   favorites,

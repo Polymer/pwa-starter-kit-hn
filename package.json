@@ -9,27 +9,30 @@
   },
   "contributors": [],
   "scripts": {
-    "bundle": "node ../../Polymer/polymer-bundler/lib/bin/polymer-bundler.js --out-dir bundled --shell src/components/hn-app.js src/components/hn-app.js",
-    "minify": "babel bundled --out-dir dist",
-    "copy": "cp -r images index.html manifest.json dist",
+    "webpack": "webpack --mode development",
+    "copy": "cp -r images manifest.json dist",
     "sw": "workbox generateSW workbox-config.js",
-    "copy-polyfills": "cp -r node_modules/@webcomponents/webcomponentsjs .",
     "clean": "rm -rf bundled dist webcomponentsjs",
-    "build": "npm run clean && npm run bundle && npm run minify && npm run copy && npm run sw && npm run copy-polyfills"
+    "build": "npm run clean && npm run webpack && npm run copy && npm run sw"
   },
   "dependencies": {
-    "@0xcda7a/redux-es6": "^3.7.2",
     "@polymer/lit-element": "^0.2.2",
     "lit-html": "^0.8.0",
     "pwa-helpers": "PolymerLabs/pwa-helpers",
+    "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.4",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-minify": "^0.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.0.6",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12",
     "workbox-cli": "^3.0.0"
   }
 }

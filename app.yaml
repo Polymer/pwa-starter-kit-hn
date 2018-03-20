@@ -4,10 +4,6 @@ threadsafe: yes
 
 handlers:
 
-- url: /node_modules/@webcomponents/webcomponentsjs
-  static_dir: webcomponentsjs
-  secure: always
-
 - url: /api/(.*)
   script: server.app
   secure: always

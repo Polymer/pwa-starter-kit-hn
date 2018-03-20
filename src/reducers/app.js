@@ -8,8 +8,8 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { createSelector } from '../../node_modules/reselect/src/index.js';
-import { UPDATE_LOCATION } from '../actions/app.js';
+import { createSelector } from 'reselect';
+import { UPDATE_LOCATION } from '../actions/app';
 
 const app = (state = {}, action) => {
   switch (action.type) {
