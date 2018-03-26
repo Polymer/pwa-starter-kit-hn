@@ -9,7 +9,7 @@
  */
 
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
+import { verticalList } from '../../node_modules/virtual-list/lit-html/lit-list.js';
 import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
 import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
@@ -50,7 +50,7 @@ export class HnItemElement extends connect(store)(LitElement) {
           isFavorite="${favorites && item && favorites[item.id]}">
       </hn-summary>
       <div hidden="${!item.content}">${unsafeHTML(item.content)}</div>
-      ${repeat(comments, (comment) => html`
+      ${verticalList(comments, (comment) => html`
         <hn-comment id="${comment.id}" comment="${comment}" itemId="${item.id}"></hn-comment>
       `)}
     </div>
