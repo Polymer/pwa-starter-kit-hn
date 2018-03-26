@@ -10,6 +10,7 @@
 
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
 import { verticalList } from '../../node_modules/virtual-list/lit-html/lit-list.js';
+import Layout from '../../node_modules/virtual-list/layouts/layout-1d.js';
 import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
 import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
@@ -28,6 +29,12 @@ store.addReducers({
 });
 
 store.dispatch(loadFavorites());
+
+const layout = new Layout({
+  itemSize: {
+    y: 2000
+  }
+});
 
 export class HnItemElement extends connect(store)(LitElement) {
   render({ favorites, item }) {
@@ -52,7 +59,7 @@ export class HnItemElement extends connect(store)(LitElement) {
       <div hidden="${!item.content}">${unsafeHTML(item.content)}</div>
       ${verticalList(comments, (comment) => html`
         <hn-comment id="${comment.id}" comment="${comment}" itemId="${item.id}"></hn-comment>
-      `)}
+      `, layout)}
     </div>
     ${item.failure ? html`<p>Item not found</p>` : ''}
     `;
