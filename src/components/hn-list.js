@@ -34,7 +34,7 @@ export class HnListElement extends connect(store)(LitElement) {
     const pages = list.pages;
     const loading = pages && pages[page] && pages[page].isFetching;
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <style>
       :host > a {
         display: inline-block;

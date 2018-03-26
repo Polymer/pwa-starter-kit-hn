@@ -18,7 +18,7 @@ import { sharedStyles } from './shared-styles.js';
 export class HnAppElement extends connect(store)(LitElement) {
   render({ view }) {
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <style>
       [view] > * {
         display: none;

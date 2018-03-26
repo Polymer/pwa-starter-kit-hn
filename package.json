@@ -8,13 +8,18 @@
     "url": "git://github.com/PolymerLabs/polymer-redux-hn.git"
   },
   "contributors": [],
-  "scripts": {},
+  "scripts": {
+    "start": "polyserve --npm --module-resolution=node"
+  },
   "dependencies": {
     "@0xcda7a/redux-es6": "^3.7.2",
-    "@polymer/lit-element": "^0.2.2",
-    "lit-html": "^0.8.0",
+    "@polymer/lit-element": "polymerlabs/lit-element#shady",
+    "lit-html": "^0.9.0",
     "pwa-helpers": "PolymerLabs/pwa-helpers",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
+  },
+  "devDependencies": {
+    "polyserve": "^0.25.2"
   }
 }
