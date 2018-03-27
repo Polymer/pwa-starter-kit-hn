@@ -8,7 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { html } from '../../node_modules/@polymer/lit-element/lit-element.js';
+import { html } from '@polymer/lit-element';
 
 export const sharedStyles = html`
 <style>

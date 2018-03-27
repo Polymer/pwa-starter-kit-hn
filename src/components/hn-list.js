@@ -8,9 +8,9 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
-import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
+import { LitElement, html } from '@polymer/lit-element';
+import { repeat } from 'lit-html/lib/repeat';
+import { connect } from 'pwa-helpers/connect-mixin';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
 import lists, { currentItemsSelector, currentListSelector } from '../reducers/lists.js';

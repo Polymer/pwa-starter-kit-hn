@@ -12,10 +12,10 @@
     "start": "polyserve --npm --module-resolution=node"
   },
   "dependencies": {
-    "@0xcda7a/redux-es6": "^3.7.2",
     "@polymer/lit-element": "polymerlabs/lit-element#shady",
     "lit-html": "^0.9.0",
     "pwa-helpers": "PolymerLabs/pwa-helpers",
+    "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
   },

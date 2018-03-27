@@ -8,9 +8,9 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
-import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
+import { LitElement, html } from '@polymer/lit-element';
+import { repeat } from 'lit-html/lib/repeat';
+import { unsafeHTML } from 'lit-html/lib/unsafe-html';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnCommentElement extends LitElement {
