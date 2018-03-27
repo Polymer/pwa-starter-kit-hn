@@ -9,7 +9,7 @@
  */
 
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
+import { verticalList } from '../../node_modules/virtual-list/lit-html/lit-list.js';
 import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
@@ -41,6 +41,14 @@ export class HnListElement extends connect(store)(LitElement) {
         margin: 0 8px 8px 0;
       }
     </style>
+    <div>
+    ${verticalList(items, (item) => html`
+      <hn-summary
+          item="${item}"
+          isFavorite="${favorites && item && favorites[item.id]}">
+      </hn-summary>
+    `)}
+    </div>
     ${
       list.id !== 'favorites' ?
       html`
@@ -51,12 +59,6 @@ export class HnListElement extends connect(store)(LitElement) {
       ` :
       null
     }
-    ${repeat(items, (item) => html`
-      <hn-summary
-          item="${item}"
-          isFavorite="${favorites && item && favorites[item.id]}">
-      </hn-summary>
-    `)}
     ${
       list.id !== 'favorites' && items.length ?
       html`

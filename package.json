@@ -17,7 +17,8 @@
     "lit-html": "^0.9.0",
     "pwa-helpers": "PolymerLabs/pwa-helpers",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "virtual-list": "github:PolymerLabs/virtual-list#master"
   },
   "devDependencies": {
     "polyserve": "^0.25.2"

@@ -9,7 +9,8 @@
  */
 
 import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
+import { verticalList } from '../../node_modules/virtual-list/lit-html/lit-list.js';
+import Layout from '../../node_modules/virtual-list/layouts/layout-1d.js';
 import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
 import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
@@ -29,6 +30,12 @@ store.addReducers({
 
 store.dispatch(loadFavorites());
 
+const layout = new Layout({
+  itemSize: {
+    y: 2000
+  }
+});
+
 export class HnItemElement extends connect(store)(LitElement) {
   render({ favorites, item }) {
     const comments = item.comments || [];
@@ -40,21 +47,21 @@ export class HnItemElement extends connect(store)(LitElement) {
         border-bottom: 1px solid #e5e5e5;
       }
     </style>
-    <hn-loading-button
-        loading="${item.isFetching}"
-        on-click="${() => store.dispatch(fetchItem(item))}">
-    </hn-loading-button>
     <div hidden="${item.failure}">
       <hn-summary
           item="${item}"
           isFavorite="${favorites && item && favorites[item.id]}">
       </hn-summary>
       <div hidden="${!item.content}">${unsafeHTML(item.content)}</div>
-      ${repeat(comments, (comment) => html`
+      ${verticalList(comments, (comment) => html`
         <hn-comment id="${comment.id}" comment="${comment}" itemId="${item.id}"></hn-comment>
-      `)}
+      `, layout)}
     </div>
     ${item.failure ? html`<p>Item not found</p>` : ''}
+    <hn-loading-button
+        loading="${item.isFetching}"
+        on-click="${() => store.dispatch(fetchItem(item))}">
+    </hn-loading-button>
     `;
   }
 
