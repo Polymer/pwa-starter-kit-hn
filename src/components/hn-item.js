@@ -47,10 +47,6 @@ export class HnItemElement extends connect(store)(LitElement) {
         border-bottom: 1px solid #e5e5e5;
       }
     </style>
-    <hn-loading-button
-        loading="${item.isFetching}"
-        on-click="${() => store.dispatch(fetchItem(item))}">
-    </hn-loading-button>
     <div hidden="${item.failure}">
       <hn-summary
           item="${item}"
@@ -62,6 +58,10 @@ export class HnItemElement extends connect(store)(LitElement) {
       `, layout)}
     </div>
     ${item.failure ? html`<p>Item not found</p>` : ''}
+    <hn-loading-button
+        loading="${item.isFetching}"
+        on-click="${() => store.dispatch(fetchItem(item))}">
+    </hn-loading-button>
     `;
   }
 
