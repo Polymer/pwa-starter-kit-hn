@@ -16,7 +16,7 @@ import { sharedStyles } from './shared-styles.js';
 export class HnSummaryElement extends LitElement {
   render({ isFavorite, item = {} }) {
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <style>
       :host {
         display: block;

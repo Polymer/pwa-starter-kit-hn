@@ -23,7 +23,7 @@ store.addReducers({
 export class HnUserElement extends connect(store)(LitElement) {
   render({ user }) {
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <style>
       table {
         margin: 1em 0;

@@ -40,7 +40,7 @@ export class HnItemElement extends connect(store)(LitElement) {
   render({ favorites, item }) {
     const comments = item.comments || [];
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <style>
       hn-summary {
         padding-bottom: 16px;

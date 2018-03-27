@@ -8,7 +8,10 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-export const sharedStyles = `
+import { html } from '../../node_modules/@polymer/lit-element/lit-element.js';
+
+export const sharedStyles = html`
+<style>
   a {
     color: inherit;
   }
@@ -20,4 +23,4 @@ export const sharedStyles = `
     color: inherit;
     cursor: pointer;
   }
-`;
+</style>`;

@@ -17,7 +17,7 @@ export class HnCommentElement extends LitElement {
   render({ collapsed, comment = {}, itemId }) {
     const comments = comment.comments || [];
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <style>
       .indent {
         margin-left: 18px;

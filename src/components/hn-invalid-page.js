@@ -14,7 +14,7 @@ import { sharedStyles } from './shared-styles.js';
 export class HnInvalidPageElement extends LitElement {
   render(props) {
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <h1>Page not found</h1>`;
   }
 }
