@@ -48,7 +48,13 @@ export class HnAppElement extends connect(store)(LitElement) {
   ready() {
     super.ready();
 
-    installRouter((location) => store.dispatch(updateLocation(location)));
+    installRouter((location, event) => {
+      // Only scroll to top on link clicks, not popstate events.
+      if (event && event.type === 'click') {
+        window.scrollTo(0, 0);
+      }
+      store.dispatch(updateLocation(location));
+    });
   }
 
   stateChanged(state) {
