@@ -9,8 +9,8 @@
  */
 
 import { LitElement, html } from '@polymer/lit-element';
-import { repeat } from 'lit-html/lib/repeat';
-import { unsafeHTML } from 'lit-html/lib/unsafe-html';
+import { repeat } from 'lit-html/lib/repeat.js';
+import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnCommentElement extends LitElement {
