@@ -16,7 +16,7 @@ import { store } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnAppElement extends connect(store)(LitElement) {
-  render({ view }) {
+  render({ _view }) {
     return html`
     ${sharedStyles}
     <style>
@@ -31,7 +31,7 @@ export class HnAppElement extends connect(store)(LitElement) {
         display: block;
       }
     </style>
-    <div view$="${view}">
+    <div view$="${_view}">
       <hn-list></hn-list>
       <hn-item></hn-item>
       <hn-user></hn-user>
@@ -41,7 +41,7 @@ export class HnAppElement extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      view: String
+      _view: String
     };
   }
 
@@ -58,7 +58,7 @@ export class HnAppElement extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    this.view = state.app.view;
+    this._view = state.app.view;
   }
 }
 
