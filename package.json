@@ -9,17 +9,18 @@
   },
   "contributors": [],
   "scripts": {
-    "start": "polyserve --npm --module-resolution=node"
+    "start": "polymer serve",
+    "build": "polymer build",
+    "rename": "LC_ALL=C find build -type f -exec sed -i '' s/node_modules/node_assets/g {} + && mv build/es5-bundled/node_modules build/es5-bundled/node_assets && mv build/es6-bundled/node_modules build/es6-bundled/node_assets && mv build/esm-bundled/node_modules build/esm-bundled/node_assets"
   },
   "dependencies": {
     "@polymer/lit-element": "polymerlabs/lit-element#shady",
     "lit-html": "^0.9.0",
+    "polymer-cli": "^1.7.0-pre.4",
     "pwa-helpers": "PolymerLabs/pwa-helpers",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
   },
-  "devDependencies": {
-    "polyserve": "^0.25.2"
-  }
+  "devDependencies": {}
 }
