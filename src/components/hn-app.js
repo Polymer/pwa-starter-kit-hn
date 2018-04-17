@@ -8,17 +8,17 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
-import { installRouter } from '../../node_modules/pwa-helpers/router.js'
+import { LitElement, html } from '@polymer/lit-element';
+import { connect } from 'pwa-helpers/connect-mixin.js';
+import { installRouter } from 'pwa-helpers/router.js';
 import { updateLocation } from '../actions/app.js';
 import { store } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnAppElement extends connect(store)(LitElement) {
-  render({ view }) {
+  render({ _view }) {
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <style>
       [view] > * {
         display: none;
@@ -34,7 +34,7 @@ export class HnAppElement extends connect(store)(LitElement) {
         display: block;
       }
     </style>
-    <div view$="${view}">
+    <div view$="${_view}">
       <hn-list></hn-list>
       <hn-item></hn-item>
       <hn-user></hn-user>
@@ -44,18 +44,24 @@ export class HnAppElement extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      view: String
+      _view: String
     };
   }
 
   ready() {
     super.ready();
 
-    installRouter((location) => store.dispatch(updateLocation(location)));
+    installRouter((location, event) => {
+      // Only scroll to top on link clicks, not popstate events.
+      if (event && event.type === 'click') {
+        window.scrollTo(0, 0);
+      }
+      store.dispatch(updateLocation(location));
+    });
   }
 
   stateChanged(state) {
-    this.view = state.app.view;
+    this._view = state.app.view;
   }
 }
 

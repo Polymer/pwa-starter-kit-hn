@@ -8,16 +8,16 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
-import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
+import { LitElement, html } from '@polymer/lit-element';
+import { repeat } from 'lit-html/lib/repeat.js';
+import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnCommentElement extends LitElement {
-  render({ collapsed, comment = {}, itemId }) {
+  render({ _collapsed, comment = {}, itemId }) {
     const comments = comment.comments || [];
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <style>
       :host {
         display: block;
@@ -42,12 +42,12 @@ export class HnCommentElement extends LitElement {
     </style>
     <div class="info">
       <button class="collapsed-btn" on-click="${() => this._toggleCollapsed()}">
-        [${collapsed ? `+${this._calculateThreadSize(comment)}` : '-'}]
+        [${_collapsed ? `+${this._calculateThreadSize(comment)}` : '-'}]
       </button>
       <a class="user" href="${`/user?id=${comment.user}`}">${comment.user}</a>
-      <a href="${`/item?id=${itemId}#${comment.id}`}">${comment.time_ago}</a></div>
+      ${comment.time_ago}
     </div>
-    <div class="content" hidden="${collapsed}">
+    <div class="content" hidden="${_collapsed}">
       <div>${unsafeHTML(comment.content)}</div>
       <div class="indent">
         ${repeat(comments, (comment) => html`
@@ -64,12 +64,12 @@ export class HnCommentElement extends LitElement {
 
       itemId: String,
 
-      collapsed: Boolean
+      _collapsed: Boolean
     }
   }
 
   _toggleCollapsed() {
-    this.collapsed = !this.collapsed;
+    this._collapsed = !this._collapsed;
   }
 
   _calculateThreadSize(comment) {

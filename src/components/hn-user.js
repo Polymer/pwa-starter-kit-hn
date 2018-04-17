@@ -8,8 +8,9 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
+import { LitElement, html } from '@polymer/lit-element';
+import { connect } from 'pwa-helpers/connect-mixin.js';
+import { updateMetadata } from 'pwa-helpers/metadata.js';
 import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
 import users, { currentUserSelector } from '../reducers/users.js';
 import { store } from '../store.js';
@@ -21,44 +22,44 @@ store.addReducers({
 });
 
 export class HnUserElement extends connect(store)(LitElement) {
-  render({ user }) {
+  render({ _user }) {
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <style>
       table {
         margin: 1em 0;
       }
     </style>
     <hn-loading-button
-        loading="${user.isFetching}"
-        on-click="${() => store.dispatch(fetchUser(user))}">
+        loading="${_user.isFetching}"
+        on-click="${() => store.dispatch(fetchUser(_user))}">
     </hn-loading-button>
-    <table hidden="${user.failure}">
+    <table hidden="${_user.failure}">
       <tr>
-        <td>User:</td><td>${user.id}</td>
+        <td>User:</td><td>${_user.id}</td>
       </tr>
       <tr>
-        <td>Created:</td><td>${user.created}</td>
+        <td>Created:</td><td>${_user.created}</td>
       </tr>
       <tr>
-        <td>Karma:</td><td>${user.karma}</td>
+        <td>Karma:</td><td>${_user.karma}</td>
       </tr>
     </table>
-    ${user.failure ? html`<p>User not found</p>` : ''}
+    ${_user.failure ? html`<p>User not found</p>` : ''}
     `;
   }
 
   static get properties() {
     return {
-      user: Object
+      _user: Object
     }
   }
 
   stateChanged(state) {
     const user = currentUserSelector(state);
     if (user) {
-      document.title = user.id;
-      this.user = user;
+      updateMetadata({ title: user.id });
+      this._user = user;
     }
   }
 }

@@ -8,13 +8,13 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
+import { LitElement, html } from '@polymer/lit-element';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnInvalidPageElement extends LitElement {
   render(props) {
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <h1>Page not found</h1>`;
   }
 }

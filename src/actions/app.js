@@ -13,10 +13,14 @@ export const UPDATE_LOCATION = 'UPDATE_LOCATION';
 export const updateLocation = (location) => (dispatch, getState) => {
   const path = window.decodeURIComponent(location.pathname);
   const splitPath = (path || '').slice(1).split('/');
-  const params = new URLSearchParams(location.search);
-  const pageStr = params.get('page');
+  const params = location.search.slice(1).split('&').reduce((acc, item) => {
+    const pair = item.split('=');
+    acc[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+    return acc;
+  }, {});
+  const pageStr = params['page'];
   const page = pageStr ? parseInt(pageStr, 10) : 1;
-  const id = params.get('id');
+  const id = params['id'];
   let list;
   let view;
   switch (splitPath[0]) {

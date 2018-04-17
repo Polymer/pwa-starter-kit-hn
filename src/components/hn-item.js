@@ -8,10 +8,11 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '../../node_modules/@polymer/lit-element/lit-element.js';
-import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
-import { unsafeHTML } from '../../node_modules/lit-html/lib/unsafe-html.js';
-import { connect } from '../../node_modules/pwa-helpers/connect-mixin.js';
+import { LitElement, html } from '@polymer/lit-element';
+import { repeat } from 'lit-html/lib/repeat.js';
+import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
+import { connect } from 'pwa-helpers/connect-mixin.js';
+import { updateMetadata } from 'pwa-helpers/metadata.js';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
 import { loadFavorites } from '../actions/favorites.js';
 import items, { currentItemSelector } from '../reducers/items.js';
@@ -30,10 +31,10 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnItemElement extends connect(store)(LitElement) {
-  render({ favorites, item }) {
-    const comments = item.comments || [];
+  render({ _favorites, _item }) {
+    const comments = _item.comments || [];
     return html`
-    <style>${sharedStyles}</style>
+    ${sharedStyles}
     <style>
       hn-summary,
       .content,
@@ -44,37 +45,37 @@ export class HnItemElement extends connect(store)(LitElement) {
       }
     </style>
     <hn-loading-button
-        loading="${item.isFetching}"
-        on-click="${() => store.dispatch(fetchItem(item))}">
+        loading="${_item.isFetching}"
+        on-click="${() => store.dispatch(fetchItem(_item))}">
     </hn-loading-button>
-    <div hidden="${item.failure}">
+    <div hidden="${_item.failure}">
       <hn-summary
-          item="${item}"
-          isFavorite="${favorites && item && favorites[item.id]}">
+          item="${_item}"
+          isFavorite="${_favorites && _item && _favorites[_item.id]}">
       </hn-summary>
-      <div class="content" hidden="${!item.content}">${unsafeHTML(item.content)}</div>
+      <div class="content" hidden="${!_item.content}">${unsafeHTML(_item.content)}</div>
       ${repeat(comments, (comment) => html`
-        <hn-comment id="${comment.id}" comment="${comment}" itemId="${item.id}"></hn-comment>
+        <hn-comment comment="${comment}" itemId="${_item.id}"></hn-comment>
       `)}
     </div>
-    ${item.failure ? html`<p>Item not found</p>` : ''}
+    ${_item.failure ? html`<p>Item not found</p>` : ''}
     `;
   }
 
   static get properties() {
     return {
-      item: Object,
+      _item: Object,
 
-      favorites: Array
+      _favorites: Array
     }
   }
 
   stateChanged(state) {
     const item = currentItemSelector(state);
     if (item) {
-      document.title = item.title;
-      this.favorites = state.favorites;
-      this.item = item;
+      updateMetadata({ title: item.title });
+      this._favorites = state.favorites;
+      this._item = item;
     }
   }
 }
