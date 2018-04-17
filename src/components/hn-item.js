@@ -11,8 +11,7 @@
 import { LitElement, html } from '@polymer/lit-element';
 import { repeat } from 'lit-html/lib/repeat.js';
 import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-import { updateMetadata } from 'pwa-helpers/metadata.js';
+import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
 import { loadFavorites } from '../actions/favorites.js';
 import items, { currentItemSelector } from '../reducers/items.js';

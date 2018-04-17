@@ -10,8 +10,7 @@
 
 import { LitElement, html } from '@polymer/lit-element';
 import { repeat } from 'lit-html/lib/repeat.js';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-import { updateMetadata } from 'pwa-helpers/metadata.js';
+import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
 import lists, { currentItemsSelector, currentListSelector } from '../reducers/lists.js';
