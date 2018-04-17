@@ -1,20 +1,29 @@
 {
   "name": "polymer-redux-hn",
   "flat": true,
-  "version": "1.0.0",
+  "version": "0.1.0",
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "git://github.com/PolymerLabs/polymer-redux-hn.git"
   },
   "contributors": [],
-  "scripts": {},
+  "scripts": {
+    "start": "polymer serve",
+    "build:prpl-server": "polymer build && rm -rf server/build && mv build server/ && renamer --find node_modules --replace node_assets 'server/build/**' && replace node_modules node_assets server/build -r -s",
+    "build:static": "polymer build --preset es6-bundled --js-transform-modules-to-amd",
+    "build": "npm run build:prpl-server && npm run build:static"
+  },
   "dependencies": {
-    "@0xcda7a/redux-es6": "^3.7.2",
-    "@polymer/lit-element": "^0.2.2",
-    "lit-html": "^0.8.0",
+    "@polymer/lit-element": "polymerlabs/lit-element#shady",
     "pwa-helpers": "PolymerLabs/pwa-helpers",
+    "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
+  },
+  "devDependencies": {
+    "polymer-cli": "^1.7.0-pre.10",
+    "renamer": "^0.6.1",
+    "replace": "^0.3.0"
   }
 }
