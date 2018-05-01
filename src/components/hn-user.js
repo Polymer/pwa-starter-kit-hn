@@ -54,7 +54,7 @@ export class HnUserElement extends connect(store)(LitElement) {
     }
   }
 
-  stateChanged(state) {
+  _stateChanged(state) {
     const user = currentUserSelector(state);
     if (user) {
       updateMetadata({ title: user.id });

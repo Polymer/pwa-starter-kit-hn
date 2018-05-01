@@ -56,7 +56,7 @@ export class HnAppElement extends connect(store)(LitElement) {
     });
   }
 
-  stateChanged(state) {
+  _stateChanged(state) {
     this._view = state.app.view;
   }
 }

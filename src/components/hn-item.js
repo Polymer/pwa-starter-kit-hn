@@ -66,7 +66,7 @@ export class HnItemElement extends connect(store)(LitElement) {
     }
   }
 
-  stateChanged(state) {
+  _stateChanged(state) {
     const item = currentItemSelector(state);
     if (item) {
       updateMetadata({ title: item.title });
