@@ -14,8 +14,7 @@
   },
   "dependencies": {
     "@polymer/lit-element": "^0.4.0",
-    "@webcomponents/shadycss": "^1.2.0-0",
-    "@webcomponents/webcomponentsjs": "^2.0.0-0",
+    "@webcomponents/webcomponentsjs": "^2.0.0-beta.2",
     "pwa-helpers": "PolymerLabs/pwa-helpers",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
