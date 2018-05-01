@@ -11,7 +11,7 @@
 import { LitElement, html } from '@polymer/lit-element';
 
 export class HnLoadingButton extends LitElement {
-  render({ loading }) {
+  _render({ loading }) {
     return html`
     <style>
       button {

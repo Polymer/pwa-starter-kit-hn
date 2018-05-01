@@ -21,7 +21,7 @@ store.addReducers({
 });
 
 export class HnUserElement extends connect(store)(LitElement) {
-  render({ _user }) {
+  _render({ _user }) {
     return html`
     ${sharedStyles}
     <style>

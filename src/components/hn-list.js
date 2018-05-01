@@ -30,7 +30,7 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnListElement extends connect(store)(LitElement) {
-  render({ _favorites, _items = [], _list, _page }) {
+  _render({ _favorites, _items = [], _list, _page }) {
     const pages = _list.pages;
     const loading = pages && pages[_page] && pages[_page].isFetching;
     return html`

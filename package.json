@@ -13,7 +13,7 @@
     "serve:static": "polymer serve --port 5000 build/es6-bundled"
   },
   "dependencies": {
-    "@polymer/lit-element": "^0.3.0",
+    "@polymer/lit-element": "^0.4.0",
     "@webcomponents/shadycss": "^1.2.0-0",
     "@webcomponents/webcomponentsjs": "^2.0.0-0",
     "pwa-helpers": "PolymerLabs/pwa-helpers",

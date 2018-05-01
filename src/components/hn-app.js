@@ -15,7 +15,7 @@ import { store } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnAppElement extends connect(store)(LitElement) {
-  render({ _view }) {
+  _render({ _view }) {
     return html`
     ${sharedStyles}
     <style>

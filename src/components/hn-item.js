@@ -30,7 +30,7 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnItemElement extends connect(store)(LitElement) {
-  render({ _favorites, _item }) {
+  _render({ _favorites, _item }) {
     const comments = _item.comments || [];
     return html`
     ${sharedStyles}
