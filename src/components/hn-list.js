@@ -10,8 +10,7 @@
 
 import { LitElement, html } from '@polymer/lit-element';
 import { repeat } from 'lit-html/lib/repeat.js';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-import { updateMetadata } from 'pwa-helpers/metadata.js';
+import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
 import lists, { currentItemsSelector, currentListSelector } from '../reducers/lists.js';
@@ -31,7 +30,7 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnListElement extends connect(store)(LitElement) {
-  render({ _favorites, _items = [], _list, _page }) {
+  _render({ _favorites, _items = [], _list, _page }) {
     const pages = _list.pages;
     const loading = pages && pages[_page] && pages[_page].isFetching;
     return html`
@@ -81,7 +80,7 @@ export class HnListElement extends connect(store)(LitElement) {
     }
   }
 
-  stateChanged(state) {
+  _stateChanged(state) {
     const list = currentListSelector(state);
     if (list) {
       updateMetadata({ title: list.id });

@@ -9,8 +9,7 @@
  */
 
 import { LitElement, html } from '@polymer/lit-element';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-import { updateMetadata } from 'pwa-helpers/metadata.js';
+import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
 import users, { currentUserSelector } from '../reducers/users.js';
 import { store } from '../store.js';
@@ -22,7 +21,7 @@ store.addReducers({
 });
 
 export class HnUserElement extends connect(store)(LitElement) {
-  render({ _user }) {
+  _render({ _user }) {
     return html`
     ${sharedStyles}
     <style>
@@ -55,7 +54,7 @@ export class HnUserElement extends connect(store)(LitElement) {
     }
   }
 
-  stateChanged(state) {
+  _stateChanged(state) {
     const user = currentUserSelector(state);
     if (user) {
       updateMetadata({ title: user.id });

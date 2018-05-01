@@ -14,7 +14,7 @@ import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnCommentElement extends LitElement {
-  render({ _collapsed, comment = {}, itemId }) {
+  _render({ _collapsed, comment = {}, itemId }) {
     const comments = comment.comments || [];
     return html`
     ${sharedStyles}

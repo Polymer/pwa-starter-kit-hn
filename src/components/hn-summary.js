@@ -14,7 +14,7 @@ import { store } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnSummaryElement extends LitElement {
-  render({ isFavorite, item = {} }) {
+  _render({ isFavorite, item = {} }) {
     return html`
     ${sharedStyles}
     <style>

@@ -12,7 +12,7 @@ import { LitElement, html } from '@polymer/lit-element';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnInvalidPageElement extends LitElement {
-  render(props) {
+  _render(props) {
     return html`
     ${sharedStyles}
     <h1>Page not found</h1>`;
