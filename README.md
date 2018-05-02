@@ -1,6 +1,17 @@
 # polymer-redux-hn
 
+![built_with pwa–starter–kit_](https://img.shields.io/badge/built_with-pwa–starter–kit_-blue.svg)
+
 An experimental Hacker News client built from scratch using Polymer and Redux. Using to explore patterns for routing, lazy-loading elements/reducer/actions, and organizing files.
+
+The app is built using [PWA Starter Kit](https://github.com/PolymerLabs/pwa-starter-kit). Using the starter-template as the starting point and the [wiki](https://github.com/PolymerLabs/pwa-starter-kit/wiki) for configuring and personalizing.
+
+![screenshot](https://user-images.githubusercontent.com/1007051/36157673-a2c40a3c-10da-11e8-8f5d-e2e0d8b9f031.png)
+
+## Features/highlights
+
+- Updating the Redux store from an API
+- Lazy-load actions, components, and reducers
 
 ## Setup
 
