@@ -6,7 +6,7 @@ An experimental Hacker News client built from scratch using Polymer and Redux. U
 
 The app is built using [PWA Starter Kit](https://github.com/PolymerLabs/pwa-starter-kit). Using the starter-template as the starting point and the [wiki](https://github.com/PolymerLabs/pwa-starter-kit/wiki) for configuring and personalizing.
 
-![screenshot](https://user-images.githubusercontent.com/1007051/36157673-a2c40a3c-10da-11e8-8f5d-e2e0d8b9f031.png)
+![screenshot](https://user-images.githubusercontent.com/116360/39543436-1302e57c-4e00-11e8-86fb-74cd8ad0466f.png)
 
 ## Features/highlights
 
