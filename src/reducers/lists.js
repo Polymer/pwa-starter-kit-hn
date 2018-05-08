@@ -108,7 +108,7 @@ export const currentListSelector = createSelector(
         }
       };
     }
-    return lists[list] || { id: list };
+    return list ? lists[list] || { id: list } : null;
   }
 );
 
