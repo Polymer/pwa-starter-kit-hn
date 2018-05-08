@@ -30,7 +30,7 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnListElement extends connect(store)(LitElement) {
-  _render({ _favorites, _items = [], _list, _page }) {
+  _render({ _favorites, _items = [], _list, _page, _pathname }) {
     const pages = _list.pages;
     const loading = pages && pages[_page] && pages[_page].isFetching;
     return html`
@@ -60,8 +60,8 @@ export class HnListElement extends connect(store)(LitElement) {
     ${
       _list.id !== 'favorites' && _items.length ?
       html`
-        <a href="${`?page=${Math.max(_page-1, 1)}`}">Previous Page</a>
-        <a href="${`?page=${_page+1}`}">Next Page</a>
+        <a href="${`${_pathname}?page=${Math.max(_page-1, 1)}`}">Previous Page</a>
+        <a href="${`${_pathname}?page=${_page+1}`}">Next Page</a>
       ` :
       null
     }
@@ -76,7 +76,9 @@ export class HnListElement extends connect(store)(LitElement) {
 
       _items: Array,
 
-      _page: Number
+      _page: Number,
+
+      _pathname: String
     }
   }
 
@@ -88,6 +90,7 @@ export class HnListElement extends connect(store)(LitElement) {
       this._favorites = state.favorites;
       this._list = list;
       this._page = state.app.page;
+      this._pathname = window.location.pathname;
       const items = currentItemsSelector(state);
       if (items) {
         this._items = items;
