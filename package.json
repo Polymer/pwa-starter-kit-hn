@@ -13,15 +13,15 @@
     "serve:static": "polymer serve --port 5000 build/es5-bundled"
   },
   "dependencies": {
-    "@polymer/lit-element": "^0.4.0",
-    "@webcomponents/webcomponentsjs": "^2.0.0-beta.2",
+    "@polymer/lit-element": "^0.5.1",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
     "pwa-helpers": "Polymer/pwa-helpers",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "polymer-cli": "^1.7.0-pre.17",
+    "polymer-cli": "^1.7.1",
     "prpl-server": "^1.1.0",
     "renamer": "^0.6.1",
     "replace": "^0.3.0"
