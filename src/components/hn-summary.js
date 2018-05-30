@@ -42,7 +42,7 @@ export class HnSummaryElement extends LitElement {
     <span class="domain" hidden="${!item.domain}">(${item.domain})</span>
     <div class="info">
       ${item.points} points by
-      <a href="${`/user?id=${item.user}`}">${item.user}</a>
+      <a href="${`/user?id=${item.user}`}" hidden?="${!item.user}">${item.user}</a>
       ${item.time_ago}
       <span class="spacer">| </span>
       <a href="${`/item?id=${item.id}`}">${item.comments_count} comments</a>
