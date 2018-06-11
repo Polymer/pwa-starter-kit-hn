@@ -9,7 +9,7 @@ module.exports = {
       handler: 'fastest'
     },
     {
-      urlPattern: new RegExp('https://node-hnapi\.herokuapp\.com/'),
+      urlPattern: new RegExp('/api/'),
       handler: 'networkFirst'
     }
   ]

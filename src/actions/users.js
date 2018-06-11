@@ -14,7 +14,7 @@ export const FAIL_USER = 'FAIL_USER';
 
 export const fetchUser = (user) => (dispatch) => {
   dispatch(requestUser(user.id));
-  fetch(`https://node-hnapi.herokuapp.com/user/${user.id}`)
+  fetch(`/api/user/${user.id}`)
     .then(res => res.json())
     .then(data => {
       if (data.error) {
