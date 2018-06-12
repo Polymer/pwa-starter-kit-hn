@@ -2,9 +2,7 @@
 
 # polymer-redux-hn
 
-An experimental Hacker News client built from scratch using Polymer and Redux. Using to explore patterns for routing, lazy-loading elements/reducer/actions, and organizing files.
-
-The app is built using [PWA Starter Kit](https://github.com/PolymerLabs/pwa-starter-kit). Using the starter-template as the starting point and the [wiki](https://github.com/PolymerLabs/pwa-starter-kit/wiki) for configuring and personalizing.
+A Hacker News client built using [PWA Starter Kit](https://github.com/PolymerLabs/pwa-starter-kit). Using the starter-template as the starting point and the [wiki](https://github.com/PolymerLabs/pwa-starter-kit/wiki) for configuring and personalizing.
 
 ![screenshot](https://user-images.githubusercontent.com/116360/39543436-1302e57c-4e00-11e8-86fb-74cd8ad0466f.png)
 
@@ -16,11 +14,19 @@ The app is built using [PWA Starter Kit](https://github.com/PolymerLabs/pwa-star
 ## Setup
 
 * `npm i`
-* Serve index.html for all routes (`polymer serve` or similar)
+* `npm start` (or any static file server for single page apps, like `serve -s`)
+
+## Building & Deploying
+
+See the [Building & Deploying](https://github.com/Polymer/pwa-starter-kit/wiki/5.-Building-&-Deploying) section in the pwa-starter-kit wiki.
+
+### HTTP/2 push optimized build
+
+The [push](https://github.com/PolymerLabs/polymer-redux-hn/compare/push) branch contains an optimized version of the static build that uses a proxy for Hacker News API requests so that it can use HTTP/2 server push for the initial API request as well. This is the build currently hosted on https://polymer-redux-hn.appspot.com/.
 
 ## Routing
 
-Client side routing is done by the src/modules/router.js module, which intercept link clicks and dispatches an action to the store. A subset of `window.location` is stored in the state, and the rest of the app renders based on that state (never on `window.location` directly). `history.pushState` is called as a side-effect of the action creator, meaning that `window.location` won't actually modify when time-travel debugging. `popstate` events (e.g. browser back) dispatches a different action that just updates the location state without side-effects.
+Client side routing is done by the pwa-helpers/router.js library, which intercept link clicks and dispatches the `updateLocation` action to the store. A state computed from the value of `window.location` is stored, and the rest of the app renders based on that state (never on `window.location` directly). `history.pushState` is called by the router library before the action is dispatched, meaning that `window.location` won't actually modify when using time-travel debugging. `popstate` events (e.g. browser back) will just dispatch the `updateLocation` action.
 
 ## Lazy-loading
 
