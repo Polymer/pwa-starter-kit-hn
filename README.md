@@ -22,7 +22,7 @@ See the [Building & Deploying](https://github.com/Polymer/pwa-starter-kit/wiki/5
 
 ### HTTP/2 push optimized build
 
-The [push](https://github.com/PolymerLabs/polymer-redux-hn/compare/push) branch contains an optimized version of the static build that uses a proxy for Hacker News API requests so that it can use HTTP/2 server push for the initial API request as well. This is the build currently hosted on https://polymer-redux-hn.appspot.com/.
+The [push-proxy](https://github.com/PolymerLabs/polymer-redux-hn/compare/push-proxy) branch contains an optimized version of the prpl-server build that uses a proxy for Hacker News API requests so that it can use HTTP/2 server push for the initial API request as well. This is the build currently hosted on https://polymer-redux-hn.appspot.com/.
 
 ## Routing
 
