@@ -38,7 +38,7 @@ export class HnSummaryElement extends LitElement {
         color: #ccc;
       }
     </style>
-    <a class="title" href="${item.url}">${item.title}</a>
+    <a class="title" href="${item.domain ? item.url : `/${item.url}`}">${item.title}</a>
     <span class="domain" hidden="${!item.domain}">(${item.domain})</span>
     <div class="info">
       ${item.points} points by
