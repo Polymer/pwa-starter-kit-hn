@@ -1,7 +1,5 @@
 {
   "name": "polymer-redux-hn",
-  "flat": true,
-  "version": "0.1.0",
   "license": "BSD-3-Clause",
   "repository": "PolymerLabs/polymer-redux-hn",
   "scripts": {
