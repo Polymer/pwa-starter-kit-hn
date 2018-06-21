@@ -20,7 +20,7 @@ export class HnLoadingButton extends LitElement {
         right: 24px;
         width: 56px;
         height: 56px;
-        background: var(--theme-color, #333);
+        background: #333;
         border: none;
         border-radius: 50%;
         box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
