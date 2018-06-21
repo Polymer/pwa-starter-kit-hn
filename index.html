@@ -49,8 +49,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <style>
       body {
-        --theme-color: #333;
-
         font-family: Roboto, Arial, Helvetica, sans-serif;
         max-width: 1280px;
         margin: 0 auto;
@@ -64,7 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 56px;
         padding: 0 8px;
         box-sizing: border-box;
-        background-color: var(--theme-color, #333);
+        background-color: #333;
         white-space: nowrap;
       }
 
@@ -119,6 +117,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </script>
 
     <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+
+    <script>
+      // Subset of fetch polyfill for IE11 (supports GET requests for JSON only).
+      // Requires Promise to be defined.
+      window.fetch = window.fetch || function(url) {
+        return new Promise(function(resolve, reject) {
+          var xhr = new XMLHttpRequest();
+          xhr.onload = function() {
+            resolve({
+              json: function() {
+                return new Promise(function(resolve, reject) {
+                  try {
+                    resolve(JSON.parse(xhr.responseText));
+                  } catch (e) {
+                    reject(e);
+                  }
+                });
+              }
+            });
+          };
+          xhr.onerror = reject;
+          xhr.open('GET', url);
+          xhr.send();
+        });
+      };
+    </script>
     <script type="module" src="src/components/hn-app.js"></script>
 
     <noscript>Please enable JavaScript to view this website.</noscript>
