@@ -1,7 +1,7 @@
 {
-  "name": "polymer-redux-hn",
+  "name": "pwa-starter-kit-hn",
   "license": "BSD-3-Clause",
-  "repository": "PolymerLabs/polymer-redux-hn",
+  "repository": "Polymer/pwa-starter-kit-hn",
   "scripts": {
     "start": "polymer serve",
     "build": "npm run build:prpl-server && npm run build:static",
