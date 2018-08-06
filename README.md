@@ -1,6 +1,6 @@
 [![Built with pwa–starter–kit](https://img.shields.io/badge/built_with-pwa–starter–kit_-blue.svg)](https://github.com/Polymer/pwa-starter-kit "Built with pwa–starter–kit")
 
-# polymer-redux-hn
+# pwa-starter-kit-hn
 
 A Hacker News client built using [PWA Starter Kit](https://github.com/PolymerLabs/pwa-starter-kit). Using the starter-template as the starting point and the [wiki](https://github.com/PolymerLabs/pwa-starter-kit/wiki) for configuring and personalizing.
 
@@ -22,7 +22,7 @@ See the [Building & Deploying](https://github.com/Polymer/pwa-starter-kit/wiki/5
 
 ### HTTP/2 push optimized build
 
-The [push-proxy](https://github.com/PolymerLabs/polymer-redux-hn/compare/push-proxy) branch contains an optimized version of the prpl-server build that uses a proxy for Hacker News API requests so that it can use HTTP/2 server push for the initial API request as well. This is the build currently hosted on https://polymer-redux-hn.appspot.com/.
+The [push-proxy](https://github.com/Polymer/pwa-starter-kit-hn/compare/push-proxy) branch contains an optimized version of the prpl-server build that uses a proxy for Hacker News API requests so that it can use HTTP/2 server push for the initial API request as well. This is the build currently hosted on https://pwa-starter-kit-hn.appspot.com/.
 
 ## Routing
 
