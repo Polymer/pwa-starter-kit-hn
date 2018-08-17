@@ -9,12 +9,14 @@
  */
 
 import { LitElement, html } from '@polymer/lit-element';
-import { repeat } from 'lit-html/lib/repeat.js';
-import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
+import { repeat } from 'lit-html/directives/repeat.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnCommentElement extends LitElement {
-  _render({ _collapsed, comment = {}, itemId }) {
+  render() {
+    const { _collapsed, itemId } = this;
+    const comment = this.comment || {};
     const comments = comment.comments || [];
     return html`
     ${sharedStyles}
@@ -38,17 +40,17 @@ export class HnCommentElement extends LitElement {
       }
     </style>
     <div class="info">
-      <button class="collapsed-btn" on-click="${() => this._toggleCollapsed()}">
+      <button class="collapsed-btn" @click="${() => this._toggleCollapsed()}">
         [${_collapsed ? `+${this._calculateThreadSize(comment)}` : '-'}]
       </button>
       <a class="user" href="${`/user?id=${comment.user}`}">${comment.user}</a>
       ${comment.time_ago}
     </div>
-    <div class="content" hidden="${_collapsed}">
+    <div class="content" ?hidden="${_collapsed}">
       <div>${unsafeHTML(comment.content)}</div>
       <div class="indent">
         ${repeat(comments, (comment) => html`
-          <hn-comment id="${comment.id}" comment="${comment}" itemId="${itemId}"></hn-comment>
+          <hn-comment id="${comment.id}" .comment="${comment}" .itemId="${itemId}"></hn-comment>
         `)}
       </div>
     </div>
@@ -57,12 +59,12 @@ export class HnCommentElement extends LitElement {
 
   static get properties() {
     return {
-      comment: Object,
+      comment: { type: Object },
 
-      itemId: String,
+      itemId: { type: String },
 
-      _collapsed: Boolean
-    }
+      _collapsed: { type: Boolean }
+    };
   }
 
   _toggleCollapsed() {

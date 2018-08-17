@@ -9,7 +9,7 @@
  */
 
 import { LitElement, html } from '@polymer/lit-element';
-import { repeat } from 'lit-html/lib/repeat.js';
+import { repeat } from 'lit-html/directives/repeat.js';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
@@ -30,7 +30,9 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnListElement extends connect(store)(LitElement) {
-  _render({ _favorites, _items = [], _list, _page, _pathname }) {
+  render() {
+    const { _favorites, _list, _page, _pathname } = this;
+    const _items = this._items || [];
     const pages = _list.pages;
     const loading = pages && pages[_page] && pages[_page].isFetching;
     return html`
@@ -45,16 +47,16 @@ export class HnListElement extends connect(store)(LitElement) {
       _list.id !== 'favorites' ?
       html`
         <hn-loading-button
-            loading="${loading}"
-            on-click="${() => store.dispatch(fetchList(_list, _page))}">
+            .loading="${loading}"
+            @click="${() => store.dispatch(fetchList(_list, _page))}">
         </hn-loading-button>
       ` :
       null
     }
     ${repeat(_items, (item) => html`
       <hn-summary
-          item="${item}"
-          isFavorite="${_favorites && item && _favorites[item.id]}">
+          .item="${item}"
+          .isFavorite="${_favorites && item && _favorites[item.id]}">
       </hn-summary>
     `)}
     ${
@@ -70,16 +72,16 @@ export class HnListElement extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      _list: Object,
+      _list: { type: Object },
 
-      _favorites: Object,
+      _favorites: { type: Object },
 
-      _items: Array,
+      _items: { type: Array },
 
-      _page: Number,
+      _page: { type: Number },
 
-      _pathname: String
-    }
+      _pathname: { type: String }
+    };
   }
 
   _stateChanged(state) {

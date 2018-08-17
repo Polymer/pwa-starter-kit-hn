@@ -9,8 +9,8 @@
  */
 
 import { LitElement, html } from '@polymer/lit-element';
-import { repeat } from 'lit-html/lib/repeat.js';
-import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
+import { repeat } from 'lit-html/directives/repeat.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
 import { loadFavorites } from '../actions/favorites.js';
@@ -30,7 +30,8 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnItemElement extends connect(store)(LitElement) {
-  _render({ _favorites, _item }) {
+  render() {
+    const { _favorites, _item } = this;
     const comments = _item.comments || [];
     return html`
     ${sharedStyles}
@@ -41,17 +42,17 @@ export class HnItemElement extends connect(store)(LitElement) {
       }
     </style>
     <hn-loading-button
-        loading="${_item.isFetching}"
-        on-click="${() => store.dispatch(fetchItem(_item))}">
+        .loading="${_item.isFetching}"
+        @click="${() => store.dispatch(fetchItem(_item))}">
     </hn-loading-button>
-    <div hidden="${_item.failure}">
+    <div ?hidden="${_item.failure}">
       <hn-summary
-          item="${_item}"
-          isFavorite="${_favorites && _item && _favorites[_item.id]}">
+          .item="${_item}"
+          .isFavorite="${_favorites && _item && _favorites[_item.id]}">
       </hn-summary>
-      <div hidden="${!_item.content}">${unsafeHTML(_item.content)}</div>
+      <div ?hidden="${!_item.content}">${unsafeHTML(_item.content)}</div>
       ${repeat(comments, (comment) => html`
-        <hn-comment comment="${comment}" itemId="${_item.id}"></hn-comment>
+        <hn-comment .comment="${comment}" .itemId="${_item.id}"></hn-comment>
       `)}
     </div>
     ${_item.failure ? html`<p>Item not found</p>` : ''}
@@ -60,9 +61,9 @@ export class HnItemElement extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      _item: Object,
+      _item: { type: Object },
 
-      _favorites: Array
+      _favorites: { type: Array }
     }
   }
 

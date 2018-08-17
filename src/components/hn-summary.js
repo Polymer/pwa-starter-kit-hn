@@ -14,7 +14,9 @@ import { store } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnSummaryElement extends LitElement {
-  _render({ isFavorite, item = {} }) {
+  render() {
+    const isFavorite = this.isFavorite;
+    const item = this.item || {};
     return html`
     ${sharedStyles}
     <style>
@@ -39,18 +41,18 @@ export class HnSummaryElement extends LitElement {
       }
     </style>
     <a class="title" href="${item.domain ? item.url : `/${item.url}`}">${item.title}</a>
-    <span class="domain" hidden="${!item.domain}">(${item.domain})</span>
+    <span class="domain" ?hidden="${!item.domain}">(${item.domain})</span>
     <div class="info">
       ${item.points} points by
-      <a href="${`/user?id=${item.user}`}" hidden?="${!item.user}">${item.user}</a>
+      <a href="${`/user?id=${item.user}`}" ?hidden="${!item.user}">${item.user}</a>
       ${item.time_ago}
       <span class="spacer">| </span>
       <a href="${`/item?id=${item.id}`}">${item.comments_count} comments</a>
       <span class="spacer"> | </span>
-      <button class="add-to-favorites" hidden="${isFavorite}" on-click="${() => store.dispatch(saveFavorite(this.item))}">
+      <button class="add-to-favorites" ?hidden="${isFavorite}" @click="${() => store.dispatch(saveFavorite(this.item))}">
         &#9829; Add to Favorites
       </button>
-      <button hidden="${!isFavorite}" on-click="${() => store.dispatch(deleteFavorite(this.item))}">
+      <button ?hidden="${!isFavorite}" @click="${() => store.dispatch(deleteFavorite(this.item))}">
         &#9829; Remove from Favorites
       </button>
     </div>
@@ -59,10 +61,10 @@ export class HnSummaryElement extends LitElement {
 
   static get properties() {
     return {
-      item: Object,
+      item: { type: Object },
 
-      isFavorite: Boolean
-    }
+      isFavorite: { type: Boolean }
+    };
   }
 }
 

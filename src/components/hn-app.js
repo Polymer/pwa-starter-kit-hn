@@ -15,7 +15,7 @@ import { store } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnAppElement extends connect(store)(LitElement) {
-  _render({ _view }) {
+  render() {
     return html`
     ${sharedStyles}
     <style>
@@ -30,7 +30,7 @@ export class HnAppElement extends connect(store)(LitElement) {
         display: block;
       }
     </style>
-    <div view$="${_view}">
+    <div view="${this._view}">
       <hn-list></hn-list>
       <hn-item></hn-item>
       <hn-user></hn-user>
@@ -40,13 +40,11 @@ export class HnAppElement extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      _view: String
+      _view: { type: String }
     };
   }
 
-  ready() {
-    super.ready();
-
+  firstUpdated() {
     installRouter((location, event) => {
       // Only scroll to top on link clicks, not popstate events.
       if (event && event.type === 'click') {

@@ -11,8 +11,9 @@
     "serve:static": "polymer serve --port 5000 build/es5-bundled"
   },
   "dependencies": {
-    "@polymer/lit-element": "^0.5.2",
+    "@polymer/lit-element": "^0.6.1",
     "@webcomponents/webcomponentsjs": "^2.0.2",
+    "lit-html": "^0.11.4",
     "pwa-helpers": "^0.8.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",

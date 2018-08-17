@@ -21,7 +21,8 @@ store.addReducers({
 });
 
 export class HnUserElement extends connect(store)(LitElement) {
-  _render({ _user }) {
+  render() {
+    const _user = this._user;
     return html`
     ${sharedStyles}
     <style>
@@ -30,10 +31,10 @@ export class HnUserElement extends connect(store)(LitElement) {
       }
     </style>
     <hn-loading-button
-        loading="${_user.isFetching}"
-        on-click="${() => store.dispatch(fetchUser(_user))}">
+        .loading="${_user.isFetching}"
+        @click="${() => store.dispatch(fetchUser(_user))}">
     </hn-loading-button>
-    <table hidden="${_user.failure}">
+    <table ?hidden="${_user.failure}">
       <tr>
         <td>User:</td><td>${_user.id}</td>
       </tr>
@@ -50,8 +51,8 @@ export class HnUserElement extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      _user: Object
-    }
+      _user: { type: Object }
+    };
   }
 
   _stateChanged(state) {
