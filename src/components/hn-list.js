@@ -9,7 +9,7 @@
  */
 
 import { LitElement, html } from '@polymer/lit-element';
-import { repeat } from 'lit-html/lib/repeat.js';
+import { repeat } from 'lit-html/directives/repeat.js';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
@@ -30,9 +30,13 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnListElement extends connect(store)(LitElement) {
-  _render({ _favorites, _items = [], _list, _page, _pathname }) {
-    const pages = _list.pages;
-    const loading = pages && pages[_page] && pages[_page].isFetching;
+  render() {
+    const pathname = window.location.pathname;
+    const items = this._items || [];
+    const list = this._list;
+    const page = this._page;
+    const pages = list.pages;
+    const loading = pages && pages[page] && pages[page].isFetching;
     return html`
     ${sharedStyles}
     <style>
@@ -41,48 +45,36 @@ export class HnListElement extends connect(store)(LitElement) {
         margin: 0 8px 8px 0;
       }
     </style>
-    ${
-      _list.id !== 'favorites' ?
-      html`
-        <hn-loading-button
-            loading="${loading}"
-            on-click="${() => store.dispatch(fetchList(_list, _page))}">
-        </hn-loading-button>
-      ` :
-      null
-    }
-    ${repeat(_items, (item) => html`
-      <hn-summary
-          item="${item}"
-          isFavorite="${_favorites && item && _favorites[item.id]}">
-      </hn-summary>
+    ${list.id !== 'favorites' ? html`
+      <hn-loading-button .loading="${loading}" @click="${this._reload}">
+      </hn-loading-button>
+    ` : null}
+    ${repeat(items, (item) => html`
+      <hn-summary .item="${item}" .favorites="${this._favorites}"></hn-summary>
     `)}
-    ${
-      _list.id !== 'favorites' && _items.length ?
-      html`
-        <a href="${`${_pathname}?page=${Math.max(_page-1, 1)}`}">Previous Page</a>
-        <a href="${`${_pathname}?page=${_page+1}`}">Next Page</a>
-      ` :
-      null
-    }
-    `;
+    ${list.id !== 'favorites' && items.length ? html`
+      <a href="${`${pathname}?page=${Math.max(page-1, 1)}`}">Previous Page</a>
+      <a href="${`${pathname}?page=${page+1}`}">Next Page</a>
+    ` : null}`;
   }
 
   static get properties() {
     return {
-      _list: Object,
+      _list: { type: Object },
 
-      _favorites: Object,
+      _favorites: { type: Object },
 
-      _items: Array,
+      _items: { type: Array },
 
-      _page: Number,
-
-      _pathname: String
-    }
+      _page: { type: Number }
+    };
   }
 
-  _stateChanged(state) {
+  _reload() {
+    store.dispatch(fetchList(this._list, this._page));
+  }
+
+  stateChanged(state) {
     const list = currentListSelector(state);
     if (list) {
       updateMetadata({ title: list.id });
@@ -90,7 +82,6 @@ export class HnListElement extends connect(store)(LitElement) {
       this._favorites = state.favorites;
       this._list = list;
       this._page = state.app.page;
-      this._pathname = window.location.pathname;
       const items = currentItemsSelector(state);
       if (items) {
         this._items = items;
