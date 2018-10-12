@@ -84,7 +84,7 @@ export class HnListElement extends connect(store)(LitElement) {
     };
   }
 
-  _stateChanged(state) {
+  stateChanged(state) {
     const list = currentListSelector(state);
     if (list) {
       updateMetadata({ title: list.id });
