@@ -31,8 +31,8 @@ store.dispatch(loadFavorites());
 
 export class HnItemElement extends connect(store)(LitElement) {
   render() {
-    const { _favorites, _item } = this;
-    const comments = _item.comments || [];
+    const item = this._item;
+    const comments = item.comments || [];
     return html`
     ${sharedStyles}
     <style>
@@ -41,22 +41,16 @@ export class HnItemElement extends connect(store)(LitElement) {
         border-bottom: 1px solid #e5e5e5;
       }
     </style>
-    <hn-loading-button
-        .loading="${_item.isFetching}"
-        @click="${() => store.dispatch(fetchItem(_item))}">
+    <hn-loading-button .loading="${item.isFetching}" @click="${this._reload}">
     </hn-loading-button>
-    <div ?hidden="${_item.failure}">
-      <hn-summary
-          .item="${_item}"
-          .isFavorite="${_favorites && _item && _favorites[_item.id]}">
-      </hn-summary>
-      <div ?hidden="${!_item.content}">${unsafeHTML(_item.content)}</div>
+    <div ?hidden="${item.failure}">
+      <hn-summary .item="${item}" .favorites="${this._favorites}"></hn-summary>
+      <div ?hidden="${!item.content}">${unsafeHTML(item.content)}</div>
       ${repeat(comments, (comment) => html`
-        <hn-comment .comment="${comment}" .itemId="${_item.id}"></hn-comment>
+        <hn-comment .comment="${comment}"></hn-comment>
       `)}
     </div>
-    ${_item.failure ? html`<p>Item not found</p>` : ''}
-    `;
+    ${item.failure ? html`<p>Item not found</p>` : null}`;
   }
 
   static get properties() {
@@ -65,6 +59,10 @@ export class HnItemElement extends connect(store)(LitElement) {
 
       _favorites: { type: Array }
     }
+  }
+
+  _reload() {
+    store.dispatch(fetchItem(this._item));
   }
 
   stateChanged(state) {

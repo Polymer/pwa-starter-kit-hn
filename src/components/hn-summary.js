@@ -15,8 +15,8 @@ import { sharedStyles } from './shared-styles.js';
 
 export class HnSummaryElement extends LitElement {
   render() {
-    const isFavorite = this.isFavorite;
     const item = this.item || {};
+    const isFavorite = this.favorites && item && this.favorites[item.id];
     return html`
     ${sharedStyles}
     <style>
@@ -49,22 +49,29 @@ export class HnSummaryElement extends LitElement {
       <span class="spacer">| </span>
       <a href="${`/item?id=${item.id}`}">${item.comments_count} comments</a>
       <span class="spacer"> | </span>
-      <button class="add-to-favorites" ?hidden="${isFavorite}" @click="${() => store.dispatch(saveFavorite(this.item))}">
+      <button class="add-to-favorites" ?hidden="${isFavorite}" @click="${this._saveFavorite}">
         &#9829; Add to Favorites
       </button>
-      <button ?hidden="${!isFavorite}" @click="${() => store.dispatch(deleteFavorite(this.item))}">
+      <button ?hidden="${!isFavorite}" @click="${this._deleteFavorite}">
         &#9829; Remove from Favorites
       </button>
-    </div>
-    `;
+    </div>`;
   }
 
   static get properties() {
     return {
       item: { type: Object },
 
-      isFavorite: { type: Boolean }
+      favorites: { type: Array }
     };
+  }
+
+  _saveFavorite() {
+    store.dispatch(saveFavorite(this.item));
+  }
+
+  _deleteFavorite() {
+    store.dispatch(deleteFavorite(this.item));
   }
 }
 

@@ -31,10 +31,12 @@ store.dispatch(loadFavorites());
 
 export class HnListElement extends connect(store)(LitElement) {
   render() {
-    const { _favorites, _list, _page, _pathname } = this;
-    const _items = this._items || [];
-    const pages = _list.pages;
-    const loading = pages && pages[_page] && pages[_page].isFetching;
+    const pathname = window.location.pathname;
+    const items = this._items || [];
+    const list = this._list;
+    const page = this._page;
+    const pages = list.pages;
+    const loading = pages && pages[page] && pages[page].isFetching;
     return html`
     ${sharedStyles}
     <style>
@@ -43,31 +45,17 @@ export class HnListElement extends connect(store)(LitElement) {
         margin: 0 8px 8px 0;
       }
     </style>
-    ${
-      _list.id !== 'favorites' ?
-      html`
-        <hn-loading-button
-            .loading="${loading}"
-            @click="${() => store.dispatch(fetchList(_list, _page))}">
-        </hn-loading-button>
-      ` :
-      null
-    }
-    ${repeat(_items, (item) => html`
-      <hn-summary
-          .item="${item}"
-          .isFavorite="${_favorites && item && _favorites[item.id]}">
-      </hn-summary>
+    ${list.id !== 'favorites' ? html`
+      <hn-loading-button .loading="${loading}" @click="${this._reload}">
+      </hn-loading-button>
+    ` : null}
+    ${repeat(items, (item) => html`
+      <hn-summary .item="${item}" .favorites="${this._favorites}"></hn-summary>
     `)}
-    ${
-      _list.id !== 'favorites' && _items.length ?
-      html`
-        <a href="${`${_pathname}?page=${Math.max(_page-1, 1)}`}">Previous Page</a>
-        <a href="${`${_pathname}?page=${_page+1}`}">Next Page</a>
-      ` :
-      null
-    }
-    `;
+    ${list.id !== 'favorites' && items.length ? html`
+      <a href="${`${pathname}?page=${Math.max(page-1, 1)}`}">Previous Page</a>
+      <a href="${`${pathname}?page=${page+1}`}">Next Page</a>
+    ` : null}`;
   }
 
   static get properties() {
@@ -78,10 +66,12 @@ export class HnListElement extends connect(store)(LitElement) {
 
       _items: { type: Array },
 
-      _page: { type: Number },
-
-      _pathname: { type: String }
+      _page: { type: Number }
     };
+  }
+
+  _reload() {
+    store.dispatch(fetchList(this._list, this._page));
   }
 
   stateChanged(state) {
@@ -92,7 +82,6 @@ export class HnListElement extends connect(store)(LitElement) {
       this._favorites = state.favorites;
       this._list = list;
       this._page = state.app.page;
-      this._pathname = window.location.pathname;
       const items = currentItemsSelector(state);
       if (items) {
         this._items = items;

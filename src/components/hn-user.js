@@ -22,7 +22,7 @@ store.addReducers({
 
 export class HnUserElement extends connect(store)(LitElement) {
   render() {
-    const _user = this._user;
+    const user = this._user;
     return html`
     ${sharedStyles}
     <style>
@@ -30,29 +30,33 @@ export class HnUserElement extends connect(store)(LitElement) {
         margin: 1em 0;
       }
     </style>
-    <hn-loading-button
-        .loading="${_user.isFetching}"
-        @click="${() => store.dispatch(fetchUser(_user))}">
+    <hn-loading-button .loading="${user.isFetching}" @click="${this._reload}">
     </hn-loading-button>
-    <table ?hidden="${_user.failure}">
+    <table ?hidden="${user.failure}">
       <tr>
-        <td>User:</td><td>${_user.id}</td>
+        <td>User:</td>
+        <td>${user.id}</td>
       </tr>
       <tr>
-        <td>Created:</td><td>${_user.created}</td>
+        <td>Created:</td>
+        <td>${user.created}</td>
       </tr>
       <tr>
-        <td>Karma:</td><td>${_user.karma}</td>
+        <td>Karma:</td>
+        <td>${user.karma}</td>
       </tr>
     </table>
-    ${_user.failure ? html`<p>User not found</p>` : ''}
-    `;
+    ${user.failure ? html`<p>User not found</p>` : null}`;
   }
 
   static get properties() {
     return {
       _user: { type: Object }
     };
+  }
+
+  _reload() {
+    store.dispatch(fetchUser(this._user));
   }
 
   stateChanged(state) {

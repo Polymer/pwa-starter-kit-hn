@@ -15,7 +15,6 @@ import { sharedStyles } from './shared-styles.js';
 
 export class HnCommentElement extends LitElement {
   render() {
-    const { _collapsed, itemId } = this;
     const comment = this.comment || {};
     const comments = comment.comments || [];
     return html`
@@ -40,28 +39,25 @@ export class HnCommentElement extends LitElement {
       }
     </style>
     <div class="info">
-      <button class="collapsed-btn" @click="${() => this._toggleCollapsed()}">
-        [${_collapsed ? `+${this._calculateThreadSize(comment)}` : '-'}]
+      <button class="collapsed-btn" @click="${this._toggleCollapsed}">
+        [${this._collapsed ? `+${this._calculateThreadSize(comment)}` : '-'}]
       </button>
       <a class="user" href="${`/user?id=${comment.user}`}">${comment.user}</a>
       ${comment.time_ago}
     </div>
-    <div class="content" ?hidden="${_collapsed}">
+    <div class="content" ?hidden="${this._collapsed}">
       <div>${unsafeHTML(comment.content)}</div>
       <div class="indent">
         ${repeat(comments, (comment) => html`
-          <hn-comment id="${comment.id}" .comment="${comment}" .itemId="${itemId}"></hn-comment>
+          <hn-comment .comment="${comment}"></hn-comment>
         `)}
       </div>
-    </div>
-    `;
+    </div>`;
   }
 
   static get properties() {
     return {
       comment: { type: Object },
-
-      itemId: { type: String },
 
       _collapsed: { type: Boolean }
     };
