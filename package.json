@@ -3,8 +3,8 @@
   "license": "BSD-3-Clause",
   "repository": "Polymer/pwa-starter-kit-hn",
   "scripts": {
-    "start": "polymer serve",
-    "build": "npm run build:prpl-server && npm run build:static",
+    "start": "tsc --watch & polymer serve",
+    "build": "tsc && npm run build:prpl-server && npm run build:static",
     "build:prpl-server": "polymer build --auto-base-path && gulp prpl-server",
     "build:static": "polymer build",
     "serve:prpl-server": "prpl-server --root server/build",
@@ -25,6 +25,7 @@
     "gulp-rename": "^1.2.3",
     "gulp-replace": "^1.0.0",
     "polymer-cli": "^1.7.1",
-    "prpl-server": "^1.1.0"
+    "prpl-server": "^1.1.0",
+    "typescript": "^3.1.3"
   }
 }
