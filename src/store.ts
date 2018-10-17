@@ -22,20 +22,29 @@ import {
   combineReducers,
   StoreEnhancer,
   Reducer,
-  AnyAction
 } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { lazyReducerEnhancer } from 'pwa-helpers';
-import app, { AppState } from './reducers/app.js';
 import { AppAction } from './actions/app.js';
+import { FavoritesAction } from './actions/favorites.js';
+import { ItemsAction } from './actions/items.js';
+import { ListsAction } from './actions/lists.js';
+import { UsersAction } from './actions/users.js';
+import app, { AppState } from './reducers/app.js';
+import { FavoritesState } from './reducers/favorites.js';
+import { ItemsState } from './reducers/items.js';
+import { ListsState } from './reducers/lists.js';
+import { UsersState } from './reducers/users.js';
 
 export interface RootState {
   app?: AppState;
-  // counter?: CounterState;
-  // shop?: ShopState;
+  favorites?: FavoritesState;
+  items?: ItemsState;
+  lists?: ListsState;
+  users?: UsersState;
 }
 
-export type RootAction = AppAction | AnyAction// | CounterAction | ShopAction;
+export type RootAction = AppAction | FavoritesAction | ItemsAction | ListsAction | UsersAction;
 
 const devCompose: <Ext0, Ext1, StateExt0, StateExt1>(
   f1: StoreEnhancer<Ext0, StateExt0>, f2: StoreEnhancer<Ext1, StateExt1>

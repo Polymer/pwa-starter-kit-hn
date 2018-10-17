@@ -8,18 +8,28 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { Reducer } from 'redux';
 import { createSelector } from 'reselect';
 import {
   REQUEST_ITEM,
   RECEIVE_ITEM,
   FAIL_ITEM
 } from '../actions/items.js';
-import { ADD_FAVORITE } from '../actions/favorites.js';
-// HACK: Don't need to import list actions just for this.
+// NOTE: No need to import these actions just for the action types.
 // import { RECEIVE_LIST } from '../actions/lists.js';
+// import { ADD_FAVORITE } from '../actions/favorites.js';
 import { idSelector } from './app.js';
+import { RootAction, RootState } from '../store.js';
 
-const items = (state = {}, action) => {
+export interface ItemsState {
+  [k: string]: ItemState;
+};
+
+export interface ItemState {
+  id: string;
+};
+
+const items: Reducer<ItemsState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_ITEM:
     case RECEIVE_ITEM:
@@ -30,11 +40,11 @@ const items = (state = {}, action) => {
         [itemId]: item(state[itemId], action)
       };
     case 'RECEIVE_LIST':
-      return action.items.reduce((obj, item) => {
+      return action.items.reduce((obj: ItemsState, item) => {
         obj[item.id] = item;
         return obj;
       }, {...state});
-    case ADD_FAVORITE:
+    case 'ADD_FAVORITE':
       return {
         ...state,
         [action.item.id]: action.item
@@ -42,9 +52,9 @@ const items = (state = {}, action) => {
     default:
       return state;
   }
-}
+};
 
-const item = (state = {}, action) => {
+const item = (state: ItemState, action: RootAction) => {
   switch (action.type) {
     case REQUEST_ITEM:
       return {
@@ -69,16 +79,16 @@ const item = (state = {}, action) => {
     default:
       return state;
   }
-}
+};
 
 export default items;
 
-export const itemsSelector = state => state.items;
+export const itemsSelector = (state: RootState) => state.items;
 
 export const currentItemSelector = createSelector(
   itemsSelector,
   idSelector,
   (items, id) => {
-    return id ? items[id] || { id } : null;
+    return id ? items![id] || { id } : null;
   }
 );

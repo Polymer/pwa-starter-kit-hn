@@ -15,12 +15,13 @@ import { RootState } from '../store.js';
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';
 
 export interface AppActionUpdateLocation extends Action<'UPDATE_LOCATION'> {
-  view: string,
-  list?: string,
-  page: number,
-  id: string
+  view: string;
+  list?: string;
+  page: number;
+  id: string;
 };
-export type AppAction = AppActionUpdateLocation;
+export interface AppActionEmpty extends Action<'EMPTY'> {};
+export type AppAction = AppActionUpdateLocation | AppActionEmpty;
 
 type ThunkResult = ThunkAction<void, RootState, undefined, AppAction>;
 

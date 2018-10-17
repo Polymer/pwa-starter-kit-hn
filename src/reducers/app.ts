@@ -13,19 +13,13 @@ import { UPDATE_LOCATION } from '../actions/app.js';
 import { RootAction, RootState } from '../store.js';
 
 export interface AppState {
-  view: string,
-  list?: string,
-  page: number,
-  id: string
-}
-
-const INITIAL_STATE: AppState = {
-  view: '',
-  page: 1,
-  id: ''
+  view?: string;
+  list?: string;
+  page?: number;
+  id?: string;
 };
 
-const app: Reducer<AppState, RootAction> = (state = INITIAL_STATE, action) => {
+const app: Reducer<AppState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_LOCATION:
       return {
@@ -38,7 +32,7 @@ const app: Reducer<AppState, RootAction> = (state = INITIAL_STATE, action) => {
     default:
       return state;
   }
-}
+};
 
 export default app;
 

@@ -8,6 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { Reducer } from 'redux';
 import { createSelector } from 'reselect';
 import {
   REQUEST_LIST,
@@ -16,8 +17,26 @@ import {
 } from '../actions/lists.js';
 import { itemsSelector } from './items.js';
 import { favoritesSelector } from './favorites.js';
+import { RootAction, RootState } from '../store.js';
 
-const lists = (state = {}, action) => {
+export interface ListsState {
+  [k: string]: ListState;
+};
+
+export interface ListState {
+  id?: string;
+  pages?: PagesState;
+};
+
+export interface PagesState {
+  [k: string]: PageState;
+};
+
+export interface PageState {
+  items?: Array<string>;
+};
+
+const lists: Reducer<ListsState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_LIST:
     case RECEIVE_LIST:
@@ -30,9 +49,9 @@ const lists = (state = {}, action) => {
     default:
       return state;
   }
-}
+};
 
-const list = (state = {}, action) => {
+const list: Reducer<ListState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_LIST:
     case RECEIVE_LIST:
@@ -45,9 +64,9 @@ const list = (state = {}, action) => {
     default:
       return state;
   }
-}
+};
 
-const pages = (state = {}, action) => {
+const pages: Reducer<PagesState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_LIST:
     case RECEIVE_LIST:
@@ -59,9 +78,9 @@ const pages = (state = {}, action) => {
     default:
       return state;
   }
-}
+};
 
-const page = (state = {}, action) => {
+const page: Reducer<PageState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_LIST:
       return {
@@ -85,13 +104,13 @@ const page = (state = {}, action) => {
     default:
       return state;
   }
-}
+};
 
 export default lists;
 
-const listsSelector = state => state.lists;
+const listsSelector = (state: RootState) => state.lists;
 
-const listSelector = state => state.app.list;
+const listSelector = (state: RootState) => state.app!.list;
 
 export const currentListSelector = createSelector(
   listsSelector,
@@ -103,26 +122,27 @@ export const currentListSelector = createSelector(
         id: 'favorites',
         pages: {
           '1': {
-            items: Object.keys(favorites).map(id => parseInt(id, 10))
+            items: Object.keys(favorites!)
           }
         }
       };
     }
-    return list ? lists[list] || { id: list } : null;
+    return list ? lists![list] || { id: list } : null;
   }
 );
 
-const pageSelector = state => state.app.page;
+const pageSelector = (state: RootState) => state.app!.page;
 
 export const currentItemsSelector = createSelector(
   currentListSelector,
   pageSelector,
   itemsSelector,
   (list, pageId, items) => {
-    const pages = list.pages;
+    if (!pageId) return null;
+    const pages = list!.pages;
     if (!pages) return null;
     const page = pages[pageId];
     if (!page) return null;
-    return page.items ? page.items.map(id => items[id] || { id }) : null;
+    return page.items ? page.items.map(id => items![id] || { id }) : null;
   }
 )

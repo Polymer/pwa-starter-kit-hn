@@ -8,6 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { Reducer } from 'redux';
 import { createSelector } from 'reselect';
 import {
   REQUEST_USER,
@@ -15,8 +16,17 @@ import {
   FAIL_USER
 } from '../actions/users.js';
 import { idSelector } from './app.js';
+import { RootAction, RootState } from '../store.js';
 
-const users = (state = {}, action) => {
+export interface UsersState {
+  [k: string]: UserState
+}
+
+export interface UserState {
+  id: string
+}
+
+const users: Reducer<UsersState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_USER:
     case RECEIVE_USER:
@@ -31,7 +41,7 @@ const users = (state = {}, action) => {
   }
 }
 
-const user = (state = {}, action) => {
+const user = (state: UserState, action: RootAction) => {
   switch (action.type) {
     case REQUEST_USER:
       return {
@@ -60,12 +70,12 @@ const user = (state = {}, action) => {
 
 export default users;
 
-const usersSelector = state => state.users;
+const usersSelector = (state: RootState) => state.users;
 
 export const currentUserSelector = createSelector(
   usersSelector,
   idSelector,
   (users, id) => {
-    return id ? users[id] || { id } : null;
+    return id ? users![id] || { id } : null;
   }
 );
