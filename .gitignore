@@ -1,5 +1,3 @@
 node_modules/
 build/
-src/**/*.d.ts
 src/**/*.js
-src/**/*.js.map
