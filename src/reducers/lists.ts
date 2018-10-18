@@ -33,6 +33,8 @@ export interface PagesState {
 };
 
 export interface PageState {
+  failure?: boolean;
+  isFetching?: boolean;
   items?: Array<string>;
 };
 
@@ -110,7 +112,7 @@ export default lists;
 
 const listsSelector = (state: RootState) => state.lists;
 
-const listSelector = (state: RootState) => state.app!.list;
+const listSelector = (state: RootState) => state.app.list;
 
 export const currentListSelector = createSelector(
   listsSelector,
@@ -127,22 +129,22 @@ export const currentListSelector = createSelector(
         }
       };
     }
-    return list ? lists![list] || { id: list } : null;
+    return list ? lists[list] || { id: list } : null;
   }
 );
 
-const pageSelector = (state: RootState) => state.app!.page;
+const pageSelector = (state: RootState) => state.app.page;
 
 export const currentItemsSelector = createSelector(
   currentListSelector,
   pageSelector,
   itemsSelector,
   (list, pageId, items) => {
-    if (!pageId) return null;
-    const pages = list!.pages;
+    if (!list || !pageId) return null;
+    const pages = list.pages;
     if (!pages) return null;
     const page = pages[pageId];
     if (!page) return null;
-    return page.items ? page.items.map(id => items![id] || { id }) : null;
+    return page.items ? page.items.map(id => items[id] || { id }) : null;
   }
 )

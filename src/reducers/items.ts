@@ -26,7 +26,25 @@ export interface ItemsState {
 };
 
 export interface ItemState {
-  id: string;
+  id?: string;
+  comments?: Array<CommentState>;
+  comments_count?: number;
+  content?: string;
+  domain?: string;
+  failure?: boolean;
+  isFetching?: boolean;
+  points?: number;
+  time_ago?: string;
+  title?: string;
+  url?: string;
+  user?: string;
+};
+
+export interface CommentState {
+  comments?: Array<CommentState>;
+  content?: string;
+  time_ago?: string;
+  user? : string;
 };
 
 const items: Reducer<ItemsState, RootAction> = (state = {}, action) => {
@@ -54,7 +72,7 @@ const items: Reducer<ItemsState, RootAction> = (state = {}, action) => {
   }
 };
 
-const item = (state: ItemState, action: RootAction) => {
+const item: Reducer<ItemState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_ITEM:
       return {
@@ -89,6 +107,6 @@ export const currentItemSelector = createSelector(
   itemsSelector,
   idSelector,
   (items, id) => {
-    return id ? items![id] || { id } : null;
+    return id ? items[id] || { id } : null;
   }
 );

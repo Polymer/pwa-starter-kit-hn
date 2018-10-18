@@ -19,12 +19,16 @@ import { idSelector } from './app.js';
 import { RootAction, RootState } from '../store.js';
 
 export interface UsersState {
-  [k: string]: UserState
-}
+  [k: string]: UserState;
+};
 
 export interface UserState {
-  id: string
-}
+  created?: string;
+  failure?: boolean;
+  id?: string;
+  isFetching?: boolean;
+  karma?: string;
+};
 
 const users: Reducer<UsersState, RootAction> = (state = {}, action) => {
   switch (action.type) {
@@ -41,7 +45,7 @@ const users: Reducer<UsersState, RootAction> = (state = {}, action) => {
   }
 }
 
-const user = (state: UserState, action: RootAction) => {
+const user: Reducer<UserState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_USER:
       return {
@@ -76,6 +80,6 @@ export const currentUserSelector = createSelector(
   usersSelector,
   idSelector,
   (users, id) => {
-    return id ? users![id] || { id } : null;
+    return id ? users[id] || { id } : null;
   }
 );

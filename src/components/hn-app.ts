@@ -38,8 +38,8 @@ export class HnAppElement extends connect(store)(LitElement) {
     </div>`;
   }
 
-  @property({type: String})
-  _view = '';
+  @property()
+  _view: string|undefined;
 
   firstUpdated() {
     installRouter((location, event) => {
@@ -52,7 +52,7 @@ export class HnAppElement extends connect(store)(LitElement) {
   }
 
   stateChanged(state: RootState) {
-    this._view = state.app!.view || '';
+    this._view = state.app.view;
   }
 }
 

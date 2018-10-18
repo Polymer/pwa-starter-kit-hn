@@ -37,11 +37,11 @@ import { ListsState } from './reducers/lists.js';
 import { UsersState } from './reducers/users.js';
 
 export interface RootState {
-  app?: AppState;
-  favorites?: FavoritesState;
-  items?: ItemsState;
-  lists?: ListsState;
-  users?: UsersState;
+  app: AppState;
+  favorites: FavoritesState;
+  items: ItemsState;
+  lists: ListsState;
+  users: UsersState;
 }
 
 export type RootAction = AppAction | FavoritesAction | ItemsAction | ListsAction | UsersAction;

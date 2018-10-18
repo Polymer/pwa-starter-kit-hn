@@ -8,15 +8,15 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '@polymer/lit-element';
+import { LitElement, html, property } from '@polymer/lit-element';
 import { repeat } from 'lit-html/directives/repeat.js';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
-import lists, { currentItemsSelector, currentListSelector } from '../reducers/lists.js';
-import items from '../reducers/items.js';
-import favorites from '../reducers/favorites.js';
-import { store } from '../store.js';
+import lists, { currentItemsSelector, currentListSelector, ListState } from '../reducers/lists.js';
+import items, { ItemState } from '../reducers/items.js';
+import favorites, { FavoritesState } from '../reducers/favorites.js';
+import { store, RootState } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 import './hn-loading-button.js';
 import './hn-summary.js';
@@ -33,10 +33,11 @@ export class HnListElement extends connect(store)(LitElement) {
   render() {
     const pathname = window.location.pathname;
     const items = this._items || [];
-    const list = this._list;
-    const page = this._page;
+    const list = this._list || {};
+    const pageNumber = this._page || 0;
+    const pageStr = '' + pageNumber;
     const pages = list.pages;
-    const loading = pages && pages[page] && pages[page].isFetching;
+    const loading = pages && pages[pageStr] && pages[pageStr].isFetching;
     return html`
     ${sharedStyles}
     <style>
@@ -53,32 +54,32 @@ export class HnListElement extends connect(store)(LitElement) {
       <hn-summary .item="${item}" .favorites="${this._favorites}"></hn-summary>
     `)}
     ${list.id !== 'favorites' && items.length ? html`
-      <a href="${`${pathname}?page=${Math.max(page-1, 1)}`}">Previous Page</a>
-      <a href="${`${pathname}?page=${page+1}`}">Next Page</a>
+      <a href="${`${pathname}?page=${Math.max(pageNumber-1, 1)}`}">Previous Page</a>
+      <a href="${`${pathname}?page=${pageNumber+1}`}">Next Page</a>
     ` : null}`;
   }
 
-  static get properties() {
-    return {
-      _list: { type: Object },
+  @property()
+  _list: ListState|undefined;
 
-      _favorites: { type: Object },
+  @property()
+  _favorites: FavoritesState|undefined;
 
-      _items: { type: Array },
+  @property()
+  _items: Array<ItemState>|undefined;
 
-      _page: { type: Number }
-    };
-  }
+  @property()
+  _page: number|undefined;
 
   _reload() {
     store.dispatch(fetchList(this._list, this._page));
   }
 
-  stateChanged(state) {
+  stateChanged(state: RootState) {
     const list = currentListSelector(state);
     if (list) {
       updateMetadata({ title: list.id });
-      document.body.setAttribute('list', list.id);
+      document.body.setAttribute('list', list.id || '');
       this._favorites = state.favorites;
       this._list = list;
       this._page = state.app.page;

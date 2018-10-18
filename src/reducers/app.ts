@@ -36,4 +36,4 @@ const app: Reducer<AppState, RootAction> = (state = {}, action) => {
 
 export default app;
 
-export const idSelector = (state: RootState) => state.app!.id;
+export const idSelector = (state: RootState) => state.app.id;

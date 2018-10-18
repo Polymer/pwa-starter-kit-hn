@@ -8,10 +8,11 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '@polymer/lit-element';
+import { LitElement, html, property } from '@polymer/lit-element';
 import { repeat } from 'lit-html/directives/repeat.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { sharedStyles } from './shared-styles.js';
+import { CommentState } from '../reducers/items.js';
 
 export class HnCommentElement extends LitElement {
   render() {
@@ -55,26 +56,25 @@ export class HnCommentElement extends LitElement {
     </div>`;
   }
 
-  static get properties() {
-    return {
-      comment: { type: Object },
+  @property()
+  comment: CommentState|undefined;
 
-      _collapsed: { type: Boolean }
-    };
-  }
+  @property()
+  _collapsed: boolean|undefined;
 
   _toggleCollapsed() {
     this._collapsed = !this._collapsed;
   }
 
-  _calculateThreadSize(comment) {
-    let threadSize = 0;
-    let flat = (comment) => {
-      threadSize++;
-      comment.comments.forEach(flat);
+  _calculateThreadSize(comment: CommentState) {
+    const nestedCommentCount = (comment: CommentState): number => {
+      const comments = comment.comments;
+      if (!comments) return 1;
+      return comments.reduce((count, comment) => {
+        return count + nestedCommentCount(comment);
+      }, 1);
     };
-    flat(comment);
-    return threadSize;
+    return nestedCommentCount(comment);
   }
 }
 

@@ -8,15 +8,17 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '@polymer/lit-element';
+import { LitElement, html, property } from '@polymer/lit-element';
 import { saveFavorite, deleteFavorite } from '../actions/favorites.js';
 import { store } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
+import { ItemState } from '../reducers/items.js';
+import { FavoritesState } from '../reducers/favorites.js';
 
 export class HnSummaryElement extends LitElement {
   render() {
     const item = this.item || {};
-    const isFavorite = this.favorites && item && this.favorites[item.id];
+    const isFavorite = this.favorites && item && this.favorites[item.id || ''];
     return html`
     ${sharedStyles}
     <style>
@@ -58,13 +60,11 @@ export class HnSummaryElement extends LitElement {
     </div>`;
   }
 
-  static get properties() {
-    return {
-      item: { type: Object },
+  @property()
+  item: ItemState|undefined;
 
-      favorites: { type: Array }
-    };
-  }
+  @property()
+  favorites: FavoritesState|undefined;
 
   _saveFavorite() {
     store.dispatch(saveFavorite(this.item));
