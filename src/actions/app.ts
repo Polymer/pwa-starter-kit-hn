@@ -59,7 +59,7 @@ export const updateLocation: ActionCreator<ThunkResult> = (location: Location) =
           list = splitPath[0];
       }
       view = 'list';
-      import('../components/hn-list.js' as string).then(module => {
+      import('../components/hn-list.js').then(module => {
         const state = getState();
         dispatch(module.fetchListIfNeeded(
           module.currentListSelector(state),
@@ -69,7 +69,7 @@ export const updateLocation: ActionCreator<ThunkResult> = (location: Location) =
       break;
     case 'user':
       view = 'user';
-      import('../components/hn-user.js' as string).then(module => {
+      import('../components/hn-user.js').then(module => {
         const state = getState();
         dispatch(module.fetchUserIfNeeded(
           module.currentUserSelector(state)
@@ -78,7 +78,7 @@ export const updateLocation: ActionCreator<ThunkResult> = (location: Location) =
       break;
     case 'item':
       view = 'item';
-      import('../components/hn-item.js' as string).then(module => {
+      import('../components/hn-item.js').then(module => {
         const state = getState();
         dispatch(module.fetchItemIfNeeded(
           module.currentItemSelector(state)
@@ -87,7 +87,7 @@ export const updateLocation: ActionCreator<ThunkResult> = (location: Location) =
       break;
     default:
       view = 'invalid-page';
-      import('../components/hn-invalid-page.js' as string);
+      import('../components/hn-invalid-page.js');
   }
 
   dispatch({
