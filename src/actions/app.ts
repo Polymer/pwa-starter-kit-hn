@@ -20,8 +20,7 @@ export interface AppActionUpdateLocation extends Action<'UPDATE_LOCATION'> {
   page: number;
   id: string;
 };
-export interface AppActionEmpty extends Action<'EMPTY'> {};
-export type AppAction = AppActionUpdateLocation | AppActionEmpty;
+export type AppAction = AppActionUpdateLocation;
 
 type ThunkResult = ThunkAction<void, RootState, undefined, AppAction>;
 

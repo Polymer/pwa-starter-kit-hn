@@ -21,6 +21,7 @@ import {
   compose,
   combineReducers,
   StoreEnhancer,
+  Action,
   Reducer,
 } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
@@ -44,7 +45,7 @@ export interface RootState {
   users: UsersState;
 }
 
-export type RootAction = AppAction | FavoritesAction | ItemsAction | ListsAction | UsersAction;
+export type RootAction = AppAction | FavoritesAction | ItemsAction | ListsAction | UsersAction | Action<''>;
 
 const devCompose: <Ext0, Ext1, StateExt0, StateExt1>(
   f1: StoreEnhancer<Ext0, StateExt0>, f2: StoreEnhancer<Ext1, StateExt1>
