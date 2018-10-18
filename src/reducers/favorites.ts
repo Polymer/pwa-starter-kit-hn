@@ -16,7 +16,7 @@ import {
 import { RootAction, RootState } from '../store.js';
 
 export interface FavoritesState {
-  [k: string]: boolean;
+  [k: string]: true;
 };
 
 const favorites: Reducer<FavoritesState, RootAction> = (state = {}, action) => {

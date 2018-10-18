@@ -58,7 +58,7 @@ const items: Reducer<ItemsState, RootAction> = (state = {}, action) => {
         [itemId]: item(state[itemId], action)
       };
     case 'RECEIVE_LIST':
-      return action.items.reduce((obj: ItemsState, item) => {
+      return action.items.reduce((obj, item) => {
         obj[item.id] = item;
         return obj;
       }, {...state});

@@ -124,7 +124,7 @@ export const currentListSelector = createSelector(
         id: 'favorites',
         pages: {
           '1': {
-            items: Object.keys(favorites!)
+            items: Object.keys(favorites)
           }
         }
       };
