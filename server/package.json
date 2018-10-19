@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "prpl-server": "^1.1.0",
-    "request": "^2.86.0"
+    "request": "^2.86.0",
+    "shrink-ray-current": "^2.1.2"
   }
 }

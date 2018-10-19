@@ -10,9 +10,25 @@
 const prpl = require('prpl-server');
 const request = require('request');
 const express = require('express');
+const shrinkRay = require('shrink-ray-current');
 const rendertron = require('rendertron-middleware');
-
 const app = express();
+
+// Trust X-Forwarded-* headers so that when we are behind a reverse proxy,
+// our connection information is that of the original client (according to
+// the proxy), not of the proxy itself. We need this for HTTPS redirection
+// and bot rendering.
+app.set('trust proxy', true);
+
+app.use((req, res, next) => {
+  if (req.secure) {
+    next();
+    return;
+  }
+  res.redirect(301, `https://${req.hostname}${req.url}`);
+});
+
+app.use(shrinkRay());
 
 app.use(rendertron.makeMiddleware({
   proxyUrl: 'https://render-tron.appspot.com/render',
