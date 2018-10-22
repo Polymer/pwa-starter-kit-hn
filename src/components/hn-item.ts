@@ -15,7 +15,6 @@ import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
 import { loadFavorites } from '../actions/favorites.js';
 import items, { currentItemSelector, ItemState } from '../reducers/items.js';
-import favorites, { FavoritesState } from '../reducers/favorites.js';
 import { store, RootState } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 import './hn-loading-button.js';
@@ -23,7 +22,6 @@ import './hn-summary.js';
 import './hn-comment.js';
 
 store.addReducers({
-  favorites,
   items
 });
 
@@ -44,7 +42,7 @@ export class HnItemElement extends connect(store)(LitElement) {
     <hn-loading-button .loading="${item.isFetching}" @click="${this._reload}">
     </hn-loading-button>
     <div ?hidden="${item.failure}">
-      <hn-summary .item="${item}" .favorites="${this._favorites}"></hn-summary>
+      <hn-summary .item="${item}"></hn-summary>
       <div ?hidden="${!item.content}">${unsafeHTML(item.content)}</div>
       ${repeat(comments, (comment) => html`
         <hn-comment .comment="${comment}"></hn-comment>
@@ -56,9 +54,6 @@ export class HnItemElement extends connect(store)(LitElement) {
   @property()
   private _item?: ItemState;
 
-  @property()
-  private _favorites?: FavoritesState;
-
   _reload() {
     store.dispatch(fetchItem(this._item));
   }
@@ -67,7 +62,6 @@ export class HnItemElement extends connect(store)(LitElement) {
     const item = currentItemSelector(state);
     if (item) {
       updateMetadata({ title: item.title });
-      this._favorites = state.favorites;
       this._item = item;
     }
   }

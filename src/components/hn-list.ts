@@ -15,7 +15,6 @@ import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
 import { loadFavorites } from '../actions/favorites.js';
 import lists, { currentItemsSelector, currentListSelector, ListState } from '../reducers/lists.js';
 import items, { ItemState } from '../reducers/items.js';
-import favorites, { FavoritesState } from '../reducers/favorites.js';
 import { store, RootState } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 import './hn-loading-button.js';
@@ -23,7 +22,6 @@ import './hn-summary.js';
 
 store.addReducers({
   lists,
-  favorites,
   items
 });
 
@@ -51,7 +49,7 @@ export class HnListElement extends connect(store)(LitElement) {
       </hn-loading-button>
     ` : null}
     ${repeat(items, (item) => html`
-      <hn-summary .item="${item}" .favorites="${this._favorites}"></hn-summary>
+      <hn-summary .item="${item}"></hn-summary>
     `)}
     ${list.id !== 'favorites' && items.length ? html`
       <a href="${`${pathname}?page=${Math.max(pageNumber-1, 1)}`}">Previous Page</a>
@@ -61,9 +59,6 @@ export class HnListElement extends connect(store)(LitElement) {
 
   @property()
   private _list?: ListState;
-
-  @property()
-  private _favorites?: FavoritesState;
 
   @property()
   private _items?: Array<ItemState>;
@@ -80,7 +75,6 @@ export class HnListElement extends connect(store)(LitElement) {
     if (list) {
       updateMetadata({ title: list.id });
       document.body.setAttribute('list', list.id || '');
-      this._favorites = state.favorites;
       this._list = list;
       this._page = state.app.page;
       const items = currentItemsSelector(state);
