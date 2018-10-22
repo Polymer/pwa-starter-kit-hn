@@ -8,12 +8,6 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-declare global {
-  interface Window {
-    dbPromise?: Promise<IDBDatabase>;
-  }
-}
-
 import { ActionCreator, Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../store.js';
@@ -31,7 +25,7 @@ export type FavoritesAction = FavoritesActionAddFavorite | FavoritesActionRemove
 
 type ThunkResult = ThunkAction<void, RootState, undefined, FavoritesAction>;
 
-const dbPromise = window.dbPromise = new Promise((resolve, reject) => {
+const dbPromise = new Promise<IDBDatabase>((resolve, reject) => {
   const openRequest = window.indexedDB.open('favorites', 5);
   openRequest.onsuccess = (event) => {
     const target = event.target as IDBRequest<IDBDatabase>;
