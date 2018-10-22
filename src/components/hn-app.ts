@@ -39,7 +39,7 @@ export class HnAppElement extends connect(store)(LitElement) {
   }
 
   @property()
-  _view: string|undefined;
+  private _view?: string;
 
   firstUpdated() {
     installRouter((location, event) => {

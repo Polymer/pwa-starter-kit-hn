@@ -49,7 +49,7 @@ export class HnLoadingButton extends LitElement {
   }
 
   @property()
-  loading: boolean|undefined;
+  loading?: boolean;
 }
 
 customElements.define('hn-loading-button', HnLoadingButton);

@@ -50,7 +50,7 @@ export class HnUserElement extends connect(store)(LitElement) {
   }
 
   @property()
-  _user: UserState|undefined;
+  private _user?: UserState;
 
   _reload() {
     store.dispatch(fetchUser(this._user));

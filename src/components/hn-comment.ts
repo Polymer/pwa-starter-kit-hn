@@ -57,10 +57,10 @@ export class HnCommentElement extends LitElement {
   }
 
   @property()
-  comment: CommentState|undefined;
+  comment?: CommentState;
 
   @property()
-  _collapsed: boolean|undefined;
+  private _collapsed?: boolean;
 
   _toggleCollapsed() {
     this._collapsed = !this._collapsed;

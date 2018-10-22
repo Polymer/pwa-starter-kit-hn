@@ -54,10 +54,10 @@ export class HnItemElement extends connect(store)(LitElement) {
   }
 
   @property()
-  _item: ItemState|undefined;
+  private _item?: ItemState;
 
   @property()
-  _favorites: FavoritesState|undefined;
+  private _favorites?: FavoritesState;
 
   _reload() {
     store.dispatch(fetchItem(this._item));

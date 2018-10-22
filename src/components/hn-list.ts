@@ -60,16 +60,16 @@ export class HnListElement extends connect(store)(LitElement) {
   }
 
   @property()
-  _list: ListState|undefined;
+  private _list?: ListState;
 
   @property()
-  _favorites: FavoritesState|undefined;
+  private _favorites?: FavoritesState;
 
   @property()
-  _items: Array<ItemState>|undefined;
+  private _items?: Array<ItemState>;
 
   @property()
-  _page: number|undefined;
+  private _page?: number;
 
   _reload() {
     store.dispatch(fetchList(this._list, this._page));

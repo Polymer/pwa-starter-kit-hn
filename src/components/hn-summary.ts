@@ -61,10 +61,10 @@ export class HnSummaryElement extends LitElement {
   }
 
   @property()
-  item: ItemState|undefined;
+  item?: ItemState;
 
   @property()
-  favorites: FavoritesState|undefined;
+  favorites?: FavoritesState;
 
   _saveFavorite() {
     store.dispatch(saveFavorite(this.item));
