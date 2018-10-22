@@ -8,16 +8,30 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { ActionCreator, Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '../store.js';
+
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';
 
-export const updateLocation = (location) => (dispatch, getState) => {
-  const path = window.decodeURIComponent(location.pathname);
+export interface AppActionUpdateLocation extends Action<'UPDATE_LOCATION'> {
+  view: string;
+  list?: string;
+  page: number;
+  id: string;
+};
+export type AppAction = AppActionUpdateLocation;
+
+type ThunkResult = ThunkAction<void, RootState, undefined, AppAction>;
+
+export const updateLocation: ActionCreator<ThunkResult> = (location: Location) => (dispatch, getState) => {
+  const path = decodeURIComponent(location.pathname);
   const splitPath = (path || '').slice(1).split('/');
   const params = location.search.slice(1).split('&').reduce((acc, item) => {
     const pair = item.split('=');
     acc[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
     return acc;
-  }, {});
+  }, {} as {[key: string]: string});
   const pageStr = params['page'];
   const page = pageStr ? parseInt(pageStr, 10) : 1;
   const id = params['id'];

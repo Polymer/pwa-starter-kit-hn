@@ -8,11 +8,11 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '@polymer/lit-element';
+import { LitElement, html, property } from '@polymer/lit-element';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
-import users, { currentUserSelector } from '../reducers/users.js';
-import { store } from '../store.js';
+import users, { currentUserSelector, UserState } from '../reducers/users.js';
+import { store, RootState } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 import './hn-loading-button.js';
 
@@ -22,7 +22,7 @@ store.addReducers({
 
 export class HnUserElement extends connect(store)(LitElement) {
   render() {
-    const user = this._user;
+    const user = this._user || {};
     return html`
     ${sharedStyles}
     <style>
@@ -49,17 +49,14 @@ export class HnUserElement extends connect(store)(LitElement) {
     ${user.failure ? html`<p>User not found</p>` : null}`;
   }
 
-  static get properties() {
-    return {
-      _user: { type: Object }
-    };
-  }
+  @property()
+  private _user?: UserState;
 
   _reload() {
     store.dispatch(fetchUser(this._user));
   }
 
-  stateChanged(state) {
+  stateChanged(state: RootState) {
     const user = currentUserSelector(state);
     if (user) {
       updateMetadata({ title: user.id });

@@ -8,10 +8,10 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '@polymer/lit-element';
+import { LitElement, html, property } from '@polymer/lit-element';
 import { connect, installRouter } from 'pwa-helpers';
 import { updateLocation } from '../actions/app.js';
-import { store } from '../store.js';
+import { store, RootState } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnAppElement extends connect(store)(LitElement) {
@@ -38,11 +38,8 @@ export class HnAppElement extends connect(store)(LitElement) {
     </div>`;
   }
 
-  static get properties() {
-    return {
-      _view: { type: String }
-    };
-  }
+  @property()
+  private _view?: string;
 
   firstUpdated() {
     installRouter((location, event) => {
@@ -54,7 +51,7 @@ export class HnAppElement extends connect(store)(LitElement) {
     });
   }
 
-  stateChanged(state) {
+  stateChanged(state: RootState) {
     this._view = state.app.view;
   }
 }

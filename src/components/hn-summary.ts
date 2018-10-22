@@ -8,15 +8,22 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '@polymer/lit-element';
+import { LitElement, html, property } from '@polymer/lit-element';
+import { connect } from 'pwa-helpers';
 import { saveFavorite, deleteFavorite } from '../actions/favorites.js';
-import { store } from '../store.js';
+import { ItemState } from '../reducers/items.js';
+import favorites, { FavoritesState } from '../reducers/favorites.js';
+import { store, RootState } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
-export class HnSummaryElement extends LitElement {
+store.addReducers({
+  favorites
+});
+
+export class HnSummaryElement extends connect(store)(LitElement) {
   render() {
     const item = this.item || {};
-    const isFavorite = this.favorites && item && this.favorites[item.id];
+    const isFavorite = this._favorites && item && this._favorites[item.id || ''];
     return html`
     ${sharedStyles}
     <style>
@@ -58,13 +65,11 @@ export class HnSummaryElement extends LitElement {
     </div>`;
   }
 
-  static get properties() {
-    return {
-      item: { type: Object },
+  @property()
+  item?: ItemState;
 
-      favorites: { type: Array }
-    };
-  }
+  @property()
+  private _favorites?: FavoritesState;
 
   _saveFavorite() {
     store.dispatch(saveFavorite(this.item));
@@ -72,6 +77,10 @@ export class HnSummaryElement extends LitElement {
 
   _deleteFavorite() {
     store.dispatch(deleteFavorite(this.item));
+  }
+
+  stateChanged(state: RootState) {
+    this._favorites = state.favorites;
   }
 }
 

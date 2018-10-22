@@ -8,9 +8,18 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { Reducer } from 'redux';
 import { UPDATE_LOCATION } from '../actions/app.js';
+import { RootAction, RootState } from '../store.js';
 
-const app = (state = {}, action) => {
+export interface AppState {
+  view?: string;
+  list?: string;
+  page?: number;
+  id?: string;
+};
+
+const app: Reducer<AppState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_LOCATION:
       return {
@@ -23,8 +32,8 @@ const app = (state = {}, action) => {
     default:
       return state;
   }
-}
+};
 
 export default app;
 
-export const idSelector = state => state.app.id;
+export const idSelector = (state: RootState) => state.app.id;

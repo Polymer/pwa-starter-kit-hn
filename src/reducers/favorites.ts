@@ -8,12 +8,18 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { Reducer } from 'redux';
 import {
   ADD_FAVORITE,
   REMOVE_FAVORITE
 } from '../actions/favorites.js';
+import { RootAction, RootState } from '../store.js';
 
-const favorites = (state = {}, action) => {
+export interface FavoritesState {
+  [k: string]: true;
+};
+
+const favorites: Reducer<FavoritesState, RootAction> = (state = {}, action) => {
   switch (action.type) {
     case ADD_FAVORITE:
       return {
@@ -27,8 +33,8 @@ const favorites = (state = {}, action) => {
     default:
       return state;
   }
-}
+};
 
 export default favorites;
 
-export const favoritesSelector = state => state.favorites;
+export const favoritesSelector = (state: RootState) => state.favorites;

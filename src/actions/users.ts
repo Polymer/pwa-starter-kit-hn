@@ -8,11 +8,29 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { ActionCreator, Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '../store.js';
+
 export const REQUEST_USER = 'REQUEST_USER';
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const FAIL_USER = 'FAIL_USER';
 
-export const fetchUser = (user) => (dispatch) => {
+export interface UsersActionRequestUser extends Action<'REQUEST_USER'> {
+  userId: string;
+};
+export interface UsersActionReceiveUser extends Action<'RECEIVE_USER'> {
+  userId: string;
+  data: object;
+};
+export interface UsersActionFailUser extends Action<'FAIL_USER'> {
+  userId: string;
+};
+export type UsersAction = UsersActionRequestUser | UsersActionReceiveUser | UsersActionFailUser;
+
+type ThunkResult = ThunkAction<void, RootState, undefined, UsersAction>;
+
+export const fetchUser: ActionCreator<ThunkResult> = (user) => (dispatch) => {
   dispatch(requestUser(user.id));
   fetch(`/api/user/${user.id}`)
     .then(res => res.json())
@@ -25,20 +43,20 @@ export const fetchUser = (user) => (dispatch) => {
     .catch(() => dispatch(failUser(user.id)));
 };
 
-export const fetchUserIfNeeded = (user) => (dispatch) => {
+export const fetchUserIfNeeded: ActionCreator<ThunkResult> = (user) => (dispatch) => {
   if (user && !user.created_time && !user.isFetching) {
     dispatch(fetchUser(user));
   }
 };
 
-const requestUser = (userId) => {
+const requestUser: ActionCreator<UsersActionRequestUser> = (userId) => {
   return {
     type: REQUEST_USER,
     userId
   };
 };
 
-const receiveUser = (userId, data) => {
+const receiveUser: ActionCreator<UsersActionReceiveUser> = (userId, data) => {
   return {
     type: RECEIVE_USER,
     userId,
@@ -46,7 +64,7 @@ const receiveUser = (userId, data) => {
   };
 };
 
-const failUser = (userId) => {
+const failUser: ActionCreator<UsersActionFailUser> = (userId) => {
   return {
     type: FAIL_USER,
     userId

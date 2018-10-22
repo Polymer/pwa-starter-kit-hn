@@ -8,23 +8,39 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { ActionCreator, Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '../store.js';
+
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
 
-const dbPromise = window.dbPromise = new Promise((resolve, reject) => {
+export interface FavoritesActionAddFavorite extends Action<'ADD_FAVORITE'> {
+  item: {id: string};
+};
+export interface FavoritesActionRemoveFavorite extends Action<'REMOVE_FAVORITE'> {
+  item: {id: string};
+};
+export type FavoritesAction = FavoritesActionAddFavorite | FavoritesActionRemoveFavorite;
+
+type ThunkResult = ThunkAction<void, RootState, undefined, FavoritesAction>;
+
+const dbPromise = new Promise<IDBDatabase>((resolve, reject) => {
   const openRequest = window.indexedDB.open('favorites', 5);
   openRequest.onsuccess = (event) => {
-    resolve(event.target.result);
+    const target = event.target as IDBRequest<IDBDatabase>;
+    resolve(target.result);
   };
   openRequest.onupgradeneeded = (event) => {
-    event.target.result.createObjectStore('favorites', { keyPath: 'id' });
+    const target = event.target as IDBRequest<IDBDatabase>;
+    target.result.createObjectStore('favorites', { keyPath: 'id' });
   };
   openRequest.onerror = (error) => {
     reject(error);
   };
 });
 
-export const saveFavorite = (item) => (dispatch) => {
+export const saveFavorite: ActionCreator<ThunkResult> = (item) => (dispatch) => {
   dbPromise.then((db) => {
     const transaction = db.transaction(['favorites'], 'readwrite');
     const objectStore = transaction.objectStore('favorites');
@@ -46,14 +62,14 @@ export const saveFavorite = (item) => (dispatch) => {
   });
 };
 
-const addFavorite = (item) => (dispatch) => {
-  dispatch({
+const addFavorite: ActionCreator<FavoritesActionAddFavorite> = (item) => {
+  return {
     type: ADD_FAVORITE,
     item
-  });
+  };
 };
 
-export const deleteFavorite = (item) => (dispatch) => {
+export const deleteFavorite: ActionCreator<ThunkResult> = (item) => (dispatch) => {
   dbPromise.then((db) => {
     const transaction = db.transaction(['favorites'], 'readwrite');
     const objectStore = transaction.objectStore('favorites');
@@ -69,13 +85,14 @@ export const deleteFavorite = (item) => (dispatch) => {
 
 let loaded = false;
 
-export const loadFavorites = () => (dispatch) => {
+export const loadFavorites: ActionCreator<ThunkResult> = () => (dispatch) => {
   if (loaded) return;
   loaded = true;
   dbPromise.then((db) => {
     const objectStore = db.transaction('favorites').objectStore('favorites');
-    objectStore.openCursor().onsuccess = function(event) {
-      const cursor = event.target.result;
+    objectStore.openCursor().onsuccess = (event) => {
+      const target = event.target as IDBRequest<IDBCursorWithValue | null>;
+      const cursor = target.result;
       if (cursor) {
         dispatch(addFavorite(cursor.value));
         cursor.continue();

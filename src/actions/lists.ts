@@ -8,11 +8,32 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { ActionCreator, Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '../store.js';
+
 export const REQUEST_LIST = 'REQUEST_LIST';
 export const RECEIVE_LIST = 'RECEIVE_LIST';
 export const FAIL_LIST = 'FAIL_LIST';
 
-export const fetchList = (list, page) => (dispatch) => {
+export interface ListsActionRequestList extends Action<'REQUEST_LIST'> {
+  listId: string;
+  page: number;
+};
+export interface ListsActionReceiveList extends Action<'RECEIVE_LIST'> {
+  listId: string;
+  page: number;
+  items: Array<{id: string}>;
+};
+export interface ListsActionFailList extends Action<'FAIL_LIST'> {
+  listId: string;
+  page: number;
+};
+export type ListsAction = ListsActionRequestList | ListsActionReceiveList | ListsActionFailList;
+
+type ThunkResult = ThunkAction<void, RootState, undefined, ListsAction>;
+
+export const fetchList: ActionCreator<ThunkResult> = (list, page) => (dispatch) => {
   dispatch(requestList(list.id, page));
   fetch(`/api/${list.id}?page=${page}`)
     .then(res => res.json())
@@ -20,7 +41,7 @@ export const fetchList = (list, page) => (dispatch) => {
     .catch(() => dispatch(failList(list.id, page)));
 };
 
-export const fetchListIfNeeded = (list, page) => (dispatch) => {
+export const fetchListIfNeeded: ActionCreator<ThunkResult> = (list, page) => (dispatch) => {
   if (!list) return;
   if (!list.pages ||
       !list.pages[page] ||
@@ -29,7 +50,7 @@ export const fetchListIfNeeded = (list, page) => (dispatch) => {
   }
 };
 
-const requestList = (listId, page) => {
+const requestList: ActionCreator<ListsActionRequestList> = (listId, page) => {
   return {
     type: REQUEST_LIST,
     listId,
@@ -37,7 +58,7 @@ const requestList = (listId, page) => {
   };
 };
 
-const receiveList = (listId, page, items) => {
+const receiveList: ActionCreator<ListsActionReceiveList> = (listId, page, items) => {
   return {
     type: RECEIVE_LIST,
     listId,
@@ -46,7 +67,7 @@ const receiveList = (listId, page, items) => {
   };
 };
 
-const failList = (listId, page) => {
+const failList: ActionCreator<ListsActionFailList> = (listId, page) => {
   return {
     type: FAIL_LIST,
     listId,

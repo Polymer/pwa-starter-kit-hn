@@ -8,11 +8,29 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import { ActionCreator, Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '../store.js';
+
 export const REQUEST_ITEM = 'REQUEST_ITEM';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
 export const FAIL_ITEM = 'FAIL_ITEM';
 
-export const fetchItem = (item) => (dispatch) => {
+export interface ItemsActionRequestItem extends Action<'REQUEST_ITEM'> {
+  itemId: string
+};
+export interface ItemsActionReceiveItem extends Action<'RECEIVE_ITEM'> {
+  itemId: string;
+  data: object;
+};
+export interface ItemsActionFailItem extends Action<'FAIL_ITEM'> {
+  itemId: string
+};
+export type ItemsAction = ItemsActionRequestItem | ItemsActionReceiveItem | ItemsActionFailItem;
+
+type ThunkResult = ThunkAction<void, RootState, undefined, ItemsAction>;
+
+export const fetchItem: ActionCreator<ThunkResult> = (item) => (dispatch) => {
   dispatch(requestItem(item.id));
   fetch(`/api/item/${item.id}`)
     .then(res => res.json())
@@ -20,20 +38,20 @@ export const fetchItem = (item) => (dispatch) => {
     .catch(() => dispatch(failItem(item.id)));
 };
 
-export const fetchItemIfNeeded = (item) => (dispatch) => {
+export const fetchItemIfNeeded: ActionCreator<ThunkResult> = (item) => (dispatch) => {
   if (item && !item.comments && !item.isFetching) {
     dispatch(fetchItem(item));
   }
 };
 
-const requestItem = (itemId) => {
+const requestItem: ActionCreator<ItemsActionRequestItem> = (itemId) => {
   return {
     type: REQUEST_ITEM,
     itemId
   };
 };
 
-const receiveItem = (itemId, data) => {
+const receiveItem: ActionCreator<ItemsActionReceiveItem> = (itemId, data) => {
   return {
     type: RECEIVE_ITEM,
     itemId,
@@ -41,7 +59,7 @@ const receiveItem = (itemId, data) => {
   };
 };
 
-const failItem = (itemId) => {
+const failItem: ActionCreator<ItemsActionFailItem> = (itemId) => {
   return {
     type: FAIL_ITEM,
     itemId

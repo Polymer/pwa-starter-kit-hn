@@ -8,22 +8,20 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from '@polymer/lit-element';
+import { LitElement, html, property } from '@polymer/lit-element';
 import { repeat } from 'lit-html/directives/repeat.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
 import { loadFavorites } from '../actions/favorites.js';
-import items, { currentItemSelector } from '../reducers/items.js';
-import favorites from '../reducers/favorites.js';
-import { store } from '../store.js';
+import items, { currentItemSelector, ItemState } from '../reducers/items.js';
+import { store, RootState } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 import './hn-loading-button.js';
 import './hn-summary.js';
 import './hn-comment.js';
 
 store.addReducers({
-  favorites,
   items
 });
 
@@ -31,7 +29,7 @@ store.dispatch(loadFavorites());
 
 export class HnItemElement extends connect(store)(LitElement) {
   render() {
-    const item = this._item;
+    const item = this._item || {};
     const comments = item.comments || [];
     return html`
     ${sharedStyles}
@@ -44,7 +42,7 @@ export class HnItemElement extends connect(store)(LitElement) {
     <hn-loading-button .loading="${item.isFetching}" @click="${this._reload}">
     </hn-loading-button>
     <div ?hidden="${item.failure}">
-      <hn-summary .item="${item}" .favorites="${this._favorites}"></hn-summary>
+      <hn-summary .item="${item}"></hn-summary>
       <div ?hidden="${!item.content}">${unsafeHTML(item.content)}</div>
       ${repeat(comments, (comment) => html`
         <hn-comment .comment="${comment}"></hn-comment>
@@ -53,23 +51,17 @@ export class HnItemElement extends connect(store)(LitElement) {
     ${item.failure ? html`<p>Item not found</p>` : null}`;
   }
 
-  static get properties() {
-    return {
-      _item: { type: Object },
-
-      _favorites: { type: Array }
-    }
-  }
+  @property()
+  private _item?: ItemState;
 
   _reload() {
     store.dispatch(fetchItem(this._item));
   }
 
-  stateChanged(state) {
+  stateChanged(state: RootState) {
     const item = currentItemSelector(state);
     if (item) {
       updateMetadata({ title: item.title });
-      this._favorites = state.favorites;
       this._item = item;
     }
   }
