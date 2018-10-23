@@ -13,7 +13,6 @@ import { repeat } from 'lit-html/directives/repeat.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchItem, fetchItemIfNeeded } from '../actions/items.js';
-import { loadFavorites } from '../actions/favorites.js';
 import items, { currentItemSelector, ItemState } from '../reducers/items.js';
 import { store, RootState } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
@@ -24,8 +23,6 @@ import './hn-comment.js';
 store.addReducers({
   items
 });
-
-store.dispatch(loadFavorites());
 
 export class HnItemElement extends connect(store)(LitElement) {
   render() {

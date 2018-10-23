@@ -10,7 +10,7 @@
 
 import { LitElement, html, property } from '@polymer/lit-element';
 import { connect } from 'pwa-helpers';
-import { saveFavorite, deleteFavorite } from '../actions/favorites.js';
+import { loadFavorites, saveFavorite, deleteFavorite } from '../actions/favorites.js';
 import { ItemState } from '../reducers/items.js';
 import favorites, { FavoritesState } from '../reducers/favorites.js';
 import { store, RootState } from '../store.js';
@@ -19,6 +19,8 @@ import { sharedStyles } from './shared-styles.js';
 store.addReducers({
   favorites
 });
+
+store.dispatch(loadFavorites());
 
 export class HnSummaryElement extends connect(store)(LitElement) {
   render() {
