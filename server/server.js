@@ -35,9 +35,13 @@ app.use(rendertron.makeMiddleware({
   injectShadyDom: true,
 }));
 
-app.get('/api/*', (req, res, next) => {
+app.get('/api/*', (req, res) => {
   const url = `http://node-hnapi.herokuapp.com/${req.url.substring(5)}`;
-  req.pipe(request(url)).pipe(res);
+  request(url)
+    .on('response', (r) => {
+      delete r.headers['access-control-allow-origin'];
+    })
+    .pipe(res);
 });
 
 app.get('/*', prpl.makeHandler('./build', require('./build/polymer.json')));
