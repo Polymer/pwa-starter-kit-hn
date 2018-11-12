@@ -12,7 +12,6 @@ import { LitElement, html, property } from '@polymer/lit-element';
 import { repeat } from 'lit-html/directives/repeat.js';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
-import { loadFavorites } from '../actions/favorites.js';
 import lists, { currentItemsSelector, currentListSelector, ListState } from '../reducers/lists.js';
 import items, { ItemState } from '../reducers/items.js';
 import { store, RootState } from '../store.js';
@@ -24,8 +23,6 @@ store.addReducers({
   lists,
   items
 });
-
-store.dispatch(loadFavorites());
 
 export class HnListElement extends connect(store)(LitElement) {
   render() {

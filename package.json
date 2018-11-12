@@ -3,7 +3,7 @@
   "license": "BSD-3-Clause",
   "repository": "Polymer/pwa-starter-kit-hn",
   "scripts": {
-    "start": "tsc --watch & polymer serve",
+    "start": "gulp serve",
     "build": "tsc && npm run build:prpl-server && npm run build:static",
     "build:prpl-server": "polymer build --auto-base-path && gulp prpl-server",
     "build:static": "polymer build",
@@ -11,9 +11,9 @@
     "serve:static": "polymer serve --port 5000 build/es5-bundled"
   },
   "dependencies": {
-    "@polymer/lit-element": "^0.6.2",
+    "@polymer/lit-element": "^0.6.3",
     "@webcomponents/webcomponentsjs": "^2.0.2",
-    "lit-html": "^0.12.0",
+    "lit-html": "^0.13.0",
     "pwa-helpers": "^0.9.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
