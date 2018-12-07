@@ -5,14 +5,17 @@
       "weight": 1
     },
     "src/components/hn-app.js": {
+      "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
     },
     "src/components/hn-list.js": {
+      "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
     },
     "/api/news?page=1": {
+      "crossorigin": "anonymous",
       "type": "fetch",
       "weight": 1
     }
@@ -23,10 +26,12 @@
       "weight": 1
     },
     "src/components/hn-app.js": {
+      "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
     },
     "src/components/hn-list.js": {
+      "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
     }
@@ -37,10 +42,12 @@
       "weight": 1
     },
     "src/components/hn-app.js": {
+      "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
     },
     "src/components/hn-item.js": {
+      "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
     }
@@ -51,10 +58,12 @@
       "weight": 1
     },
     "src/components/hn-app.js": {
+      "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
     },
     "src/components/hn-user.js": {
+      "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
     }
