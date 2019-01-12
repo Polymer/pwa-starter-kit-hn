@@ -8,17 +8,17 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html, property } from '@polymer/lit-element';
+import { LitElement, html, css, property } from 'lit-element';
 import { connect, installRouter } from 'pwa-helpers';
 import { updateLocation } from '../actions/app.js';
 import { store, RootState } from '../store.js';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnAppElement extends connect(store)(LitElement) {
-  render() {
-    return html`
-    ${sharedStyles}
-    <style>
+  static get styles() {
+    return [
+      sharedStyles,
+      css`
       [view] > * {
         display: none;
         padding: 0 16px;
@@ -28,8 +28,12 @@ export class HnAppElement extends connect(store)(LitElement) {
       [view=user] hn-user,
       [view=invalid-page] hn-invalid-page {
         display: block;
-      }
-    </style>
+      }`
+    ];
+  }
+
+  render() {
+    return html`
     <div view="${this._view}">
       <hn-list></hn-list>
       <hn-item></hn-item>

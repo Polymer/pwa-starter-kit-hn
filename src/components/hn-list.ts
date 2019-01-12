@@ -8,7 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html, property } from '@polymer/lit-element';
+import { LitElement, html, css, property } from 'lit-element';
 import { repeat } from 'lit-html/directives/repeat.js';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchList, fetchListIfNeeded } from '../actions/lists.js';
@@ -25,6 +25,17 @@ store.addReducers({
 });
 
 export class HnListElement extends connect(store)(LitElement) {
+  static get styles() {
+    return [
+      sharedStyles,
+      css`
+      :host > a {
+        display: inline-block;
+        margin: 0 8px 8px 0;
+      }`
+    ];
+  }
+
   render() {
     const pathname = window.location.pathname;
     const items = this._items || [];
@@ -34,13 +45,6 @@ export class HnListElement extends connect(store)(LitElement) {
     const pages = list.pages;
     const loading = pages && pages[pageStr] && pages[pageStr].isFetching;
     return html`
-    ${sharedStyles}
-    <style>
-      :host > a {
-        display: inline-block;
-        margin: 0 8px 8px 0;
-      }
-    </style>
     ${list.id !== 'favorites' ? html`
       <hn-loading-button .loading="${loading}" @click="${this._reload}">
       </hn-loading-button>
