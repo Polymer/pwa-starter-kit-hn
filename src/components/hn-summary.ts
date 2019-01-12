@@ -8,7 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html, property } from '@polymer/lit-element';
+import { LitElement, html, property } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { loadFavorites, saveFavorite, deleteFavorite } from '../actions/favorites.js';
 import { ItemState } from '../reducers/items.js';

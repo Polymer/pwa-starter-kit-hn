@@ -8,7 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html, property } from '@polymer/lit-element';
+import { LitElement, html, property } from 'lit-element';
 import { connect, installRouter } from 'pwa-helpers';
 import { updateLocation } from '../actions/app.js';
 import { store, RootState } from '../store.js';
