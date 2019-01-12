@@ -14,7 +14,7 @@ A Hacker News client built using [PWA Starter Kit](https://github.com/PolymerLab
 ## Setup
 
 * `npm i`
-* `npm start` (or any static file server for single page apps, like `serve -s`)
+* `npm start`
 
 ## Building & Deploying
 
