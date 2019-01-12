@@ -8,19 +8,17 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html, property } from 'lit-element';
+import { LitElement, html, css, property } from 'lit-element';
 import { repeat } from 'lit-html/directives/repeat.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { sharedStyles } from './shared-styles.js';
 import { CommentState } from '../reducers/items.js';
 
 export class HnCommentElement extends LitElement {
-  render() {
-    const comment = this.comment || {};
-    const comments = comment.comments || [];
-    return html`
-    ${sharedStyles}
-    <style>
+  static get styles() {
+    return [
+      sharedStyles,
+      css`
       .indent {
         margin-left: 18px;
       }
@@ -37,8 +35,14 @@ export class HnCommentElement extends LitElement {
       }
       .content pre {
         white-space: pre-line;
-      }
-    </style>
+      }`
+    ];
+  }
+
+  render() {
+    const comment = this.comment || {};
+    const comments = comment.comments || [];
+    return html`
     <div class="info">
       <button class="collapsed-btn" @click="${this._toggleCollapsed}">
         [${this._collapsed ? `+${this._calculateThreadSize(comment)}` : '-'}]

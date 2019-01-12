@@ -8,7 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html, property } from 'lit-element';
+import { LitElement, html, css, property } from 'lit-element';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { fetchUser, fetchUserIfNeeded } from '../actions/users.js';
 import users, { currentUserSelector, UserState } from '../reducers/users.js';
@@ -21,15 +21,19 @@ store.addReducers({
 });
 
 export class HnUserElement extends connect(store)(LitElement) {
+  static get styles() {
+    return [
+      sharedStyles,
+      css`
+      table {
+        margin: 1em 0;
+      }`
+    ];
+  }
+
   render() {
     const user = this._user || {};
     return html`
-    ${sharedStyles}
-    <style>
-      table {
-        margin: 1em 0;
-      }
-    </style>
     <hn-loading-button .loading="${user.isFetching}" @click="${this._reload}">
     </hn-loading-button>
     <table ?hidden="${user.failure}">

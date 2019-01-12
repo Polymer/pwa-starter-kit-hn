@@ -12,9 +12,14 @@ import { LitElement, html } from 'lit-element';
 import { sharedStyles } from './shared-styles.js';
 
 export class HnInvalidPageElement extends LitElement {
+  static get styles() {
+    return [
+      sharedStyles
+    ];
+  }
+
   render() {
     return html`
-    ${sharedStyles}
     <h1>Page not found</h1>`;
   }
 }

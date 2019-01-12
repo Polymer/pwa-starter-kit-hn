@@ -8,7 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html, property } from 'lit-element';
+import { LitElement, html, css, property } from 'lit-element';
 import { repeat } from 'lit-html/directives/repeat.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { connect, updateMetadata } from 'pwa-helpers';
@@ -25,17 +25,21 @@ store.addReducers({
 });
 
 export class HnItemElement extends connect(store)(LitElement) {
+  static get styles() {
+    return [
+      sharedStyles,
+      css`
+      hn-summary {
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e5e5e5;
+      }`
+    ];
+  }
+
   render() {
     const item = this._item || {};
     const comments = item.comments || [];
     return html`
-    ${sharedStyles}
-    <style>
-      hn-summary {
-        padding-bottom: 16px;
-        border-bottom: 1px solid #e5e5e5;
-      }
-    </style>
     <hn-loading-button .loading="${item.isFetching}" @click="${this._reload}">
     </hn-loading-button>
     <div ?hidden="${item.failure}">

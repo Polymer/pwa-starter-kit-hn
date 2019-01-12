@@ -8,7 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html, property } from 'lit-element';
+import { LitElement, html, css, property } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { loadFavorites, saveFavorite, deleteFavorite } from '../actions/favorites.js';
 import { ItemState } from '../reducers/items.js';
@@ -23,12 +23,10 @@ store.addReducers({
 store.dispatch(loadFavorites());
 
 export class HnSummaryElement extends connect(store)(LitElement) {
-  render() {
-    const item = this.item || {};
-    const isFavorite = this._favorites && item && this._favorites[item.id || ''];
-    return html`
-    ${sharedStyles}
-    <style>
+  static get styles() {
+    return [
+      sharedStyles,
+      css`
       :host {
         display: block;
         margin: 16px 0;
@@ -47,8 +45,14 @@ export class HnSummaryElement extends connect(store)(LitElement) {
       }
       .add-to-favorites {
         color: #ccc;
-      }
-    </style>
+      }`
+    ];
+  }
+
+  render() {
+    const item = this.item || {};
+    const isFavorite = this._favorites && item && this._favorites[item.id || ''];
+    return html`
     <a class="title" href="${item.domain ? item.url : `/${item.url}`}">${item.title}</a>
     <span class="domain" ?hidden="${!item.domain}">(${item.domain})</span>
     <div class="info">
